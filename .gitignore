@@ -117,6 +117,12 @@ ehthumbs.db
 [Dd]esktop.ini
 
 
+# ================= #
+# Blender generated #
+# ================= #
+*.blend1*
+
+
 # =============== #
 # Unity generated #
 # =============== #
