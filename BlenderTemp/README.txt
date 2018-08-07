@@ -1,0 +1,1 @@
+This is where Blender will store all the temporary data.

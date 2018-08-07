@@ -1,0 +1,1 @@
+This directory is where Blender will store all the user preferences such as the last-opened scenes and the list of active add-ons.
