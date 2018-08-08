@@ -400,20 +400,6 @@ MonoBehaviour:
 GameObject:
   m_PrefabParentObject: {fileID: 100060, guid: 44dae5db9a0354d498c216edccbde858, type: 3}
   m_PrefabInternal: {fileID: 155071899}
---- !u!114 &1470251583
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 0}
-  m_GameObject: {fileID: 1470251582}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 6567fcd86fb39d34e89933e5d23239b9, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  expressionTransitionTime: 0.2
-  current_expression_index: 0
-  currentExpressionName: 
 --- !u!114 &1470251584
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -445,6 +431,7 @@ MonoBehaviour:
   speakIntervalSecs: 12
   walkIntervalSecs: 10
   facialExpressionChangeIntervalSecs: 8
+  facialExpressionDurationSecs: 4
 --- !u!114 &1470251586
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -486,6 +473,20 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 02d56631023cd4828b310bd7e912bc46, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!114 &1470251590
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 1470251582}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6567fcd86fb39d34e89933e5d23239b9, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  expressionTransitionTime: 0.2
+  current_expression_index: 0
+  currentExpressionName: 
 --- !u!1 &1490275918
 GameObject:
   m_ObjectHideFlags: 0
