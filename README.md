@@ -15,11 +15,11 @@ We aim at providing a common authoring pipeline, framework, and API for the crea
 
 ## Download
 
-* [YALLAH-SDK-YYMMDD.zip]() contains:
+* [YALLAH-SDK-YYMMDD.zip](http://www.dfki.de/~fanu01/YALLAH/Releases) contains:
   * `yallah/` - the Blender add-on needed to author a new virtual character.
   * `YALLAH_Unity-YYMMDD.unitypackage` - all the scripts and basic assets to run the virtual character in Unity.
   * `Manual/` - all the documents describing how to create new characters and how to transfer them into Unity.
-* [YALLAH-Assets-YYMMDD.zip](): a collection of assets to dress and animate your characters.
+* [YALLAH-Assets-YYMMDD.zip](http://www.dfki.de/~fanu01/YALLAH/Assets): a collection of assets to dress and animate your characters.
 
 
 ## Links
