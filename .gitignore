@@ -103,10 +103,6 @@ venv.bak/
 # mypy
 .mypy_cache/
 
-# =============== #
-# YALLAH specific #
-# =============== #
-SharedHaxeClasses/haxe_lib.cs
 
 
 # ============ #
@@ -120,6 +116,14 @@ Icon?
 ehthumbs.db
 [Tt]humbs.db
 [Dd]esktop.ini
+
+
+# =============== #
+# YALLAH specific #
+# =============== #
+SharedHaxeClasses/haxe_lib.cs
+BlenderExe
+BlenderConfig
 
 
 # ================= #
