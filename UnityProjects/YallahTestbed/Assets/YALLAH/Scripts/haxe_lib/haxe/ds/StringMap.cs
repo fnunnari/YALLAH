@@ -41,17 +41,17 @@ namespace haxe.ds {
 						case "vals":
 						{
 							if (( this.vals != null )) {
-								T_c[] __temp_new_arr61 = new T_c[this.vals.Length];
-								int __temp_i62 = -1;
-								while ((  ++ __temp_i62 < this.vals.Length )) {
-									object __temp_obj63 = ((object) (this.vals[__temp_i62]) );
-									if (( __temp_obj63 != null )) {
-										__temp_new_arr61[__temp_i62] = global::haxe.lang.Runtime.genericCast<T_c>(__temp_obj63);
+								T_c[] __temp_new_arr59 = new T_c[this.vals.Length];
+								int __temp_i60 = -1;
+								while ((  ++ __temp_i60 < this.vals.Length )) {
+									object __temp_obj61 = ((object) (this.vals[__temp_i60]) );
+									if (( __temp_obj61 != null )) {
+										__temp_new_arr59[__temp_i60] = global::haxe.lang.Runtime.genericCast<T_c>(__temp_obj61);
 									}
 									
 								}
 								
-								new_me.vals = __temp_new_arr61;
+								new_me.vals = __temp_new_arr59;
 							}
 							else {
 								new_me.vals = null;

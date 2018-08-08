@@ -15,38 +15,38 @@ namespace glm {
 		
 		
 		public static void __hx_ctor_glm_Mat4(global::glm.Mat4 __hx_this, global::haxe.lang.Null<double> _r0c0, global::haxe.lang.Null<double> _r0c1, global::haxe.lang.Null<double> _r0c2, global::haxe.lang.Null<double> _r0c3, global::haxe.lang.Null<double> _r1c0, global::haxe.lang.Null<double> _r1c1, global::haxe.lang.Null<double> _r1c2, global::haxe.lang.Null<double> _r1c3, global::haxe.lang.Null<double> _r2c0, global::haxe.lang.Null<double> _r2c1, global::haxe.lang.Null<double> _r2c2, global::haxe.lang.Null<double> _r2c3, global::haxe.lang.Null<double> _r3c0, global::haxe.lang.Null<double> _r3c1, global::haxe.lang.Null<double> _r3c2, global::haxe.lang.Null<double> _r3c3) {
-			double __temp__r3c344 = ( ( ! (_r3c3.hasValue) ) ? (((double) (0) )) : ((_r3c3).@value) );
-			double __temp__r3c243 = ( ( ! (_r3c2.hasValue) ) ? (((double) (0) )) : ((_r3c2).@value) );
-			double __temp__r3c142 = ( ( ! (_r3c1.hasValue) ) ? (((double) (0) )) : ((_r3c1).@value) );
-			double __temp__r3c041 = ( ( ! (_r3c0.hasValue) ) ? (((double) (0) )) : ((_r3c0).@value) );
-			double __temp__r2c340 = ( ( ! (_r2c3.hasValue) ) ? (((double) (0) )) : ((_r2c3).@value) );
-			double __temp__r2c239 = ( ( ! (_r2c2.hasValue) ) ? (((double) (0) )) : ((_r2c2).@value) );
-			double __temp__r2c138 = ( ( ! (_r2c1.hasValue) ) ? (((double) (0) )) : ((_r2c1).@value) );
-			double __temp__r2c037 = ( ( ! (_r2c0.hasValue) ) ? (((double) (0) )) : ((_r2c0).@value) );
-			double __temp__r1c336 = ( ( ! (_r1c3.hasValue) ) ? (((double) (0) )) : ((_r1c3).@value) );
-			double __temp__r1c235 = ( ( ! (_r1c2.hasValue) ) ? (((double) (0) )) : ((_r1c2).@value) );
-			double __temp__r1c134 = ( ( ! (_r1c1.hasValue) ) ? (((double) (0) )) : ((_r1c1).@value) );
-			double __temp__r1c033 = ( ( ! (_r1c0.hasValue) ) ? (((double) (0) )) : ((_r1c0).@value) );
-			double __temp__r0c332 = ( ( ! (_r0c3.hasValue) ) ? (((double) (0) )) : ((_r0c3).@value) );
-			double __temp__r0c231 = ( ( ! (_r0c2.hasValue) ) ? (((double) (0) )) : ((_r0c2).@value) );
-			double __temp__r0c130 = ( ( ! (_r0c1.hasValue) ) ? (((double) (0) )) : ((_r0c1).@value) );
-			double __temp__r0c029 = ( ( ! (_r0c0.hasValue) ) ? (((double) (0) )) : ((_r0c0).@value) );
-			__hx_this._00 = __temp__r0c029;
-			__hx_this._01 = __temp__r1c033;
-			__hx_this._02 = __temp__r2c037;
-			__hx_this._03 = __temp__r3c041;
-			__hx_this._10 = __temp__r0c130;
-			__hx_this._11 = __temp__r1c134;
-			__hx_this._12 = __temp__r2c138;
-			__hx_this._13 = __temp__r3c142;
-			__hx_this._20 = __temp__r0c231;
-			__hx_this._21 = __temp__r1c235;
-			__hx_this._22 = __temp__r2c239;
-			__hx_this._23 = __temp__r3c243;
-			__hx_this._30 = __temp__r0c332;
-			__hx_this._31 = __temp__r1c336;
-			__hx_this._32 = __temp__r2c340;
-			__hx_this._33 = __temp__r3c344;
+			double __temp__r3c336 = ( ( ! (_r3c3.hasValue) ) ? (((double) (0) )) : ((_r3c3).@value) );
+			double __temp__r3c235 = ( ( ! (_r3c2.hasValue) ) ? (((double) (0) )) : ((_r3c2).@value) );
+			double __temp__r3c134 = ( ( ! (_r3c1.hasValue) ) ? (((double) (0) )) : ((_r3c1).@value) );
+			double __temp__r3c033 = ( ( ! (_r3c0.hasValue) ) ? (((double) (0) )) : ((_r3c0).@value) );
+			double __temp__r2c332 = ( ( ! (_r2c3.hasValue) ) ? (((double) (0) )) : ((_r2c3).@value) );
+			double __temp__r2c231 = ( ( ! (_r2c2.hasValue) ) ? (((double) (0) )) : ((_r2c2).@value) );
+			double __temp__r2c130 = ( ( ! (_r2c1.hasValue) ) ? (((double) (0) )) : ((_r2c1).@value) );
+			double __temp__r2c029 = ( ( ! (_r2c0.hasValue) ) ? (((double) (0) )) : ((_r2c0).@value) );
+			double __temp__r1c328 = ( ( ! (_r1c3.hasValue) ) ? (((double) (0) )) : ((_r1c3).@value) );
+			double __temp__r1c227 = ( ( ! (_r1c2.hasValue) ) ? (((double) (0) )) : ((_r1c2).@value) );
+			double __temp__r1c126 = ( ( ! (_r1c1.hasValue) ) ? (((double) (0) )) : ((_r1c1).@value) );
+			double __temp__r1c025 = ( ( ! (_r1c0.hasValue) ) ? (((double) (0) )) : ((_r1c0).@value) );
+			double __temp__r0c324 = ( ( ! (_r0c3.hasValue) ) ? (((double) (0) )) : ((_r0c3).@value) );
+			double __temp__r0c223 = ( ( ! (_r0c2.hasValue) ) ? (((double) (0) )) : ((_r0c2).@value) );
+			double __temp__r0c122 = ( ( ! (_r0c1.hasValue) ) ? (((double) (0) )) : ((_r0c1).@value) );
+			double __temp__r0c021 = ( ( ! (_r0c0.hasValue) ) ? (((double) (0) )) : ((_r0c0).@value) );
+			__hx_this._00 = __temp__r0c021;
+			__hx_this._01 = __temp__r1c025;
+			__hx_this._02 = __temp__r2c029;
+			__hx_this._03 = __temp__r3c033;
+			__hx_this._10 = __temp__r0c122;
+			__hx_this._11 = __temp__r1c126;
+			__hx_this._12 = __temp__r2c130;
+			__hx_this._13 = __temp__r3c134;
+			__hx_this._20 = __temp__r0c223;
+			__hx_this._21 = __temp__r1c227;
+			__hx_this._22 = __temp__r2c231;
+			__hx_this._23 = __temp__r3c235;
+			__hx_this._30 = __temp__r0c324;
+			__hx_this._31 = __temp__r1c328;
+			__hx_this._32 = __temp__r2c332;
+			__hx_this._33 = __temp__r3c336;
 		}
 		
 		

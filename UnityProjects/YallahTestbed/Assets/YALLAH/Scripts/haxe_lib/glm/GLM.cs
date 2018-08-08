@@ -264,11 +264,11 @@ namespace glm {
 		
 		public static global::glm.Mat4 orthographic(double left, double right, double bottom, double top, global::haxe.lang.Null<double> near, global::haxe.lang.Null<double> far, global::glm.Mat4 dest) {
 			unchecked {
-				double __temp_far13 = ( ( ! (far.hasValue) ) ? (((double) (1) )) : ((far).@value) );
-				double __temp_near12 = ( ( ! (near.hasValue) ) ? (((double) (-1) )) : ((near).@value) );
+				double __temp_far5 = ( ( ! (far.hasValue) ) ? (((double) (1) )) : ((far).@value) );
+				double __temp_near4 = ( ( ! (near.hasValue) ) ? (((double) (-1) )) : ((near).@value) );
 				double rl = ( 1 / (( right - left )) );
 				double tb = ( 1 / (( top - bottom )) );
-				double fn = ( 1 / (( __temp_far13 - __temp_near12 )) );
+				double fn = ( 1 / (( __temp_far5 - __temp_near4 )) );
 				dest._00 = ( 2 * rl );
 				dest._10 = ((double) (0) );
 				dest._20 = ((double) (0) );
@@ -280,7 +280,7 @@ namespace glm {
 				dest._02 = ((double) (0) );
 				dest._12 = ((double) (0) );
 				dest._22 = ( -2 * fn );
-				dest._32 = ( ( -1 * (( __temp_far13 + __temp_near12 )) ) * fn );
+				dest._32 = ( ( -1 * (( __temp_far5 + __temp_near4 )) ) * fn );
 				dest._03 = ((double) (0) );
 				dest._13 = ((double) (0) );
 				dest._23 = ((double) (0) );
@@ -292,26 +292,26 @@ namespace glm {
 		
 		public static global::glm.Mat4 frustum(double left, double right, double bottom, double top, global::haxe.lang.Null<double> near, global::haxe.lang.Null<double> far, global::glm.Mat4 dest) {
 			unchecked {
-				double __temp_far15 = ( ( ! (far.hasValue) ) ? (((double) (1) )) : ((far).@value) );
-				double __temp_near14 = ( ( ! (near.hasValue) ) ? (((double) (-1) )) : ((near).@value) );
+				double __temp_far7 = ( ( ! (far.hasValue) ) ? (((double) (1) )) : ((far).@value) );
+				double __temp_near6 = ( ( ! (near.hasValue) ) ? (((double) (-1) )) : ((near).@value) );
 				double rl = ( 1 / (( right - left )) );
 				double tb = ( 1 / (( top - bottom )) );
-				double nf = ( 1 / (( __temp_near14 - __temp_far15 )) );
-				dest._00 = ( ( __temp_near14 * 2 ) * rl );
+				double nf = ( 1 / (( __temp_near6 - __temp_far7 )) );
+				dest._00 = ( ( __temp_near6 * 2 ) * rl );
 				dest._01 = ((double) (0) );
 				dest._02 = ((double) (0) );
 				dest._03 = ((double) (0) );
 				dest._10 = ((double) (0) );
-				dest._11 = ( ( __temp_near14 * 2 ) * tb );
+				dest._11 = ( ( __temp_near6 * 2 ) * tb );
 				dest._12 = ((double) (0) );
 				dest._13 = ((double) (0) );
 				dest._20 = ( (( right + left )) * tb );
 				dest._21 = ( (( top + bottom )) * tb );
-				dest._22 = ( (( __temp_far15 + __temp_near14 )) * nf );
+				dest._22 = ( (( __temp_far7 + __temp_near6 )) * nf );
 				dest._23 = ((double) (-1) );
 				dest._30 = ((double) (0) );
 				dest._31 = ((double) (0) );
-				dest._32 = ( ( ( __temp_far15 * __temp_near14 ) * 2 ) * nf );
+				dest._32 = ( ( ( __temp_far7 * __temp_near6 ) * 2 ) * nf );
 				dest._33 = ((double) (0) );
 				return dest;
 			}

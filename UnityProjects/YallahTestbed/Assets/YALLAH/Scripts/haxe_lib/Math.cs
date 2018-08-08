@@ -11,8 +11,6 @@ namespace haxe.root {
 		
 		public static readonly global::System.Random rand = new global::System.Random();
 		
-		public static readonly double PI = global::System.Math.PI;
-		
 		public static readonly double NaN = global::System.Double.NaN;
 		
 	}

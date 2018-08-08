@@ -15,14 +15,14 @@ namespace glm {
 		
 		
 		public static void __hx_ctor_glm_Mat2(global::glm.Mat2 __hx_this, global::haxe.lang.Null<double> _r0c0, global::haxe.lang.Null<double> _r0c1, global::haxe.lang.Null<double> _r1c0, global::haxe.lang.Null<double> _r1c1) {
-			double __temp__r1c119 = ( ( ! (_r1c1.hasValue) ) ? (((double) (0) )) : ((_r1c1).@value) );
-			double __temp__r1c018 = ( ( ! (_r1c0.hasValue) ) ? (((double) (0) )) : ((_r1c0).@value) );
-			double __temp__r0c117 = ( ( ! (_r0c1.hasValue) ) ? (((double) (0) )) : ((_r0c1).@value) );
-			double __temp__r0c016 = ( ( ! (_r0c0.hasValue) ) ? (((double) (0) )) : ((_r0c0).@value) );
-			__hx_this._00 = __temp__r0c016;
-			__hx_this._01 = __temp__r1c018;
-			__hx_this._10 = __temp__r0c117;
-			__hx_this._11 = __temp__r1c119;
+			double __temp__r1c111 = ( ( ! (_r1c1.hasValue) ) ? (((double) (0) )) : ((_r1c1).@value) );
+			double __temp__r1c010 = ( ( ! (_r1c0.hasValue) ) ? (((double) (0) )) : ((_r1c0).@value) );
+			double __temp__r0c19 = ( ( ! (_r0c1.hasValue) ) ? (((double) (0) )) : ((_r0c1).@value) );
+			double __temp__r0c08 = ( ( ! (_r0c0.hasValue) ) ? (((double) (0) )) : ((_r0c0).@value) );
+			__hx_this._00 = __temp__r0c08;
+			__hx_this._01 = __temp__r1c010;
+			__hx_this._10 = __temp__r0c19;
+			__hx_this._11 = __temp__r1c111;
 		}
 		
 		

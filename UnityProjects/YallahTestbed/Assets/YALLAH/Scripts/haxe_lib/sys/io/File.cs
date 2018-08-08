@@ -27,16 +27,9 @@ namespace sys.io {
 		
 		
 		public static global::sys.io.FileInput read(string path, global::haxe.lang.Null<bool> binary) {
-			bool __temp_binary64 = ( ( ! (binary.hasValue) ) ? (true) : ((binary).@value) );
+			bool __temp_binary62 = ( ( ! (binary.hasValue) ) ? (true) : ((binary).@value) );
 			global::System.IO.FileStream stream = new global::System.IO.FileStream(((string) (path) ), ((global::System.IO.FileMode) (global::System.IO.FileMode.Open) ), ((global::System.IO.FileAccess) (global::System.IO.FileAccess.Read) ), ((global::System.IO.FileShare) (global::System.IO.FileShare.ReadWrite) ));
 			return new global::sys.io.FileInput(((global::System.IO.FileStream) (stream) ));
-		}
-		
-		
-		public static global::sys.io.FileOutput write(string path, global::haxe.lang.Null<bool> binary) {
-			bool __temp_binary65 = ( ( ! (binary.hasValue) ) ? (true) : ((binary).@value) );
-			global::System.IO.FileStream stream = new global::System.IO.FileStream(((string) (path) ), ((global::System.IO.FileMode) (global::System.IO.FileMode.Create) ), ((global::System.IO.FileAccess) (global::System.IO.FileAccess.Write) ), ((global::System.IO.FileShare) (global::System.IO.FileShare.ReadWrite) ));
-			return new global::sys.io.FileOutput(((global::System.IO.FileStream) (stream) ));
 		}
 		
 		

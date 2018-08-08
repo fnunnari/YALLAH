@@ -103,6 +103,11 @@ venv.bak/
 # mypy
 .mypy_cache/
 
+# =============== #
+# YALLAH specific #
+# =============== #
+SharedHaxeClasses/haxe_lib.cs
+
 
 # ============ #
 # OS generated #

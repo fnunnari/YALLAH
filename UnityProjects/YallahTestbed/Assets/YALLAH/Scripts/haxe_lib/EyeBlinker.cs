@@ -166,7 +166,7 @@ namespace haxe.root {
 			unchecked {
 				double SIM_REAL_TIME = 10.0;
 				global::haxe.root.EyeBlinker blinker = new global::haxe.root.EyeBlinker();
-				global::haxe.Log.trace.__hx_invoke2_o(default(double), global::haxe.lang.Runtime.concat("Instance ", global::haxe.root.Std.@string(blinker)), default(double), new global::haxe.lang.DynamicObject(new int[]{302979532, 1547539107, 1648581351}, new object[]{"test_speed", "EyeBlinker", "EyeBlinker.hx"}, new int[]{1981972957}, new double[]{((double) (176) )}));
+				global::haxe.Log.trace.__hx_invoke2_o(default(double), global::haxe.lang.Runtime.concat("Instance ", global::haxe.root.Std.@string(blinker)), default(double), new global::haxe.lang.DynamicObject(new int[]{302979532, 1547539107, 1648581351}, new object[]{"test_speed", "EyeBlinker", "EyeBlinker.hx"}, new int[]{1981972957}, new double[]{((double) (164) )}));
 				int n_visemes = global::haxe.root.EyeBlinker.VISEMES.length;
 				double[] this1 = new double[n_visemes];
 				double[] visemes_buffer = ((double[]) (this1) );
@@ -190,13 +190,13 @@ namespace haxe.root {
 				}
 				
 				double after = global::haxe.root.Sys.time();
-				global::haxe.Log.trace.__hx_invoke2_o(default(double), global::haxe.lang.Runtime.concat(global::haxe.lang.Runtime.concat("Simulated ", global::haxe.lang.Runtime.toString(SIM_REAL_TIME)), " seconds"), default(double), new global::haxe.lang.DynamicObject(new int[]{302979532, 1547539107, 1648581351}, new object[]{"test_speed", "EyeBlinker", "EyeBlinker.hx"}, new int[]{1981972957}, new double[]{((double) (202) )}));
+				global::haxe.Log.trace.__hx_invoke2_o(default(double), global::haxe.lang.Runtime.concat(global::haxe.lang.Runtime.concat("Simulated ", global::haxe.lang.Runtime.toString(SIM_REAL_TIME)), " seconds"), default(double), new global::haxe.lang.DynamicObject(new int[]{302979532, 1547539107, 1648581351}, new object[]{"test_speed", "EyeBlinker", "EyeBlinker.hx"}, new int[]{1981972957}, new double[]{((double) (190) )}));
 				double elapsed = ( after - before );
 				double iter_per_sec = ( iterations / elapsed );
-				global::haxe.Log.trace.__hx_invoke2_o(default(double), global::haxe.lang.Runtime.concat("Number of iterations: ", global::haxe.lang.Runtime.toString(iterations)), default(double), new global::haxe.lang.DynamicObject(new int[]{302979532, 1547539107, 1648581351}, new object[]{"test_speed", "EyeBlinker", "EyeBlinker.hx"}, new int[]{1981972957}, new double[]{((double) (205) )}));
-				global::haxe.Log.trace.__hx_invoke2_o(default(double), global::haxe.lang.Runtime.concat("Elapsed (secs): ", global::haxe.lang.Runtime.toString(elapsed)), default(double), new global::haxe.lang.DynamicObject(new int[]{302979532, 1547539107, 1648581351}, new object[]{"test_speed", "EyeBlinker", "EyeBlinker.hx"}, new int[]{1981972957}, new double[]{((double) (206) )}));
-				global::haxe.Log.trace.__hx_invoke2_o(default(double), global::haxe.lang.Runtime.concat("Iter / sec: ", global::haxe.lang.Runtime.toString(iter_per_sec)), default(double), new global::haxe.lang.DynamicObject(new int[]{302979532, 1547539107, 1648581351}, new object[]{"test_speed", "EyeBlinker", "EyeBlinker.hx"}, new int[]{1981972957}, new double[]{((double) (207) )}));
-				global::haxe.Log.trace.__hx_invoke2_o(default(double), "Main finished.", default(double), new global::haxe.lang.DynamicObject(new int[]{302979532, 1547539107, 1648581351}, new object[]{"test_speed", "EyeBlinker", "EyeBlinker.hx"}, new int[]{1981972957}, new double[]{((double) (209) )}));
+				global::haxe.Log.trace.__hx_invoke2_o(default(double), global::haxe.lang.Runtime.concat("Number of iterations: ", global::haxe.lang.Runtime.toString(iterations)), default(double), new global::haxe.lang.DynamicObject(new int[]{302979532, 1547539107, 1648581351}, new object[]{"test_speed", "EyeBlinker", "EyeBlinker.hx"}, new int[]{1981972957}, new double[]{((double) (193) )}));
+				global::haxe.Log.trace.__hx_invoke2_o(default(double), global::haxe.lang.Runtime.concat("Elapsed (secs): ", global::haxe.lang.Runtime.toString(elapsed)), default(double), new global::haxe.lang.DynamicObject(new int[]{302979532, 1547539107, 1648581351}, new object[]{"test_speed", "EyeBlinker", "EyeBlinker.hx"}, new int[]{1981972957}, new double[]{((double) (194) )}));
+				global::haxe.Log.trace.__hx_invoke2_o(default(double), global::haxe.lang.Runtime.concat("Iter / sec: ", global::haxe.lang.Runtime.toString(iter_per_sec)), default(double), new global::haxe.lang.DynamicObject(new int[]{302979532, 1547539107, 1648581351}, new object[]{"test_speed", "EyeBlinker", "EyeBlinker.hx"}, new int[]{1981972957}, new double[]{((double) (195) )}));
+				global::haxe.Log.trace.__hx_invoke2_o(default(double), "Main finished.", default(double), new global::haxe.lang.DynamicObject(new int[]{302979532, 1547539107, 1648581351}, new object[]{"test_speed", "EyeBlinker", "EyeBlinker.hx"}, new int[]{1981972957}, new double[]{((double) (197) )}));
 			}
 		}
 		
@@ -218,7 +218,7 @@ namespace haxe.root {
 				}
 				
 				global::haxe.root.Array<int> counters = _g;
-				global::haxe.Log.trace.__hx_invoke2_o(default(double), "Randomizing...", default(double), new global::haxe.lang.DynamicObject(new int[]{302979532, 1547539107, 1648581351}, new object[]{"test_poisson", "EyeBlinker", "EyeBlinker.hx"}, new int[]{1981972957}, new double[]{((double) (222) )}));
+				global::haxe.Log.trace.__hx_invoke2_o(default(double), "Randomizing...", default(double), new global::haxe.lang.DynamicObject(new int[]{302979532, 1547539107, 1648581351}, new object[]{"test_poisson", "EyeBlinker", "EyeBlinker.hx"}, new int[]{1981972957}, new double[]{((double) (210) )}));
 				{
 					int _g21 = 0;
 					int _g11 = n_rolls;

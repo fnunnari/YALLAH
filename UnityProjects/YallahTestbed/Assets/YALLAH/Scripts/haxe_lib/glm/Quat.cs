@@ -16,14 +16,14 @@ namespace glm {
 		
 		public static void __hx_ctor_glm_Quat(global::glm.Quat __hx_this, global::haxe.lang.Null<double> x, global::haxe.lang.Null<double> y, global::haxe.lang.Null<double> z, global::haxe.lang.Null<double> w) {
 			unchecked {
-				double __temp_w48 = ( ( ! (w.hasValue) ) ? (((double) (1) )) : ((w).@value) );
-				double __temp_z47 = ( ( ! (z.hasValue) ) ? (((double) (0) )) : ((z).@value) );
-				double __temp_y46 = ( ( ! (y.hasValue) ) ? (((double) (0) )) : ((y).@value) );
-				double __temp_x45 = ( ( ! (x.hasValue) ) ? (((double) (0) )) : ((x).@value) );
-				__hx_this.x = __temp_x45;
-				__hx_this.y = __temp_y46;
-				__hx_this.z = __temp_z47;
-				__hx_this.w = __temp_w48;
+				double __temp_w40 = ( ( ! (w.hasValue) ) ? (((double) (1) )) : ((w).@value) );
+				double __temp_z39 = ( ( ! (z.hasValue) ) ? (((double) (0) )) : ((z).@value) );
+				double __temp_y38 = ( ( ! (y.hasValue) ) ? (((double) (0) )) : ((y).@value) );
+				double __temp_x37 = ( ( ! (x.hasValue) ) ? (((double) (0) )) : ((x).@value) );
+				__hx_this.x = __temp_x37;
+				__hx_this.y = __temp_y38;
+				__hx_this.z = __temp_z39;
+				__hx_this.w = __temp_w40;
 			}
 		}
 		

@@ -15,10 +15,10 @@ namespace glm {
 		
 		
 		public static void __hx_ctor_glm_Vec2(global::glm.Vec2 __hx_this, global::haxe.lang.Null<double> x, global::haxe.lang.Null<double> y) {
-			double __temp_y52 = ( ( ! (y.hasValue) ) ? (((double) (0) )) : ((y).@value) );
-			double __temp_x51 = ( ( ! (x.hasValue) ) ? (((double) (0) )) : ((x).@value) );
-			__hx_this.x = __temp_x51;
-			__hx_this.y = __temp_y52;
+			double __temp_y44 = ( ( ! (y.hasValue) ) ? (((double) (0) )) : ((y).@value) );
+			double __temp_x43 = ( ( ! (x.hasValue) ) ? (((double) (0) )) : ((x).@value) );
+			__hx_this.x = __temp_x43;
+			__hx_this.y = __temp_y44;
 		}
 		
 		
@@ -30,10 +30,10 @@ namespace glm {
 		
 		
 		public static global::glm.Vec2 @set(global::glm.Vec2 dest, global::haxe.lang.Null<double> x, global::haxe.lang.Null<double> y) {
-			double __temp_y50 = ( ( ! (y.hasValue) ) ? (((double) (0) )) : ((y).@value) );
-			double __temp_x49 = ( ( ! (x.hasValue) ) ? (((double) (0) )) : ((x).@value) );
-			dest.x = __temp_x49;
-			dest.y = __temp_y50;
+			double __temp_y42 = ( ( ! (y.hasValue) ) ? (((double) (0) )) : ((y).@value) );
+			double __temp_x41 = ( ( ! (x.hasValue) ) ? (((double) (0) )) : ((x).@value) );
+			dest.x = __temp_x41;
+			dest.y = __temp_y42;
 			return dest;
 		}
 		

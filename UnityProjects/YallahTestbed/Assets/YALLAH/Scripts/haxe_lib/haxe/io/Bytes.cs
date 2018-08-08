@@ -25,12 +25,6 @@ namespace haxe.io {
 		}
 		
 		
-		public static global::haxe.io.Bytes ofString(string s) {
-			byte[] b = global::System.Text.Encoding.UTF8.GetBytes(((string) (s) ));
-			return new global::haxe.io.Bytes(( b as global::System.Array ).Length, b);
-		}
-		
-		
 		public int length;
 		
 		public byte[] b;

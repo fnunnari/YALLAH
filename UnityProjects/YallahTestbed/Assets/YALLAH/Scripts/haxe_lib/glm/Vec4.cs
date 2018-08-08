@@ -15,14 +15,14 @@ namespace glm {
 		
 		
 		public static void __hx_ctor_glm_Vec4(global::glm.Vec4 __hx_this, global::haxe.lang.Null<double> x, global::haxe.lang.Null<double> y, global::haxe.lang.Null<double> z, global::haxe.lang.Null<double> w) {
-			double __temp_w60 = ( ( ! (w.hasValue) ) ? (((double) (0) )) : ((w).@value) );
-			double __temp_z59 = ( ( ! (z.hasValue) ) ? (((double) (0) )) : ((z).@value) );
-			double __temp_y58 = ( ( ! (y.hasValue) ) ? (((double) (0) )) : ((y).@value) );
-			double __temp_x57 = ( ( ! (x.hasValue) ) ? (((double) (0) )) : ((x).@value) );
-			__hx_this.x = __temp_x57;
-			__hx_this.y = __temp_y58;
-			__hx_this.z = __temp_z59;
-			__hx_this.w = __temp_w60;
+			double __temp_w58 = ( ( ! (w.hasValue) ) ? (((double) (0) )) : ((w).@value) );
+			double __temp_z57 = ( ( ! (z.hasValue) ) ? (((double) (0) )) : ((z).@value) );
+			double __temp_y56 = ( ( ! (y.hasValue) ) ? (((double) (0) )) : ((y).@value) );
+			double __temp_x55 = ( ( ! (x.hasValue) ) ? (((double) (0) )) : ((x).@value) );
+			__hx_this.x = __temp_x55;
+			__hx_this.y = __temp_y56;
+			__hx_this.z = __temp_z57;
+			__hx_this.w = __temp_w58;
 		}
 		
 		
@@ -36,14 +36,14 @@ namespace glm {
 		
 		
 		public static global::glm.Vec4 @set(global::glm.Vec4 dest, global::haxe.lang.Null<double> x, global::haxe.lang.Null<double> y, global::haxe.lang.Null<double> z, global::haxe.lang.Null<double> w) {
-			double __temp_w56 = ( ( ! (w.hasValue) ) ? (((double) (0) )) : ((w).@value) );
-			double __temp_z55 = ( ( ! (z.hasValue) ) ? (((double) (0) )) : ((z).@value) );
-			double __temp_y54 = ( ( ! (y.hasValue) ) ? (((double) (0) )) : ((y).@value) );
-			double __temp_x53 = ( ( ! (x.hasValue) ) ? (((double) (0) )) : ((x).@value) );
-			dest.x = __temp_x53;
-			dest.y = __temp_y54;
-			dest.z = __temp_z55;
-			dest.w = __temp_w56;
+			double __temp_w54 = ( ( ! (w.hasValue) ) ? (((double) (0) )) : ((w).@value) );
+			double __temp_z53 = ( ( ! (z.hasValue) ) ? (((double) (0) )) : ((z).@value) );
+			double __temp_y52 = ( ( ! (y.hasValue) ) ? (((double) (0) )) : ((y).@value) );
+			double __temp_x51 = ( ( ! (x.hasValue) ) ? (((double) (0) )) : ((x).@value) );
+			dest.x = __temp_x51;
+			dest.y = __temp_y52;
+			dest.z = __temp_z53;
+			dest.w = __temp_w54;
 			return dest;
 		}
 		
