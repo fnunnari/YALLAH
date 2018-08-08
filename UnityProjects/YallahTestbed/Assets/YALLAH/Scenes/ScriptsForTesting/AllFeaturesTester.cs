@@ -7,26 +7,29 @@ using System;
 [RequireComponent(typeof(EyeHeadGazeController))]
 public class AllFeaturesTester : MonoBehaviour {
 
+
     [Tooltip("Please, drag here the avatar parent of this mesh")]
     public GameObject avatar;
 
+
+    [Header("Gaze:")]
     [Tooltip("The character will stare at this Game Object.")]
 	public GameObject gazeTarget;
-
     [Tooltip("The gaze target will orbit around the head of the character.")]
 	public bool animateGazeTarget = false;
-
-	private EyeHeadGazeController gazescript;
-	private MaryTTSController ttsController;
-    private LocomotionController locomotionController;
+    private EyeHeadGazeController gazescript;
 
 
+    [Header("Text-to-Speech:")]
     [Tooltip("The character will say something every x seconds")]
     public float speakIntervalSecs = 5.0f;
+    private MaryTTSController ttsController;
 	private float lastSpeakStart = 0.0f;
 
+    [Header("Locomotion:")]
     [Tooltip("The will randomly walk somewhere every x seconds")]
     public float walkIntervalSecs = 10.0f;
+    private LocomotionController locomotionController;
     private float lastWalkStart = 0.0f;
 
 
