@@ -36,7 +36,7 @@ mkdir ../Releases
 zip -r ../Releases/$RELEASE_DIR.zip $RELEASE_DIR/
 
 echo "Remove temporary directory..."
-#rm -rf $RELEASE_DIR
+rm -rf $RELEASE_DIR
 
 echo "Done."
 
