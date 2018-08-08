@@ -20,7 +20,7 @@ public class LocomotionController : MonoBehaviour {
 
     // The actual threshold used to tart/stop the rotation.
     // When going below the user-define rot threshold, this threshold is set to a higher value.
-    // If the highr value is reached, this histarasis threshold will be again set to the user-defined.
+    // If the highr value is reached, this histeresis threshold will be again set to the user-defined.
     // This avoids instabilities at the threshold level.
     // See: https://en.wikipedia.org/wiki/Hysteresis#Control_systems
     private float rotHistheresiThresholdDegs;
@@ -64,11 +64,11 @@ public class LocomotionController : MonoBehaviour {
 
         this.rotHistheresiThresholdDegs = this.rotationThresholdDegs;
 
-            //
-		// Tweak the animator so that we can be able to set the animation clips at run-time.
-
-		// I needed to move them in the global animation controller, where there is already an Animator Override configuration.
 		/*
+        //
+        // Override the animations, so that we can be able to set the animation clips at run-time.
+
+        // I needed to move them in the global animation controller, where there is already an Animator Override configuration.
 		AnimatorOverrideController animatorOverrideController = new AnimatorOverrideController(this.anim.runtimeAnimatorController);
 		this.anim.runtimeAnimatorController = animatorOverrideController;
 		animatorOverrideController ["DUMMY_WALK_CYCLE_ANIMATION"] = this.walkCycleAnimationClip;
@@ -184,11 +184,6 @@ public class LocomotionController : MonoBehaviour {
 		// Control walk/run
 		this.anim.SetFloat ("fwd_factor", this.fwdVal);
 
-		//
-		// Dynamically adjust the influence of the locomotion layer
-		//float locomotion_layer_weight = Mathf.Max(Mathf.Abs(this.rotVal), this.fwdVal) ;
-		//anim.SetLayerWeight (this.locomotionLayerIdx, locomotion_layer_weight);
-		//this.anim.SetFloat ("locomotion_level", locomotion_layer_weight);
 
 		if(distance_reached) {
 			// Debug.Log ("Triger Stop");

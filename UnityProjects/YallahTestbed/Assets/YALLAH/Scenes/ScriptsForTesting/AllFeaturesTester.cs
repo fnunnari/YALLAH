@@ -23,14 +23,22 @@ public class AllFeaturesTester : MonoBehaviour {
     [Header("Text-to-Speech:")]
     [Tooltip("The character will say something every x seconds")]
     public float speakIntervalSecs = 5.0f;
-    private MaryTTSController ttsController;
 	private float lastSpeakStart = 0.0f;
+    private MaryTTSController ttsController;
 
     [Header("Locomotion:")]
     [Tooltip("The will randomly walk somewhere every x seconds")]
     public float walkIntervalSecs = 10.0f;
-    private LocomotionController locomotionController;
     private float lastWalkStart = 0.0f;
+    private LocomotionController locomotionController;
+
+
+    [Header("Facial Expression:")]
+    [Tooltip("The will randomly walk somewhere every x seconds")]
+    public float facialExpressionChangeIntervalSecs = 8.0f;
+    public float facialExpressionDurationSecs = 4.0f;
+    private float lastFacialExprStart = 0.0f;
+    private FacialExpressionsController facialExpressionsController;
 
 
     // Use this for initialization
@@ -45,6 +53,7 @@ public class AllFeaturesTester : MonoBehaviour {
         this.gazescript = gameObject.GetComponent<EyeHeadGazeController>();
         this.ttsController = gameObject.GetComponent<MaryTTSController>();
         this.locomotionController = this.avatar.GetComponent<LocomotionController>();
+        this.facialExpressionsController = gameObject.GetComponent<FacialExpressionsController>();
     }
 
 
@@ -71,7 +80,8 @@ public class AllFeaturesTester : MonoBehaviour {
 		if(now - this.lastSpeakStart > this.speakIntervalSecs)
         {
 			this.ttsController.MaryTTSspeak ("The quick brown fox jumps over the lazy dog.");
-			this.lastSpeakStart = now;
+
+            this.lastSpeakStart = now;
 		}
 
         //
@@ -83,7 +93,36 @@ public class AllFeaturesTester : MonoBehaviour {
                                                   UnityEngine.Random.Range(-4, 4));
             Debug.Log("Walking to " + target_position);
             this.locomotionController.WalkTo(target_position);
+
             this.lastWalkStart = now;
+        }
+
+
+        //Debug.Log(this.facialExpressionsController.GetCurrentFacialExpression());
+        //
+        // Change expression from time to time
+        //if (now - this.lastFacialExprStart > facialExpressionDurationSecs)
+        //{
+        //    this.facialExpressionsController.ClearFacialExpression();
+        //}
+        //else 
+        if (now - this.lastFacialExprStart > this.facialExpressionChangeIntervalSecs)
+        {
+            string[] facial_expressions = this.facialExpressionsController.ListFacialExpressions();
+            // expression 0 is the defaul expression. Let's randomize the others
+            int expr_num = UnityEngine.Random.Range(1, facial_expressions.Length);
+            string expr_name = facial_expressions[expr_num];
+            Debug.Log("Setting facial expression to '" + expr_name + "'");
+            this.facialExpressionsController.SetCurrentFacialExpression(expr_name);
+
+            this.lastFacialExprStart = now;
+        }
+        else if(this.facialExpressionsController.GetCurrentFacialExpression() != "Normal")
+        {
+            if (now - this.lastFacialExprStart > facialExpressionDurationSecs)
+            {
+                this.facialExpressionsController.ClearFacialExpression();
+            }
         }
 
 	}
