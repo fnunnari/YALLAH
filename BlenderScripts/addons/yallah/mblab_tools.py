@@ -97,8 +97,7 @@ class FixMaterials(bpy.types.Operator):
         # MBlab_human_eyes1501659564.030366
         # MBlab_human_teeth1501659564.03038
 
-        for mat in mesh.materials:
-
+        for mat in mesh.materials:  # type: bpy.types.Material
             # For most materials, set the texture slot 0 to use the diffuse texture
 
             if mat.name.startswith("MBlab_pupil"):
@@ -261,44 +260,6 @@ class SetupMBLabCharacter(bpy.types.Operator):
             if md.name == "mbastlab_subdvision":
                 mesh_obj.modifiers.remove(md)
                 break
-
-        #
-        # Setup the Blender scene for BGE
-        #
-        if context.scene.mblab_tools_setup_bge:
-            from yallah import YALLAH_DATA_DIR
-
-            #
-            # CREATE THE CONTROL BONES, TO ANIMATE THE SHAPE KEYS FROM THE GAME ENGINE
-            #
-            filepath = os.path.join(YALLAH_FEATURES_DIR, "BGEControlBones/Setup.py")
-            exec(compile(open(filepath).read(), filepath, 'exec'))
-
-            # Remove the default Lamp
-            if 'Lamp' in bpy.context.scene.objects:
-                default_lamp = bpy.data.objects['Lamp']
-                bpy.context.scene.objects.unlink(default_lamp)
-                bpy.data.objects.remove(default_lamp)
-            else:
-                print("Default Lamp not found!")
-
-            # Setup the Camera in a comfortable position
-            if 'Camera' in bpy.context.scene.objects:
-                from mathutils import Euler
-                from mathutils import Vector
-                default_camera = bpy.context.scene.objects['Camera']
-                default_camera.rotation_euler = Euler((1.5707963705062866, 0.0, 0.0), 'XYZ')
-                default_camera.location = Vector((0.0, -2.0, 1.5))
-                default_camera.data.lens = 55.0
-                default_camera.data.lens_unit = 'MILLIMETERS'
-            else:
-                print("Default Camera not found!")
-
-            # Automatically link LightGroup and GameLogic
-            bpy.ops.wm.link(directory=os.path.join(YALLAH_DATA_DIR, "BGEScene-Lights.blend/Group/"),
-                            filename="LightsGroup")
-            bpy.ops.wm.link(directory=os.path.join(YALLAH_DATA_DIR, "BGEScene-Logic.blend/Object/"),
-                            filename="TalkingHeadLogic")
 
         return {'FINISHED'}
 
@@ -492,6 +453,7 @@ class ResetCharacterPose(bpy.types.Operator):
 
         return {'FINISHED'}
 
+
 #
 # (UN)REGISTER
 #
@@ -502,11 +464,6 @@ def register():
     bpy.utils.register_class(SetRelaxedPoseToFingers)
     bpy.utils.register_class(ResetCharacterPose)
 
-    bpy.types.Scene.mblab_tools_setup_bge =\
-        bpy.props.BoolProperty(name="Setup BGE",
-                               description="If True, the character initialization will make the character also"
-                                           " ready for rendering in the Blander Game Engine.")
-
 
 def unregister():
     bpy.utils.unregister_class(FixMaterials)
@@ -514,8 +471,6 @@ def unregister():
     bpy.utils.unregister_class(RemoveAnimationFromFingers)
     bpy.utils.unregister_class(SetRelaxedPoseToFingers)
     bpy.utils.unregister_class(ResetCharacterPose)
-
-    del bpy.types.Scene.mblab_tools_setup_bge
 
 
 if __name__ == "__main__":

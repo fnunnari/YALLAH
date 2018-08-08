@@ -72,7 +72,6 @@ class YallahPanel(bpy.types.Panel):
             row = layout.row()
             box = row.box()
             box.label("Setup:")
-            box.prop(data=context.scene, property="mblab_tools_setup_bge")
             box.operator(SetupMBLabCharacter.bl_idname, text="Setup a MBLab character")
 
             #
