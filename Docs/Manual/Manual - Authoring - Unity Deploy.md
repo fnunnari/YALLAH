@@ -1,29 +1,86 @@
 # Setting up the character in Unity
 
-This document explains how to transfer a character created in the main Authoring procedure, from Blender to Unity.
+This document explains how import in Unity a character created in the main Authoring procedure.
 
-TODO -- the rest of this document is under revision
+## Prerequisite
 
-## Copy Scene(s) into Unity Project Directory
+[Download the YALLAH SDK](http://www.dfki.de/~fanu01/YALLAH/Releases/), extract the zip, and import the `YALLAH_Unity-yymmdd.unitypackage` package into your Unity project.
 
-* Copy the character scene (`Anna.blend`) into a dedicated directory, e.g.: `MyUnityProject/Assets/Characters/Anna/`
+The package will add the following folder to your Assets:
+
+```
+/YALLAH/
+  Characters/
+    MBLabFemale/
+    MBLabMale/
+  Scenes/
+    TestMaleBase.unity
+    ...
+  Scripts/
+```
+
+The `Characters` folder contains two basic, naked characters; one male and one female, generated using MBLab and the default body proportions. 
+
+The `Scenes` folder contains Test scenes that put both characters in a minimalistic demo stage. They are stress tests activating all functionalities at the same time. Don't be surprised if the characters look psychotic.
+
+The `Scripts` folder contains the _Motion Controllers_ of the characters, i.e., the scripts enabling their interactive animation. 
+
+The rest of this document explains the procedure to apply the scripts to a freshly imported character.
+
+## Add the Blender Scene to your Assets
+
+* Copy the character scene (e.g., `Anna.blend`) into a dedicated directory, e.g.: `MyUnityProject/Assets/Characters/Anna/`
 
 * Export the textures as files into Unity Assets
-  - (Optional step, you can do this step or use the pre-exported textures in Scripts/mesh_utils/textures)
-  - Open the copied scene with Blender (e.g.: .../BlenderScenes/Anna/Anna.blend)
+  - Use Blender to open the scene that you copied into your Assets folder (e.g.: `/Assets/Characters/Anna/Anna.blend`)
   - Menu: `File -> External data -> Unpack All Into Files`
   - On pop-up select: `Write files into current directory (Overwrite existing files)`
-  - A directory with the textures will be created. e.g.:
-    - BlenderScenes/Anna/textures/
-      - human_female_diffuse.png
-      - human_female_displacement.png
+  - A directory named `textures` will be created. e.g.:
+  
+    ```
+    /Assets/BlenderScenes/Anna/textures/
+      human_female_diffuse.png
+      human_female_displacement.png
+      Tops_Diffuse.png
+      Shoes_Diffuse.png
+      ...
+    ```
+
+TODO -- check if it is possible to retain also the Normal-textures.
+
+Actually, you can delete the textures named `human_[fe]male_diffuse/Displacement.png` because they are the same for each character.
+You can avoid replications and find a copy of them under `Scripts/mesh_utils/MBLab_textures`.
+
+## Configure textures import options
+
+
+For each image in the newly created `texture` directory:
+* Do not import the alpha channel for diffuse textures
+* Set the image type to "normal map" for normal map textures.
+
+TODO -- For each piece of clothes you have to take the textures from the original OBJ or DAE object.
+Manually edit the materials: 
+* Albedo: set the diffuse texture
+* Albedo color: (255,255,255,255)
+* Normal Map: set the normal texture
+
+
 
 ## Configure Import settings
-Select the prefab model and change:
+
+
+Select the prefab model `/Assets/YALLAH/Characters/Anna/Anna.blend` and in the inspector, configure:
+
  * `Import Settings -> Model -> Normals -> Calculate`
+
+   ![Unity Import Mode](Pics/Unity-Import-Model.png)
+
  * `Import Settings -> Rig`
    - `Animation Type Generic`
    - `Root node: XXXArmature` (the parent of the _root_ node)
+
+   ![Unity Import Rig](Pics/Unity-Import-Rig.png)
+
  * `Import Settings -> Animation`
    - (Important for locomotion)
    - Check `Loop Time` for each animation that has to loop (e..g, _WalkCycle_, _TurnLeft_ and _TurnRight_)
@@ -34,26 +91,47 @@ Select the prefab model and change:
    - Check the flag `Root Transform Position (XY)` for every animation that is NOT supposed translate on the horizontal plane (e.g., _Idle_, _Wave Hello_)
      - This avoids for example that an error accumulation slides the character on the floor.
    - Please, see the [Unity manual on Root Motion](https://docs.unity3d.com/Manual/RootMotion.html) to understand the details.
-  
 
-By default, the materials are embedded in the character. But embedded materials are not editable. Unfortunately, we have to extract the materials and perform some manual operation.
- * `Import Settings -> Materials -> Location: Use Embedded Materials`
- * `Import Settings -> Materials -> Extract Materials...` and put them in the same folder with the blend file.
+   ![Unity Import Animation](Pics/Unity-Import-Animation.png)
+
+ * Manually fix some materials
+   - By default, the materials are embedded in the character. But embedded materials are not editable. Unfortunately, we have to extract the materials and perform some manual operation.
+   - Leave `Import Settings -> Materials -> Location: Use Embedded Materials`
+   - **Click** `Import Settings -> Materials -> Extract Materials...` and put them in the same folder with the blend file.
+
+   ![Unity Import Materials](Pics/Unity-Import-Materials.png)
 
 
+## Add a character
 
-## Fix the materials
+Put a character in the scene, e.g., by dragging the `Anna.blend` asset in the Hierarchy Window.
 
-* Add a script `FixMLabMaterials.cs` as component of the Mesh object (e.g., the one called AnnaMesh).
-* Manually select the texture to be used as Diffuse Map (The skin, e.g.: human_female_diffuse)
-* Manually select the texture to be used as Normal Map (The skin, e.g.: human_female_displacement)
+![Unity Hierarchy and Character](Pics/Unity-AnnaOnStage.png)
 
-The script automatically fixes the materials when the game starts.
-However, cornea and fur (eyelashes) must be fixed manually, as described in the two following sectiuons.
+## Fix the materials (Mesh Script)
+
+This script will automatically adjust the materials of the character when you Start the game. In other words, when starting the game (Play), the script is procedurally performing some operation that you would need to perform by hand on every character you import in the scene.
+
+* Select the Mesh Game Object (e.g., `AnnaMesh`) (expand Object `Anna`, if needed)
+* In the inspector `Add Component`: `FixMLabMaterials.cs`.
+* From `Assets/Scripts/mesh_utils/MBLab_textures` drag the 3 following textures in the corresponding slots
+  - `human_[fe]male_diffuse`
+  - `human_[fe]male_displacement`
+  - `eyelashes_[fe]male_diffuse`
+
+![Unity Configure Material Panel](Pics/Unity-Configure-MaterialsPanel.png)
+
+The diffuse and displacement textures are taken directly from the MBLab character generator.
+The eyelashes textures have been created from the diffuse ones in order to better render the eyelashes with the standard Unity shader in _Fade_ mode.
+
+Unfortunately, _cornea_ and _fur_ (eyelashes) must be fixed manually, as described in the two following sections.
+
+(The FixMLabMaterials.cs script already has the code to fix the issue, but looks like it doesn't work when exporting.)
 
 ### Fix Cornea
-(The FixMLabMaterials.cs script already has the code to fix the issue, but it doesn't work when exporting to Android.)
-* Locate material `MBlab_cornea`
+
+* **Select** the Mesh
+* In the inspector, locate material `MBlab_cornea`
 * `Shader: Standard (Specular setup)`
 * `Rendering Mode: Transparent`
 * `Albedo texture: eyelashes_[fe]male_diffuse`
@@ -66,7 +144,9 @@ However, cornea and fur (eyelashes) must be fixed manually, as described in the 
 
 
 ### Fix Eyelashes
-* Locate material `MBlab_fur`
+
+* **Select** the Mesh
+* In the inspector, locate material `MBlab_fur`
 * `Shader: Standard (Specular setup)`
 * `Rendering Mode: Fade`
 * `Albedo texture: eyelashes_[fe]male_diffuse`
@@ -78,49 +158,39 @@ However, cornea and fur (eyelashes) must be fixed manually, as described in the 
 * `Reflections: off`
 
 
-## Fix materials for the clothes
-For each piece of clothes you hace to take the textures from the original OBJ or DAE object.
-Set the import option for each image. In general:
-* Do not import the alpha channel for diffuse textures
-* Set teh image type to "normal map" for normal map textures.
-
-Manually edit the materials: 
-* Albedo: set the diffuse texture
-* Albedo color: (255,255,255,255)
-* Normal Map: set the normal texture
-
 ## Scripts for interaction with MaryTTS
 
-We use MaryTTS as web service. We provide the sentence and get back the Wav file and the _realized durations_ (a table with timecode-phoneme pairs).
+* **Select** the Mesh (e.g., `AnnaMesh`)
+* In the inspector `Add Component`: `MaryTTSController.cs`.
 
-The main script to parse the realized durations and compute the weight for the viseme blendshapes of the character is implemented in Haxe:
-`SharedHaxeClasses/marytts/MaryTTSBlendSequencer.hx`.
+  ![Configure MaryTTS](Pics/Unity-Configure-MaryTTS.png)
 
-The MakeFile `SharedHaxeClasses/MakeFile` contains the directives to translate the Haxe code into both Python and C# and to update the code in the projects:
-* run `make` to translate the code.
-* run `make install` to copy the generated files into the Blender and Unity projects.
+The script `YALLAH/Scripts/tts/MaryTTSController.cs` uses [MaryTTS](http://mary.dfki.de/) as web service.
 
-For each target platform, a _wrapper_ will take care of the platform-specific stuff and invoke the Sequencer.
-The main duties of a wrapper are: handle HTTP connections to retrieve wav and realized durations, call the update function at high frequency, update the blendshape values of the character.
-
-The wrappers are:
-  * For the Blender target: `BlenderScenes/tts.py`
-    * Use it from the game engine
-  * For the Unity project: `UnityScripts/MaryTTSController.cs`
-    * Attach it to the AnnaMesh character. Use the GetInput method to say something.
+The controller sends the sentence text and gets back a WAV file and the _realized durations_ (a table with timecode-phoneme pairs).
+This architecture might introduce delays of the server is slow to respond. It is advised to install MaryTTS on your local machine if quick reactions to speech orders must be guaranteed. 
 
 
 ## Eye Blinking
 
-Select the mesh and add the component script `Eye Blink Controller`.
+* **Select** the Mesh (e.g., `AnnaMesh`)
+* In the inspector `Add Component`: `EyeBlinkController`.
+
+No configuration is needed. The character will blink at irregular intervals.
+
 
 ## Eye gaze
 
-Add script `Eye Head Gaze Controller` to the Mesh.
-Select/drag the following bones from the Armature hierarchy in the configuration panel:
-* Left eye
-* Right eye
+* **Select** the Mesh (e.g., `AnnaMesh`)
+* In the inspector `Add Component`: `Eye Head Gaze Controller`.
+
+Select/drag the following bones from the Armature hierarchy (e.g., expand `AnnaArmature`) in the configuration panel:
+* Left Eye
+* Right Eye
 * Neck
+
+![Configure Eye Gaze](Pics/Unity-Configure-Gaze.png)
+
 
 ## Script for changing Facial Expressions
 Facial expressions are originally created as blendShapes in Blender and then as components of the character, they are imported to Unity. In Unity, you can find them in the inspector of the imported mesh under the title of "Skinned Mesh Renderer" as "Blend Shapes".

@@ -74,3 +74,17 @@ TODO
 
 ## Develop Multi-Platform Features Using Haxe and Meta-Programming
 TODO
+
+
+## Mary TTS
+
+The sequence table is then parsed by the script `Scripts/haxe_lib/MaryTTSBlendSequencer`.
+The main script to parse the realized durations and compute the weight for the viseme blendshapes of the character is implemented in Haxe:
+`SharedHaxeClasses/MaryTTSBlendSequencer.hx`.
+
+The MakeFile `SharedHaxeClasses/MakeFile` contains the directives to translate the Haxe code into both Python and C# and to update the code in the projects:
+* run `make` to translate the code.
+* run `make install` to copy the generated files into the Blender and Unity projects.
+
+For each target platform, a _wrapper_ will take care of the platform-specific stuff and invoke the Sequencer.
+The main duties of a wrapper are: handle HTTP connections to retrieve wav and realized durations, call the update function at high frequency, update the blendshape values of the character.
