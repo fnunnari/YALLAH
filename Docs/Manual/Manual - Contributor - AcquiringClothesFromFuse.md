@@ -29,6 +29,8 @@ You need to repeat this procedure only if future updates of MBLab drastically ch
 * Open Fuse and import a new character using `FemaleFittedToBastioniNaked.obj`
 	- (This must be done only the first time. Then, the character definition will stay in your Fuse installation.)
 * Select the clothes you want and edit their colors.
+* Check you export options `Menu -> Edit -> Preferences`:
+  ![Fuse Preferences](Pics/Fuse-Preferences.png)
 * Select File -> Export obj in order to open the Fuse OBJ export panel option.
 * Set the export option as:
 	- Check: Export in new Folder
@@ -52,6 +54,131 @@ A whole set of clothes has been saved in `AcquiringClothesFuse/Woman/Clothes/`
 ## Create an action to fit the neutral pose of the MBLab character to the Mixamo character
 
 TODO -- How to create `FuseToMBLabAlignmentAction.blend`
+
+
+## Acquiring Hair from Mixamo
+
+Since the hair do not need an alignment through an armature, for the hair we can follow a simplified procedure.
+In this procedure we use the _obj_ format to directly export the hair from Fuse into Blender.
+
+* Open Fuse
+* Open the character named `Authoring/AcquiringClothesFromFuse/[Woman|Man]/Hair/WomanHeadMBLabSized.fuse
+`.
+  - In this model, the head has the proportions to perfectly fit the head of a MBLab woman in its standard size.
+* Choose the hair you like in Section `Clothing/Hair`
+* Customize in tab `Texture`
+  - Testure size 512x512 should be fine.
+* Save your file as, e.g., `WomanHair01/WomanHair01.fuse`
+* `File -> Export -> Export Model as OBJ`
+  - Save as `WomanHair01/WomanHair01`  (.obj will be appended)
+  - Use the same options we have set before for the clothes, but do not create a new folder:
+    - NO Export in new folder
+    - NO Triangulate
+    - YES remove occluded polygons
+    - NO Pack Texures
+    - Character Scale: 0.01
+ 
+Fuse will export:
+* an _.obj_ file
+* a _.mtl_ file (the materials description)
+* Several texture files, with name template <saveName>_Hair_<texType>.png:
+  - Diffuse
+  - Normal
+  - Gloss
+  - Opacity
+  - Specular
+
+Adjust for Blender MBLab
+* Import the character in Blender using the default options:
+  ![OBJ Import Options](Pics/Blender-OBJImportOptions.png)
+* Delete from the scene all unneeded objects (Eyelashes, Body, default)
+* Manually import the Normal map
+  - The OBJ format doesn't consider the normal map by default. (In Fuse it is supported through a custom extension)
+  - Open the image through the UV/Image Editor panel and force it into the scene (**F**ake user)
+* `File -> Externanl data -> Pack all into .blend`
+* `File -> Externanl data -> Make All Paths Relative`
+*  Save and reload until all unused textures are removed from the Blend file.
+
+
+### Prepare the Albedo Texture for Unity
+
+In Unity, the transparency is supported through the alpha channel of the color texture assigned to the Albedo map.
+However, by default Fuse saves the color (Diffuse) and the transparency (Opacity) in two different textures.
+
+Here, we explain how to merge the transparency information of the Opacity texture as alpha channel of the diffuse.
+
+**Merging the Opacity file as an Alpha channel of the Diffuse file**
+
+This works fine with GIMP 2.8.
+ 
+* Open the Diffuse file (e.g., `WomanHair02_Hair_Diffuse.png`)
+* On the layer `Right click -> Add Alpha Channel`
+* On the layer `Right click -> Add Layer Mask -> Transfer layer's alpha channel`
+
+* Then open the Opacity file as a new layer (`File -> Open as Layers -> WomanHair02_Hair_Opacity.png`)
+* Menu `Layer -> Transparency -> Color to Alpha`
+  - Select full black (0,0,0) as `From: _black_ to alpha`
+* On the opacity layer `Right click -> Add Layer Mask -> Transfer layer's alpha channel`
+
+Notice that, in the layer view, the masks are displayed as extra miniatures on the right of the preview miniature.
+Now let's transfer the alpha channel.
+
+* Select the Opacity Layer
+* While pressing `alt`, `left-click` on the mask miniature.
+  - It will have a green contour.
+* Copy with `ctrl-c`
+* Select the Diffuse layer
+* While pressing `alt`, `left-click` on the mask miniature.
+* Paste with `ctrl-v`
+* `Anchor layer`
+  - This way you will have transferred the alpha channel
+  - At this point you can delete the Opacity Layer
+* `Right-click -> Apply Layer Mask`
+* `File -> Export As ...` (e.g., `WomanHair02_Hair_DiffuseWithAlpha.png`) 
+
+This video explains a similar procedure:
+`https://www.youtube.com/watch?v=pGPJhT5lUpE`
+
+
+### Unity setup
+
+* Select the `_DiffuseWithAlpha.png` texture:
+* In the inspector, **enable** `Alpha Is Transparency`
+* **Select** the `Hair` Mesh.
+* Set the `Albedo` texture to `_DiffuseWithAlpha.png`.
+
+Now, according to the hai model, you have two options to fix the material properties.
+
+**Option 1**: Nice transparency, bad visibility.
+
+* Set `Rendering Mode` to `Fade`
+
+The transpareny will be nice, but if you look the hair from inside the head, the backface culling will let you see outside the head.
+With some hair model and camra angles, this is not acceptable.
+
+
+**Option 2**: Bad transparency, good visibility.
+
+* Set `Rendering Mode` to `Cutout`
+* Set `Alpha Cutoff` to a vale as low as `0.01`
+  - This will at least adjust the rendering of hair tips
+* `Add Component -> ` `DuplicateMeshFaces.cs`
+  - It will enable the visibility of the polygons from both sides after starting the game.
+
+
+### (Optional) Decrease the transparency of the hair
+If you notice that the hair are too transparent, you can "saturate" the opacity map before converting it into alpha.
+
+* Open the Opacity Image.
+* `Menu -> Colors -> Levels`
+* Click `Edit these Settings as Curves`
+* Click on the linear ramp and drag a central point to the maximum
+  ![Opacity Saturation in GIMP](Pics/GIMP-SaturateHairTransparency.png)
+
+In this way, most of the central part of the hair will be completely opaque,
+while the hair tip will keep on fading.  
+  
+
 
 
 ## Import and use clothes from the Mixamo collada files

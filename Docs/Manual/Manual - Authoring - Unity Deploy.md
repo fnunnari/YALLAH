@@ -158,6 +158,34 @@ Unfortunately, _cornea_ and _fur_ (eyelashes) must be fixed manually, as describ
 * `Reflections: off`
 
 
+### Fix the Hair
+
+* Select the `_DiffuseWithAlpha.png` texture:
+* In the inspector, **enable** `Alpha Is Transparency`
+* **Select** the `Hair` Mesh.
+* Set the `Albedo` texture to `_DiffuseWithAlpha.png`.
+
+Now, according to the hair model, you have two options to fix the material properties.
+
+**Option 1**: Nice transparency, bad visibility.
+
+* Set `Rendering Mode` to `Fade`
+
+The transpareny will be nice, but if you look the hair from inside the head, the backface culling will let you see outside the head.
+With some hair model and camera angles, this is not acceptable.
+
+
+**Option 2**: Bad transparency, good visibility.
+
+* Set `Rendering Mode` to `Cutout`
+* Set `Alpha Cutoff` to a vale as low as `0.01`
+  - This will at least adjust the rendering of hair tips
+* `Add Component -> ` `DuplicateMeshFaces.cs`
+  - It will enable the visibility of the polygons from both sides after starting the game.
+
+
+_The `DuplicateMeshFaces.cs` doesn't work properly with transparent materials._
+
 ## Scripts for interaction with MaryTTS
 
 * **Select** the Mesh (e.g., `AnnaMesh`)
@@ -174,7 +202,7 @@ This architecture might introduce delays of the server is slow to respond. It is
 ## Eye Blinking
 
 * **Select** the Mesh (e.g., `AnnaMesh`)
-* In the inspector `Add Component`: `EyeBlinkController`.
+* In the inspector `Add Component`: `Eye Blink Controller`.
 
 No configuration is needed. The character will blink at irregular intervals.
 
@@ -193,103 +221,70 @@ Select/drag the following bones from the Armature hierarchy (e.g., expand `AnnaA
 
 
 ## Script for changing Facial Expressions
-Facial expressions are originally created as blendShapes in Blender and then as components of the character, they are imported to Unity. In Unity, you can find them in the inspector of the imported mesh under the title of "Skinned Mesh Renderer" as "Blend Shapes".
-The script `SetExpressionValues.cs` provides the possibility to change the facial expressions in the inspector or while running (by pushing some buttons)
 
-How to use:
-1. Add the code (`SetExpressionValues.cs`) as component of the mesh.
-2. For writing the title of each shot while running, just add a text_object to this part of the inspector. (Note: Better to add text_objects as part of the Canvas and GUI)
-3. Now, To make the buttons work, add the mesh to dedicated part (on click) of the intended button and then in the pull_down menu beside it, choose this code and name of related function of the code that you expect to be performed by pushing the button (e.g. SetExpressionValues.previousExpression).
+* **Select** the Mesh (e.g., `AnnaMesh`)
+* In the inspector `Add Component`: `Facial Expression Controller`.
 
-![Alt](Pics/ButtonInspector.png "Title")
+The script `YALLAH/Scripts/facial_expressions/FacialExpressionsController.cs` scans the list of BlendShapes (aka ShapeKeys, in Blender terminology)
+and makes alist of all blend shapes beginning with the `fe_` prefix.
+
+The Basic set of expressions is automatically extracted from the Manuel Bastioni Lab default character.
+If you want to add more expressions to this Controller, simply create your own in Blender and name them with a `fe_` prefix.
+
+The controller add a "Normal" facial expression to the list of the `fe_xxx`.
+The normal expression is indexed as 0, all the remaining are numbered from 1 onwards.
+
+At run time, you can manually input the facial expression number in the `Current Expression Index`.
+
+![Facial Expression example: Bored](Pics/Unity-FacialExpression-Bored.png)
+![Facial Expression Panel](Pics/Unity-Configure-FacialExpression.png)
+
 
 ## Script for playing back animations
 
-Select the avatar in the Scene (e.g., Anna), where an `Animator` component is created by default.
-Configure:
-* `Controller: Scripts/animation/CharAnimationController`
+* **Select** the avatar root GameObject (e.g., `Anna`)
+* In the inspector, locate the `Animator` component and select `Controller: /YALLAH/Scripts/Animation/CharAnimationController.controller`.
+  ![Avatar Animator Panel](Pics/Unity_AnimatorPanel.png)
+* In the inspector `Add Component`: `Animation Controller`.
 
-Add the script component `AnimationController.cs` to the character's main object (e.g., Anna).
-Configure:
+The Animation Controller script (`YALLAH/Scripts/animation/CharAnimationController.cs`) centralizes a set of animation and their role,
+avoiding the need to have a Animation Overrider or the need to create a different controller (State Machine) for each character.
+
+Configuration:
 * `Enable Ambient at start`: the ambient animation will be enabled when the game starts (Suggested option).
-* `IdleAmbientAnimationClip`: select a clip where the character is standing and slightly moving, in order to remove the "puppet" effect.
-* `StaticPoseAnimationClip`: select a clip where the character is just standing in a static neutral position, like the reference A-pose.
+* `Idle Ambient Animation Clip`: select a clip where the character is standing and slightly moving, in order to remove the "puppet" effect.
+* `Static Pose Animation Clip`: select a clip where the character is just standing in a static neutral position, like the reference A-pose.
 * `AnimationClips`: insert the number of clips you want to support and drag them into the editor panel.
-  - For each slot, drag an animation clip, from the character `AnnaAvatar` or another you want.
-* Locomotion (You can skip if you don't add the locomotion controller):
-  - `Walk Cycle`: A loopeble animation with a walking cycle.
+  - For each slot, drag an animation clip, e.g., from the asset `/YALLAH/Characters/Anna/Anna(.blend)/Salsa`.
+  - At runtime, you can click on `Play Random Anim` to play a random animation from this list.
+* Locomotion (You can skip these if you don't add the locomotion controller. See next section):
+  - `Walk Cycle`: A loopable animation with a walking cycle.
   - `Turn Right`: A loopable animation stepping and rotating to the right.
   - `Turn Left`: A loopable animation stepping and rotating left.
-  - The three animations must be synchronized in time, i.e., the animations must have the same duration and
+  - The three animations must be ideally synchronized in time, i.e., the animations must have the same duration and
     the feet must touch the floor at the same timestamp.
 
-Add script component `LocomotionController.cs` to the character's main object.
 
-To test the locomotion insert the coordinates of the target destination and click on the `Force Start` checkbox.
+![Animation Controller Panel](Pics/Unity_AnimationControllerPanel.png "Title")
 
-
-![Alt](Pics/Unity_AnimationControllerPanel.png "Title")
-
-
-## Script for Repositioning the camera
-Between the standard shots, we chose five of them to be integrated. They are "FULL_SHOT", "MEDIUM_SHOT", "MEDIUM_CLOSE_UP", "FULL_CLOSE_UP" and "EXTREME_CLOSE_UP".
-
-![Alt](Pics/CameraShots.png "Title")
-
-The user can switch the shots on the GUI.
-
-The script `camera/CameraPositioner.cs` repositions the camera for each shot.
-
-For repositioning the camera, we calculate distance of the camera to the character and the height of camera. In all shots, the camera is always horizontally aligned.
-
-As you may see in the picture, height of the frame is a sum of:
-1. the part of the body that is in the frame
-2. The bottom of the frame
-3. The top margins of the frame
-
-`Frame_Height = (Bottom_Margin + Top_Margin) * Frame_Height  + Height`
-
-Distance is calculated using tangent of the camera's FOV:
-`Distance = Frame_Height / Tan(Camera_FOV * 0.5)`
-
-As the camera is horizontally aligned, it should be positioned symmetrically in the middle of the frame. Thus height of camera is the mean of heights of top and bottom of the frame:
-
-`Camera_Height = (height of the Frame_Bottom + height of the Frame_Top) * 0.5`
-
-`Camera_Height = [(Body_Top + Top_Margin * Height) + (Body_Button - Button_Margin * Height)] / 2`
-
-![Alt](Pics/CamerePositionDescription.png "Title")
-
-# User interface panel (Canvas_UI)
-Canvas_UI consists of buttons and texts of the user interface panel with a background image and an additional game object named UI_controller. The functionality of the UI controller is defined in its attached script (`UI_controller.cs`).
-
-By placing a sample of the prefab of Canvas_UI in the scene, its internal setup is already defined and we need to just define two parameters in its inspector:  mesh of the target character (Target Character Mesh) and the Active Camera.
-
-![Alt](Pics/UI_Controller_inspector.png "Title")
-
-## Setup of the Canvas_UI
-The setup is done by predefined Inspector of the Canvas_UI under the "Canvas Scaler". In the current setup, we made the UI setup as you can see in the image. It is chosen that UI scales with the screen size. In this setup, the UI size is scaled according to just the canvas height (Match slider). As a result by adjusting just the Y part of the "Reference Resolution", it is possible to scale size of the UI.
-
-![Alt](Pics/Canvas_UI_Inspector.png "Title")
+_Restriction: the animation clips for a character must be picked from the same blender scene prefab.
+At the moment, it is not possible to use the animation clips of a charater across other characters, even if the skeletal structure is the same.
+This causes a waste of memory. We will investigate how to optimize the management of the animations and reduce memory footprint._
 
 
-# Modifying Hair mesh in Unity (imported from Blender)
-To make the hair mesh in Unity, first we need to make the Albedo which is  the diffuse file which has opacity file as alpha channel. Then modify the hair material and apply hair texture.
+## Script for Locomotion
 
-## Adding the Opacity file as an Alpha channel of the Diffuse file
-This works fine with GIMP 2.8. Open the Diffuse file. Then open the Opacity file as a new layer (File -> Open as Layers). Put this new layer as the highest layer. Delete alpha channels if exist. With the Opacity layer selected press ctrl+a to select the whole layer and then press ctrl+c to copy it. Then right click on the Opacity layer and choose "add layer mask". In the opened menu choose "Gray scale copy of layer" and click the "add" button. Click on the created mask and press ctrl+v to paste the copied texture in the mask.
+* **Select** the avatar root GameObject (e.g., `Anna`)
+* In the inspector `Add Component`: `Locomotion Controller`.
 
-Then right click on the Diffuse layer and repeat the same steps but this time select "White(full opacity)" to create a mask on this layer. Then click on the mask of the Opacity layer, press ctrl+a and then ctrl+c. Then click on the mask of the Diffuse layer and press ctrl+v to paste.
+![Locomotion Controller Panel](Pics/UnityConfigure-LocomotionPanel.png)
 
-Now you have everything in the Diffuse layer and you can delete the Opacity layer.
+The script `YALLAH/Scripts/animation/LocomotionController.cs` allows the character to walk to a target destination.
 
-You can see a video in the following link:
-`https://www.youtube.com/watch?v=pGPJhT5lUpE`
+Configure:
+* `Target Position` shows where the character would like to walk to.
+* `Force Zero Y` is needed to force the avatar game object to y=0, in case the animations have a vertical drift.
+* `Distance Threshold` the character will stop walking when he reaches this distance from the target. Too small values might lead to an infinite attempt to reach the target.
+* `Rotation Threshold Degs` tolerance, in degrees, in the alignment with the target. Too small values might lead to infinite attempts to orient towards the target.
 
-## Modification of hair shader
-Normally the hair has a standard shader. First add the texture which has alpha-channel to the shader and set the rendering mode  to `Cutout`.
-
-Two codes are attached to the hair object:
-
-`DoubleFaceMesh.js` makes the hair visible from both sides.
-`MeshInst.cs` creates an instance of  `SkinnedMeshRenderer` over which the `DoubleFaceMesh.js` operates. In this way we may avoid memory overflow of making multiple vertices and normals.
+To test the locomotion, at runtime, manually insert the coordinates of the `Target Position` and click on the `Force Start`.
