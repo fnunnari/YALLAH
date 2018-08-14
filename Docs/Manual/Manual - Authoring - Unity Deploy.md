@@ -160,10 +160,10 @@ Unfortunately, _cornea_ and _fur_ (eyelashes) must be fixed manually, as describ
 
 ### Fix the Hair
 
-* Select the `_DiffuseWithAlpha.png` texture:
+* Select the `..._DiffuseWithAlpha.png` texture:
 * In the inspector, **enable** `Alpha Is Transparency`
 * **Select** the `Hair` Mesh.
-* Set the `Albedo` texture to `_DiffuseWithAlpha.png`.
+* Set the `Albedo` texture to `..._DiffuseWithAlpha.png`.
 
 Now, according to the hair model, you have two options to fix the material properties.
 
@@ -171,7 +171,7 @@ Now, according to the hair model, you have two options to fix the material prope
 
 * Set `Rendering Mode` to `Fade`
 
-The transpareny will be nice, but if you look the hair from inside the head, the backface culling will let you see outside the head.
+The transparency will be nice, but if you look the hair from inside the head, the backface culling will let you see outside the head.
 With some hair model and camera angles, this is not acceptable.
 
 

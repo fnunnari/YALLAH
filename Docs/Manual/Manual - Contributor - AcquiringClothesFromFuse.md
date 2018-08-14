@@ -140,31 +140,6 @@ This video explains a similar procedure:
 `https://www.youtube.com/watch?v=pGPJhT5lUpE`
 
 
-### Unity setup
-
-* Select the `_DiffuseWithAlpha.png` texture:
-* In the inspector, **enable** `Alpha Is Transparency`
-* **Select** the `Hair` Mesh.
-* Set the `Albedo` texture to `_DiffuseWithAlpha.png`.
-
-Now, according to the hai model, you have two options to fix the material properties.
-
-**Option 1**: Nice transparency, bad visibility.
-
-* Set `Rendering Mode` to `Fade`
-
-The transpareny will be nice, but if you look the hair from inside the head, the backface culling will let you see outside the head.
-With some hair model and camra angles, this is not acceptable.
-
-
-**Option 2**: Bad transparency, good visibility.
-
-* Set `Rendering Mode` to `Cutout`
-* Set `Alpha Cutoff` to a vale as low as `0.01`
-  - This will at least adjust the rendering of hair tips
-* `Add Component -> ` `DuplicateMeshFaces.cs`
-  - It will enable the visibility of the polygons from both sides after starting the game.
-
 
 ### (Optional) Decrease the transparency of the hair
 If you notice that the hair are too transparent, you can "saturate" the opacity map before converting it into alpha.
@@ -313,11 +288,15 @@ In the following we can also cleanup the scene and test directly:
 * For each piece of clothes:
 	- Un-parent
 	- Remove Armature modifier
-
+	- Remove all vertex groups
+	- ShapeKeys. If there is a `mbastlab_proxyfit` with weight at 1.0, then:
+	  - remove the current Basis (so that the ShapeKey will become the new basis)
+	  - remove also the `mbastlab_proxyfit` ShapeKey, so that no ShapeKeys are left. 
+* Open a UV/Image editor panel and manually load each `Normal` texture. Also `Force` it to stay in teh scene. 
 * `File -> Externanl data -> Pack all into .blend`
-* Save to ... e.g. `AnnaInterpreterClothes_aloneE.blend`
-* Quit Blender, reload, re-save, re-quit, ... 4/5 times ... until you get rid of all unneeded textures.
-(E)
+* `File -> Externanl data -> Make All Paths Relative`
+* Save to ... e.g. `WomanClothes-02-CasualJeansAndShirt.blend`
+* Quit Blender, reload, re-save, re-quit, ... 4 or 5 times ... until you get rid of all unneeded textures.
 
 The saved scene will contain only the clothes meshes.
 These meshes can be used to dress a new freshly created MBLab character.
