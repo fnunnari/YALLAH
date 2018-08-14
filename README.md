@@ -25,5 +25,5 @@ We aim at providing a common authoring pipeline, framework, and API for the crea
 ## Links
 
 * The 3D authoring pipeline relies on [Blender](https://www.blender.org/).
-* The character generation heavily relies on the excellent [Manuel Bastioni Laboratory](http://www.manuelbastioni.com/) charactr generator.
+* The character generation heavily relies on the excellent [Manuel Bastioni Laboratory](http://www.manuelbastioni.com/) character generator.
 * The real-time 3D rendering targets [Unity](https://unity3d.com/).
