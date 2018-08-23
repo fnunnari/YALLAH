@@ -4,7 +4,7 @@
 This document is a chapter of the [YALLAH Manual](Manual%20-%20Main.md) series.
 This chapter explains how to create dressed characters using [Adobe FuseCC](https://www.adobe.com/products/fuse.html) and apply those dresses to YALLAH characters.
 
-The goal is to take the clothes from Fuse character and edit them in order to make them ready to be used with the 
+The goal is to take the clothes from Fuse character and edit them in order to make them ready to be used with the
 Manuel Bastioni Lab _Proxy Fitting_ procedure.
 
 ## Create a new basic character for Fuse
@@ -77,7 +77,7 @@ In this procedure we use the _obj_ format to directly export the hair from Fuse 
     - YES remove occluded polygons
     - NO Pack Texures
     - Character Scale: 0.01
- 
+
 Fuse will export:
 * an _.obj_ file
 * a _.mtl_ file (the materials description)
@@ -110,7 +110,7 @@ Here, we explain how to merge the transparency information of the Opacity textur
 **Merging the Opacity file as an Alpha channel of the Diffuse file**
 
 This works fine with GIMP 2.8.
- 
+
 * Open the Diffuse file (e.g., `WomanHair02_Hair_Diffuse.png`)
 * On the layer `Right click -> Add Alpha Channel`
 * On the layer `Right click -> Add Layer Mask -> Transfer layer's alpha channel`
@@ -134,7 +134,7 @@ Now let's transfer the alpha channel.
   - This way you will have transferred the alpha channel
   - At this point you can delete the Opacity Layer
 * `Right-click -> Apply Layer Mask`
-* `File -> Export As ...` (e.g., `WomanHair02_Hair_DiffuseWithAlpha.png`) 
+* `File -> Export As ...` (e.g., `WomanHair02_Hair_DiffuseWithAlpha.png`)
 
 This video explains a similar procedure:
 `https://www.youtube.com/watch?v=pGPJhT5lUpE`
@@ -152,7 +152,36 @@ If you notice that the hair are too transparent, you can "saturate" the opacity 
 
 In this way, most of the central part of the hair will be completely opaque,
 while the hair tip will keep on fading.  
-  
+
+
+
+## Import hair .obj to Blender
+
+- Go to `File->Import->Wavefront(.obj)` to import the .obj file.
+- If the textures are imported properly, you would have the  opacity, diffuse and specular textures.
+- Delete all unnecessary objects and textures and just keep the hair object and textures.
+- The OBJ format doesn't consider the normal map by default. (In Fuse it is supported through a custom extension) For later use in Unity, manually import the Normal map `normal` and the `diffuseWithAlpha` textures and force them into the scene (Fake user).
+  - If you are missing some textures in the Blender, add them manually.
+- `File -> Externanl data -> Pack all into .blend`
+- `File -> Externanl data -> Make All Paths Relative`
+- Save and reload until all unused textures are removed from the Blend file.
+
+# Resize and position the hair
+In order to make the mesh ready for proxy fitting, the hair mesh should be scaled and positioned properly.
+- Select the hair mesh
+- `Tools -> Set Geometry to Origin` (You can find the `Tools` tab in the left menu)
+- For man-hair make the transform (location and scale) as follows:
+ - Location( 0, -0.01, 1.75)
+ - Scale(1.01, 0.96, 1.05)
+
+    ![ManHairTransform](Pics/ManHairTransform.PNG)
+
+
+- For woman-hair make the transform (location and scale) as follows:
+ - Location( 0, -0.03, 1.6)
+ - Scale(0.91, 0.82, 0.86)
+
+    ![WomanHairTransform](Pics/WomanHairTransform.PNG)
 
 
 
@@ -291,8 +320,8 @@ In the following we can also cleanup the scene and test directly:
 	- Remove all vertex groups
 	- ShapeKeys. If there is a `mbastlab_proxyfit` with weight at 1.0, then:
 	  - remove the current Basis (so that the ShapeKey will become the new basis)
-	  - remove also the `mbastlab_proxyfit` ShapeKey, so that no ShapeKeys are left. 
-* Open a UV/Image editor panel and manually load each `Normal` texture. Also `Force` it to stay in teh scene. 
+	  - remove also the `mbastlab_proxyfit` ShapeKey, so that no ShapeKeys are left.
+* Open a UV/Image editor panel and manually load each `Normal` texture. Also `Force` it to stay in teh scene.
 * `File -> Externanl data -> Pack all into .blend`
 * `File -> Externanl data -> Make All Paths Relative`
 * Save to ... e.g. `WomanClothes-02-CasualJeansAndShirt.blend`
