@@ -166,7 +166,7 @@ while the hair tip will keep on fading.
 - `File -> Externanl data -> Make All Paths Relative`
 - Save and reload until all unused textures are removed from the Blend file.
 
-# Resize and position the hair
+# Modifying the size and positioning the hair
 In order to make the mesh ready for proxy fitting, the hair mesh should be scaled and positioned properly.
 - Select the hair mesh
 - `Tools -> Set Geometry to Origin` (You can find the `Tools` tab in the left menu)
