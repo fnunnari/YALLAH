@@ -12,6 +12,8 @@ The goal of YALLAH is to allow 3D content creators to **generate, customize, ani
 
 We aim at providing a common authoring pipeline, framework, and API for the creation of multi-functional virtual humans that can be used in different application domains: video games, embodied conversational agents, virtual assistants, front-end for chat-bot systems.
 
+## Documentation
+The official [YALLAH documentation](https://github.com/fnunnari/YALLAH/wiki) is maintained on the online github wiki pages.
 
 ## Download
 
