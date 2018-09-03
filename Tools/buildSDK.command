@@ -20,15 +20,18 @@ mkdir $RELEASE_DIR
 echo "Copying the Blender add-on..."
 rsync -av --exclude '.DS_Store' --exclude '*.pyc' --exclude '__pycache__' ../BlenderScripts/addons/yallah $RELEASE_DIR
 
-# Zip the Manual
-echo "Copying the docs..."
-rsync -av --exclude '.DS_Store' ../Docs/Manual $RELEASE_DIR
+echo "Zipping the yallah Blender plugin"
+pushd "$RELEASE_DIR"
+zip -r yallah.zip yallah
+rm -r yallah
+popd
+
 
 # Build the Unity Package
 # See: https://docs.unity3d.com/Manual/CommandLineArguments.html
 echo "TODO - Building the Unity Package..."
 PKG_NAME=YALLAH_Unity-$TIMECODE.unitypackage
-$UNITY_EXE -quit -batchmode -nographics -logFile unity_log.txt -exportPackage Assets/YALLAH $PKG_NAME  -projectPath ../UnityProjects/YallahTestbed
+$UNITY_EXE -quit -batchmode -nographics -logFile unity_log.txt -exportPackage Assets/YALLAH $PKG_NAME  -projectPath "$DIR/../UnityProjects/YallahTestbed"
 mv ../UnityProjects/YallahTestbed/$PKG_NAME $RELEASE_DIR
 
 echo "Zipping..."
