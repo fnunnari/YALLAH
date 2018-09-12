@@ -15,7 +15,7 @@ from yallah.mblab_tools import RemoveAnimationFromFingers
 from yallah.mblab_tools import SetRelaxedPoseToFingers
 from yallah.mblab_tools import ResetCharacterPose
 from yallah.anim_utils import SetDummyUserToAllActions
-from yallah.anim_utils import SetAPoseKeyFrame
+from yallah.anim_utils import CreateAPoseAction
 
 
 
@@ -108,7 +108,6 @@ class YallahPanel(bpy.types.Panel):
             box.operator(SetRelaxedPoseToFingers.bl_idname, text="Set Relaxed Fingers Keyframe")
             box.operator(ResetCharacterPose.bl_idname, text="Reset Character Pose")
             box.operator(SetDummyUserToAllActions.bl_idname)
-            box.operator(SetAPoseKeyFrame.bl_idname, text="Set A-Pose key frame")
 
         #
         # No ops

@@ -77,44 +77,70 @@ class SetDummyUserToAllActions(bpy.types.Operator):
 
         return {'FINISHED'}
 
-class SetAPoseKeyFrame(bpy.types.Operator):
+
+class CreateAPoseAction(bpy.types.Operator):
     """Operator to set an A-Pose animation key frame."""
 
-    bl_idname = "anim_utils.set_apose_key_frame"
-    bl_label = "Sets an A-Pose animation key frame."
+    A_POSE_ACTION_NAME = "A-Pose"
 
+    bl_idname = "yallah.create_apose_action"
+    bl_label = "Creates an action called " + A_POSE_ACTION_NAME\
+               + " with one keyframe at position 1 with the character reset in identity position."
 
     @classmethod
     def poll(cls, context):
         if not (context.mode == 'POSE' or context.mode == 'OBJECT'):
             return False
 
+        obj = context.active_object  # type: bpy.types.Object
+        if not obj.type == "ARMATURE":
+            return False
+
         return True
 
     def execute(self, context):
 
-        import bpy
+        obj = bpy.context.active_object
+
+        # Create the action
+        if CreateAPoseAction.A_POSE_ACTION_NAME not in bpy.data.actions:
+            bpy.data.actions.new(CreateAPoseAction.A_POSE_ACTION_NAME)
+        if obj.animation_data is None:
+            obj.animation_data_create()
+
+        obj.animation_data.action = bpy.data.actions[CreateAPoseAction.A_POSE_ACTION_NAME]
+
+        # Keyframe position
+        bpy.context.scene.frame_set(1)
+
+        # Clear object position and pose.
+        bpy.ops.object.mode_set(mode='OBJECT')
+        bpy.ops.object.location_clear()
+        bpy.ops.object.rotation_clear()
+        bpy.ops.object.scale_clear()
+
         bpy.ops.object.mode_set(mode='POSE')
         bpy.ops.pose.select_all(action='SELECT')
         bpy.ops.pose.transforms_clear()
-        bpy.context.scene.frame_set(0)
-        if not 'A-Pose' in bpy.data.actions:
-            bpy.data.actions.new('A-Pose')
-        bpy.context.object.animation_data.action = bpy.data.actions['A-Pose']
+
+        # Insert the keyframe
         bpy.ops.anim.keyframe_insert_menu(type='LocRotScale')
-        bpy.data.actions["A-Pose"].use_fake_user = True
+
+        # Be sure the action stays in memory.
+        bpy.data.actions[CreateAPoseAction.A_POSE_ACTION_NAME].use_fake_user = True
 
         return {'FINISHED'}
+
 
 def register():
     bpy.utils.register_class(ExportActionData)
     bpy.utils.register_class(SetDummyUserToAllActions)
-    bpy.utils.register_class(SetAPoseKeyFrame)
+    bpy.utils.register_class(CreateAPoseAction)
 
 
 def unregister():
     bpy.utils.unregister_class(ExportActionData)
     bpy.utils.unregister_class(SetDummyUserToAllActions)
-    bpy.utils.unregister_class(SetAPoseKeyFrame)
+    bpy.utils.unregister_class(CreateAPoseAction)
 
 

@@ -292,6 +292,17 @@ class SetupMBLabCharacter(bpy.types.Operator):
                 mesh_obj.modifiers.remove(md)
                 break
 
+        #
+        # CREATE A REFERENCE A-Pose, with object transform and all bones reset to identity.
+        #
+        bpy.context.scene.objects.active = arm_obj
+        bpy.ops.yallah.create_apose_action()
+
+        SetupMBLabCharacter.clear_selection(mesh_obj=mesh_obj)
+
+        #
+        # MARK THE SETUP AS DONE
+        #
         mesh_obj.yallah_setup_done = True
 
         return {'FINISHED'}
