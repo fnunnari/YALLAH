@@ -8,6 +8,7 @@ from yallah.vertex_utils import SaveVertexGroups
 
 from yallah.mblab_tools import is_male
 from yallah.mblab_tools import is_female
+from yallah.mblab_tools import is_mblab_body
 from yallah.mblab_tools import SetupMBLabCharacter
 
 from yallah.mblab_tools import RemoveAnimationFromFingers
@@ -50,12 +51,17 @@ class YallahPanel(bpy.types.Panel):
 
         obj = context.active_object
 
+        #
+        # NOTHING
         if obj is None:
             layout.label("Nothing active")
-            return
 
-        if obj.type == 'MESH':
-            # layout.label("Active object is not a Mesh object")
+        #
+        # MESH
+        elif obj.type == 'MESH':
+            if not is_mblab_body(mesh_obj=obj):
+                layout.row().label("The MESH must be a _finalized_ MBLab character")
+                return
 
             if is_female(mesh_obj=obj):
                 layout.row().label("MBLab Female Character")
@@ -85,11 +91,9 @@ class YallahPanel(bpy.types.Panel):
             op.replace_existing = True
 
         #
-        #
-        if obj.type == 'ARMATURE':
+        # ARMATURE
+        elif obj.type == 'ARMATURE':
 
-            #
-            # UTILS
             row = layout.row()
             box = row.box()
             box.label("Animation:")
@@ -98,6 +102,11 @@ class YallahPanel(bpy.types.Panel):
             box.operator(ResetCharacterPose.bl_idname, text="Reset Character Pose")
             box.label("TODO: Import animation sets")
             box.label("TODO: flag F on all animations")
+
+        #
+        # No ops
+        else:
+            layout.label("Please, select an MBLab armature or body.")
 
 
 #

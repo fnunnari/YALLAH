@@ -23,14 +23,30 @@ RELAXED_FINGER_ANIM = "relaxed_fingers_anim.json"
 
 #
 # Phenotype tests
-def is_female(mesh_obj: bpy.types.Object):
+def is_female(mesh_obj: bpy.types.Object) -> bool:
     mesh = mesh_obj.data  # type: bpy.types.Mesh
     return mesh.name.startswith('MBLab_human_female')
 
 
-def is_male(mesh_obj: bpy.types.Object):
+def is_male(mesh_obj: bpy.types.Object) -> bool:
     mesh = mesh_obj.data  # type: bpy.types.Mesh
     return mesh.name.startswith('MBLab_human_male')
+
+
+def is_mblab_body(mesh_obj: bpy.types.Object) -> bool:
+    mesh = mesh_obj.data  # type: bpy.types.Mesh
+    return mesh.name.startswith('MBLab_')
+
+
+# TODO -- Find a way to discriminate between finalized and not finalized characters
+# def is_finalized_mblab_body(mesh_obj: bpy.types.Object) -> bool:
+#     if not is_mblab_body(mesh_obj=mesh_obj):
+#         return False
+#
+#     if hasattr(mesh_obj, 'Body_Size'):
+#         return False
+#
+#     return True
 
 
 #
@@ -67,6 +83,18 @@ class FixMaterials(bpy.types.Operator):
             self.report({'ERROR'}, "Unsupported Mesh type {}".format(mesh.name))
             return {'CANCELLED'}
 
+        # Check if the diffuse and displacement textures still exist.
+        # They disappear if the user save and quit blender and reload the character.
+        if diffuse_texture_name not in bpy.data.images:
+            self.report({'ERROR'}, "Can not find a texture named '{}'. Maybe the scene was saved after finalization and then reloaded?"
+                        .format(diffuse_texture_name))
+            return {'CANCELLED'}
+
+        if displacement_texture_name not in bpy.data.images:
+            self.report({'ERROR'}, "Can not find a texture named '{}'. Maybe the scene was saved after finalization and then reloaded?"
+                        .format(displacement_texture_name))
+            return {'CANCELLED'}
+
         #
         # Now, some magic creating nice real-time materials for Blender Game Engine and the rest
         # of the world, too.
@@ -78,7 +106,6 @@ class FixMaterials(bpy.types.Operator):
             mat.use_transparency = False
             # mat.game_settings.physics = False
 
-        # TODO -- Check the texture names and support males as well.
         diffuse_tex = bpy.data.textures.new('MBLabDiffuse', 'IMAGE')
         diffuse_tex.image = bpy.data.images[diffuse_texture_name]
         diffuse_tex.image.use_fake_user = True
@@ -164,11 +191,15 @@ class SetupMBLabCharacter(bpy.types.Operator):
             * selected: one object, the mesh object.
             * active: the mesh object.
         """
+
         # Switch to OBJECT mode
         bpy.ops.object.mode_set(mode='OBJECT')
+
         # Unselect everything
         for o in bpy.context.scene.objects:
             o.select = False
+
+        # The MESH object will be the active and the only selected object
         mesh_obj.select = True
         bpy.context.scene.objects.active = mesh_obj
 
@@ -200,7 +231,7 @@ class SetupMBLabCharacter(bpy.types.Operator):
 
         #
         # A TEST TO CHECK FOR WORKING DIRECTORIES AND PATHS
-        # This is harmless and ca be used as template to develop new functionalities
+        # This is harmless and can be used as template to develop new functionalities
         #
         filepath = os.path.join(YALLAH_FEATURES_DIR, "Test/Setup.py")
         exec(compile(open(filepath).read(), filepath, 'exec'))
