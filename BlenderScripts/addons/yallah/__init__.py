@@ -14,7 +14,7 @@ from yallah.mblab_tools import SetupMBLabCharacter
 from yallah.mblab_tools import RemoveAnimationFromFingers
 from yallah.mblab_tools import SetRelaxedPoseToFingers
 from yallah.mblab_tools import ResetCharacterPose
-from yallah.anim_utils import ForceActionDummyUserToAllActions
+from yallah.anim_utils import SetDummyUserToAllActions
 
 
 import yallah.shape_key_utils
@@ -105,10 +105,8 @@ class YallahPanel(bpy.types.Panel):
             box.operator(RemoveAnimationFromFingers.bl_idname, text="Remove Fingers Animation")
             box.operator(SetRelaxedPoseToFingers.bl_idname, text="Set Relaxed Fingers Keyframe")
             box.operator(ResetCharacterPose.bl_idname, text="Reset Character Pose")
-            box.label("TODO: Import animation sets")
-            box.label("TODO: flag F on all animations")
-            box.operator(ForceActionDummyUserToAllActions.bl_idname, text="Force 'F' All Animation Actions")
-
+            box.operator(SetDummyUserToAllActions.bl_idname)
+            # TODO -- box.label("Import animation sets")
 
         #
         # No ops

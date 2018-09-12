@@ -1,11 +1,10 @@
 import bpy
 
-from typing import Dict
 
 class ExportActionData(bpy.types.Operator):
     """Operator to export the animation data of the current action into a JSON file."""
 
-    bl_idname = "animation.export_action_data"
+    bl_idname = "yallah.export_action_data"
     bl_label = """Export the animation data of the current action into a JSON file."""
 
     json_filename = bpy.props.StringProperty(name="Action JSON File",
@@ -56,12 +55,11 @@ class ExportActionData(bpy.types.Operator):
         return {'FINISHED'}
 
 
-class ForceActionDummyUserToAllActions(bpy.types.Operator):
-    """Operator to force 'F' (dummy user) to all actions."""
+class SetDummyUserToAllActions(bpy.types.Operator):
+    """Operator to set 'F' (dummy user) to all actions."""
 
-    bl_idname = "anim_utils.force_dummy_user_user_to_all_actions"
-    bl_label = "Forces 'F' (dummy user) to all actions"
-
+    bl_idname = "yallah.set_dummy_user_to_all_actions"
+    bl_label = "Set 'F' (dummy user) to all actions"
 
     @classmethod
     def poll(cls, context):
@@ -79,13 +77,14 @@ class ForceActionDummyUserToAllActions(bpy.types.Operator):
 
         return {'FINISHED'}
 
+
 def register():
     bpy.utils.register_class(ExportActionData)
-    bpy.utils.register_class(ForceActionDummyUserToAllActions)
+    bpy.utils.register_class(SetDummyUserToAllActions)
 
 
 def unregister():
     bpy.utils.unregister_class(ExportActionData)
-    bpy.utils.unregister_class(ForceActionDummyUserToAllActions)
+    bpy.utils.unregister_class(SetDummyUserToAllActions)
 
 
