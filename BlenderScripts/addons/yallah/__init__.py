@@ -70,7 +70,7 @@ class YallahPanel(bpy.types.Panel):
                 layout.row().label("MBLab Male Character")
                 clothes_mask_file = "ClothesMasks-M_CA01.json"
             else:
-                layout.label("Not an MBLab character")
+                layout.label("Not an MBLab supported phenotype (male or female)")
                 return
 
             #
@@ -78,7 +78,10 @@ class YallahPanel(bpy.types.Panel):
             row = layout.row()
             box = row.box()
             box.label("Setup:")
-            box.operator(SetupMBLabCharacter.bl_idname, text="Setup a MBLab character")
+            if obj.yallah_setup_done:
+                box.label("Setup already performed.")
+            else:
+                box.operator(SetupMBLabCharacter.bl_idname, text="Setup a MBLab character")
 
             #
             # CLOTHES

@@ -292,6 +292,8 @@ class SetupMBLabCharacter(bpy.types.Operator):
                 mesh_obj.modifiers.remove(md)
                 break
 
+        mesh_obj.yallah_setup_done = True
+
         return {'FINISHED'}
 
 
@@ -489,6 +491,13 @@ class ResetCharacterPose(bpy.types.Operator):
 # (UN)REGISTER
 #
 def register():
+
+    # This property will be use to mark when a character has received the Setup procedure.
+    bpy.types.Object.yallah_setup_done =\
+        bpy.props.BoolProperty(name="yallah_setup_done",
+                               description="When true, the character has already undergone the YALLAH Setup process",
+                               default=False)
+
     bpy.utils.register_class(FixMaterials)
     bpy.utils.register_class(SetupMBLabCharacter)
     bpy.utils.register_class(RemoveAnimationFromFingers)
@@ -502,6 +511,8 @@ def unregister():
     bpy.utils.unregister_class(RemoveAnimationFromFingers)
     bpy.utils.unregister_class(SetRelaxedPoseToFingers)
     bpy.utils.unregister_class(ResetCharacterPose)
+
+    del bpy.types.Object.yallah_setup_done
 
 
 if __name__ == "__main__":
