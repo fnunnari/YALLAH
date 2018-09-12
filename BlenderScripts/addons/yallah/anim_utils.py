@@ -77,14 +77,44 @@ class SetDummyUserToAllActions(bpy.types.Operator):
 
         return {'FINISHED'}
 
+class SetAPoseKeyFrame(bpy.types.Operator):
+    """Operator to set an A-Pose animation key frame."""
+
+    bl_idname = "anim_utils.set_apose_key_frame"
+    bl_label = "Sets an A-Pose animation key frame."
+
+
+    @classmethod
+    def poll(cls, context):
+        if not (context.mode == 'POSE' or context.mode == 'OBJECT'):
+            return False
+
+        return True
+
+    def execute(self, context):
+
+        import bpy
+        bpy.ops.object.mode_set(mode='POSE')
+        bpy.ops.pose.select_all(action='SELECT')
+        bpy.ops.pose.transforms_clear()
+        bpy.context.scene.frame_set(0)
+        if not 'A-Pose' in bpy.data.actions:
+            bpy.data.actions.new('A-Pose')
+        bpy.context.object.animation_data.action = bpy.data.actions['A-Pose']
+        bpy.ops.anim.keyframe_insert_menu(type='LocRotScale')
+        bpy.data.actions["A-Pose"].use_fake_user = True
+
+        return {'FINISHED'}
 
 def register():
     bpy.utils.register_class(ExportActionData)
     bpy.utils.register_class(SetDummyUserToAllActions)
+    bpy.utils.register_class(SetAPoseKeyFrame)
 
 
 def unregister():
     bpy.utils.unregister_class(ExportActionData)
     bpy.utils.unregister_class(SetDummyUserToAllActions)
+    bpy.utils.unregister_class(SetAPoseKeyFrame)
 
 
