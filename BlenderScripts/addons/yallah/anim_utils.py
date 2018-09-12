@@ -56,9 +56,36 @@ class ExportActionData(bpy.types.Operator):
         return {'FINISHED'}
 
 
+class ForceActionDummyUserToAllActions(bpy.types.Operator):
+    """Operator to force 'F' (dummy user) to all actions."""
+
+    bl_idname = "anim_utils.force_dummy_user_user_to_all_actions"
+    bl_label = "Forces 'F' (dummy user) to all actions"
+
+
+    @classmethod
+    def poll(cls, context):
+        if not (context.mode == 'POSE' or context.mode == 'OBJECT'):
+            return False
+
+        return True
+
+    def execute(self, context):
+
+        import bpy
+
+        for actions in bpy.data.actions:
+            actions.use_fake_user = True
+
+        return {'FINISHED'}
+
 def register():
     bpy.utils.register_class(ExportActionData)
+    bpy.utils.register_class(ForceActionDummyUserToAllActions)
 
 
 def unregister():
     bpy.utils.unregister_class(ExportActionData)
+    bpy.utils.unregister_class(ForceActionDummyUserToAllActions)
+
+
