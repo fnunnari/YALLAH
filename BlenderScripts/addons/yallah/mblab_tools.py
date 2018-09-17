@@ -253,6 +253,13 @@ class SetupMBLabCharacter(bpy.types.Operator):
 
         assert arm_obj.type == 'ARMATURE'
 
+        char_name = character_prefix(mesh_obj=mesh_obj)
+        if char_name is None:
+            self.report({'ERROR'}, "Character not properly named (should be, for example: 'Anna_body')."
+                                   " Please, use the MBLab prefix during finalization.")
+            return {'CANCELLED'}
+
+
         #
         # A TEST TO CHECK FOR WORKING DIRECTORIES AND PATHS
         # This is harmless and can be used as template to develop new functionalities
