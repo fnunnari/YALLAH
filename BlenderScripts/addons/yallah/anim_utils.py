@@ -113,20 +113,24 @@ class CreateAPoseAction(bpy.types.Operator):
         # Keyframe position
         bpy.context.scene.frame_set(1)
 
+        # Object
         # Clear object position and pose.
-        bpy.ops.object.mode_set(mode='OBJECT')
+        # bpy.ops.object.mode_set(mode='OBJECT')
         bpy.ops.object.location_clear()
         bpy.ops.object.rotation_clear()
         bpy.ops.object.scale_clear()
+        obj.keyframe_insert("location", frame=1)
+        obj.keyframe_insert("rotation_euler", frame=1)
+        obj.keyframe_insert("scale", frame=1)
 
+        # Bones
         bpy.ops.object.mode_set(mode='POSE')
         bpy.ops.pose.select_all(action='SELECT')
         bpy.ops.pose.transforms_clear()
-
-        # Insert the keyframe
+        # Insert the keyframe for the bones
         bpy.ops.anim.keyframe_insert_menu(type='LocRotScale')
 
-        # Be sure the action stays in memory.
+        # Be sure that the action stays in memory.
         bpy.data.actions[CreateAPoseAction.A_POSE_ACTION_NAME].use_fake_user = True
 
         return {'FINISHED'}
