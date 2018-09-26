@@ -9,6 +9,8 @@ YALLAH is composed of the two following components:
 * A Blender plugin (`yallah`) that takes as input virtual characters created with ManuelBastioniLab and quickly (procedurally) prepares them to run in real-time environments.
 * A Unity package (under the folder `YALLAH`) containing several motion controllers (Gaze, Locomotion, Test-to-Speech, ...) for the configuration of interactive virtual charcaters.
 
+![YALLAH production pipeline](Docs/YALLAH%20Pipeline.png)
+
 The goal of YALLAH is to allow 3D content creators to **generate, customize, animate, dress, and deploy a virtual human in a Game Engine in few hours of work**.
 
 * For 3D authors, YALLAH is a reference for the development of virtual humans that have to be employed in real-time engines.
