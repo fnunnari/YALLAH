@@ -41,3 +41,13 @@ The official [YALLAH documentation](https://github.com/fnunnari/YALLAH/wiki) is 
   a research group of the [German Research Center for Artificial Intelligence (DFKI)](https://www.dfki.de/)
   and funded by the [Cluster of Excellence on Multimodal Computing and Interaction (MMCI)](http://www.mmci.uni-saarland.de/) in Saarbrücken, Germany.
 * **DECAD** (DFKI Embodied Conversational Agent Demo) at [http://decad.sb.dfki.de](http://decad.sb.dfki.de) demonstrates an online running demo of a virtual human created with YALLAH.
+
+## People
+
+### Current Contributors
+* Fabrizio Nunnari (Research & Development)
+* Kiarash Tamaddon (Development)
+* Alexis Heloir (Research, Testing)
+
+### Past Contributors
+* Timo Gühring (Research & Development: text to speech, Haxe ports)
