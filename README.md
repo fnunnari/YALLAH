@@ -22,6 +22,14 @@ We aim at providing a common authoring pipeline, framework, and API for the crea
 
 The official [YALLAH documentation](https://github.com/fnunnari/YALLAH/wiki) is maintained on the online github wiki pages.
 
+## Video Tutorials
+
+There are video tutorials on YouTube at the following playlist: <https://www.youtube.com/playlist?list=PL92sVNf_0lio6ilwFiAesUJ1AQO1B4ILU>
+
+1. Character Creation in Blender <https://youtu.be/wB9baKwU9dw>
+2. Import the Character in Unity <https://youtu.be/bWzclpmE3ag>
+3. Configure the Motion Controllers in Unity <https://youtu.be/dD2oNAgDN7k>
+
 ## Download
 
 * [YALLAH-SDK-YYMMDD.zip](http://www.dfki.de/~fanu01/YALLAH/Releases) contains:
