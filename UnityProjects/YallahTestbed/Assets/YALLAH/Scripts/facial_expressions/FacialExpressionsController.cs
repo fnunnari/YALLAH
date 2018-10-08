@@ -16,11 +16,16 @@ using UnityEngine.UI;
 
 
 public class FacialExpressionsController : MonoBehaviour {
-	
+
+    // The name of the default expression, with no blend shapes applied.
+    readonly static string DEFAULT_EXPRESSION_NAME = "Normal";
+
+    // All teh blendshapes starting with this prefix will be considered as facial expressions.
+    readonly static string EXPRESSION_BLENDSHAPE_PREFIX = "fe_";
+
 	public float expressionTransitionTime = 0.2F;
 	// This will contain the indices of all the BlendShapes that we selected for control.
 	private int[] expressionBlendShapeIndex;
-
 
 
 	// The desired target value of each of the facial expression blendshape.
@@ -60,7 +65,7 @@ public class FacialExpressionsController : MonoBehaviour {
 		for (int i=0; i < sharedMesh.blendShapeCount; i++)
 		{
 			string s = sharedMesh.GetBlendShapeName(i);
-			if(s.StartsWith("fe_")){
+            if(s.StartsWith(EXPRESSION_BLENDSHAPE_PREFIX)){
 				feIndex1.Add (i);
 			}
 		}
@@ -78,7 +83,7 @@ public class FacialExpressionsController : MonoBehaviour {
 		#if UNITY_EDITOR
 //		Debug.Log("expr index " + current_expression_index) ;
 //		Debug.Log("bs num " + (current_expression_index == 0 ? -1 : expressionBlendShapeIndex[current_expression_index-1]) ) ;
-		this.currentExpressionName = current_expression_index == 0 ? "Normal" : meshRendered.sharedMesh.GetBlendShapeName(expressionBlendShapeIndex[current_expression_index-1]) ;
+        this.currentExpressionName = current_expression_index == 0 ? DEFAULT_EXPRESSION_NAME : meshRendered.sharedMesh.GetBlendShapeName(expressionBlendShapeIndex[current_expression_index-1]) ;
 		#endif
 		
 		//reset/set expressions values
@@ -140,7 +145,7 @@ public class FacialExpressionsController : MonoBehaviour {
 	//returns name of the current facial expression name
 	public string GetCurrentFacialExpression (){
 		if (current_expression_index == 0)
-			return("Normal");
+            return(DEFAULT_EXPRESSION_NAME);
 		else
 			return sharedMesh.GetBlendShapeName(expressionBlendShapeIndex [current_expression_index-1]);
 	}
