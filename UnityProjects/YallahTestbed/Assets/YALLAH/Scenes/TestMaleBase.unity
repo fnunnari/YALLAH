@@ -190,7 +190,7 @@ Transform:
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 20670613}
   m_LocalRotation: {x: 0, y: 1, z: 0, w: 0}
-  m_LocalPosition: {x: 0, y: 1.61, z: 0.6}
+  m_LocalPosition: {x: 0, y: 1.61, z: 1.21}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
@@ -202,7 +202,7 @@ MonoBehaviour:
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 20670613}
-  m_Enabled: 1
+  m_Enabled: 0
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 8e710bfae9c844215bb3f4c051a13505, type: 3}
   m_Name: 
@@ -217,13 +217,14 @@ MonoBehaviour:
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 20670613}
-  m_Enabled: 0
+  m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 484713be0aec24c53bf39315c7535207, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  targetPlayer: {fileID: 572914242}
-  offset: {x: 0, y: 2, z: 4}
+  targetObject: {fileID: 572914242}
+  farAwayOffset: {x: 0, y: 2, z: 6}
+  closeUpOffset: {x: 0, y: 1.5, z: 1}
 --- !u!4 &125575498 stripped
 Transform:
   m_PrefabParentObject: {fileID: 400016, guid: e1fcc3aca4bdd4ed3a5e41270b5a9782, type: 3}
@@ -432,7 +433,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   avatar: {fileID: 572914242}
   gazeTarget: {fileID: 1297653736}
-  animateGazeTarget: 0
+  animateGazeTarget: 1
   speakIntervalSecs: 5
   walkIntervalSecs: 10
   facialExpressionChangeIntervalSecs: 8
