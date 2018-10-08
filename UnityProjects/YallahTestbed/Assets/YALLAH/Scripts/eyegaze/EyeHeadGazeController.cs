@@ -127,6 +127,14 @@ public class EyeHeadGazeController : MonoBehaviour {
 	}
 
 
+    /** Starts moving eyes and head to watch a spcified position.
+     */
+    public void LookAtPoint(float x, float y, float z)
+    {
+        this.LookAtPoint(new Vector3(x, y, z));
+    }
+
+
 	/** Look at the object with the given name.
 	 *  If the object doesn't exist, nothing happens.
 	 */
