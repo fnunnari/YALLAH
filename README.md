@@ -4,10 +4,10 @@ YALLAH stands for **Yet Another Low-Level Agent Handler**.
 
 ## Description
 
-YALLAH is composed of the two following components:
+YALLAH is composed of:
 
-* A Blender plugin (`yallah`) that takes as input virtual characters created with ManuelBastioniLab and quickly (procedurally) prepares them to run in real-time environments.
-* A Unity package (under the folder `YALLAH`) containing several motion controllers (Gaze, Locomotion, Text-to-Speech, ...) for the configuration of interactive virtual charcaters.
+1. A Blender plugin (`yallah`) that takes as input virtual characters created with ManuelBastioniLab and quickly (procedurally) prepares them to run in real-time environments.
+2. A Unity package (under the folder `YALLAH`) containing several motion controllers (Gaze, Locomotion, Text-to-Speech, ...) for the configuration of interactive virtual charcaters.
 
 ![YALLAH production pipeline](Docs/YALLAH%20Pipeline.png)
 
