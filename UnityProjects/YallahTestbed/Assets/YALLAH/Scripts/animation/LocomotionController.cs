@@ -85,7 +85,7 @@ public class LocomotionController : MonoBehaviour {
 	}
 
 
-    public bool isWalking() {
+    public bool IsWalking() {
         AnimatorStateInfo state_info = this.anim.GetCurrentAnimatorStateInfo(this.locomotionLayerIdx) ;
         return state_info.IsName ("WalkBlendTree");
     }
@@ -102,7 +102,7 @@ public class LocomotionController : MonoBehaviour {
 		#endif
 
 
-        if (! this.isWalking()) {
+        if (! this.IsWalking()) {
 			this.anim.ResetTrigger ("locomotion_stop");
 			this.fwdVal = 0;
             return;                         // <-- BEWARE: Jumps out!!!
