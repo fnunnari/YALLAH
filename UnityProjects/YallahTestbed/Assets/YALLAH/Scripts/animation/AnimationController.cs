@@ -59,6 +59,12 @@ public class AnimationController : MonoBehaviour
 	// Wheter to switch to the ambianet animation when the current animation finishes.
 	private bool useAmbientAnimation;
 
+    #if UNITY_EDITOR
+    [Header("Test:")]
+    public bool playRandomAnim = false;
+    #endif
+
+
 	[Header("Locomotion Clips:")]
 
 	// The animation clip used for walking forward
@@ -70,11 +76,6 @@ public class AnimationController : MonoBehaviour
 	// The animation clip used to turn left
 	public AnimationClip turnLeftAnimationClip;
 
-
-	#if UNITY_EDITOR
-	[Header("Test:")]
-	public bool playRandomAnim = false;
-	#endif
 
 	public void Start()
 	{
