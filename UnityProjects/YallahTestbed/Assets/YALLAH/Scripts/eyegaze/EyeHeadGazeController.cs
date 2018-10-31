@@ -4,7 +4,6 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Assertions;
 
-using HaxeSpeedTest ;
 
 /*
  * EyeGazeBehaviour controls the eye gaze of an avatar.
@@ -80,9 +79,9 @@ public class EyeHeadGazeController : MonoBehaviour {
 			this.blendShapeIDs.Add (bsID);
 		}
 
-        Debug.Log(gameObject.name);
-        Debug.Log(this.neck.rotation.ToString("F4"));
-        Debug.Log(this.neck.localRotation.ToString("F4"));
+        //Debug.Log(gameObject.name);
+        //Debug.Log(this.neck.rotation.ToString("F4"));
+        //Debug.Log(this.neck.localRotation.ToString("F4"));
 
 		// Initialize the animator
 		this.logic = new EyeHeadGazeLogic(
