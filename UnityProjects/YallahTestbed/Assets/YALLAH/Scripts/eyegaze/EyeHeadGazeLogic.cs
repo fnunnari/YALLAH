@@ -146,16 +146,25 @@ public class EyeHeadGazeLogic
 			return 0.0f;
 		}
 
+        // The speed needed to reach the target in the given time
 		float speed = delta / time;
+
+        // limit the speed
 		if (speed > max_speed) {
 			speed = max_speed;
 		} else if (speed < -max_speed) {
 			speed = -max_speed;
 		}
+
+        // compute the increment
 		float inc = speed * dt;
+
+        // limit the increment, if surpassing the target value
 		if (Mathf.Abs (inc) > Mathf.Abs (delta)) {
-			Debug.Log ("RotSmoothtInc: incrementing too much!!!");
+			// Debug.Log ("RotSmoothtInc: incrementing too much!!!");
+            inc = delta;
 		}
+
 		return inc;
 	}
 
