@@ -3,6 +3,12 @@
 
 import haxe.ds.Vector;
 
+// See: https://api.haxe.org/StringTools.html
+using StringTools;
+
+import haxe.Json;
+import haxe.DynamicAccess;
+
 
 class MaryTTSException {
     public var reason: String ;
@@ -12,6 +18,12 @@ class MaryTTSException {
     }
 }
 
+
+typedef TTSInfo = {
+    var default_viseme:String;
+    var visemes:Array<String>;
+    var map:Map<String,String>;
+}
 
 /** This class can be used to parse a MaryTTS realized durations file and also to generate
  * in real-time the weights of the blend shapes.
@@ -34,112 +46,17 @@ class MaryTTSBlendSequencer {
     // Assumed duration when no following phoneme is present (useful for the last of the sequence.
     static var DEFAULT_VISEME_DURATION_SECS: Float = 0.2;
 
+
+    //
+    // Set form the JSON configuration file
+    //
+    private var DEFAULT_VISEME: String ;
     // How to get them in Blender:
     // for kb in bpy.context.active_object.data.shape_keys.key_blocks:
     //     print(kb.name)
-    static var VISEMES: Array<String> = [
-        "phoneme_a_01",
-        "phoneme_a_02",
-        "phoneme_b_01",
-        "phoneme_b_02",
-        "phoneme_c_01",
-        "phoneme_c_02",
-        "phoneme_d_01",
-        "phoneme_e_01",
-        "phoneme_f_01",
-        "phoneme_g_01",
-        "phoneme_i_01",
-        "phoneme_i_02",
-        "phoneme_k_01",
-        "phoneme_l_01",
-        "phoneme_m_01",
-        "phoneme_n_01",
-        "phoneme_o_01",
-        "phoneme_o_02",
-        "phoneme_p_01",
-        "phoneme_q_01",
-        "phoneme_r_01",
-        "phoneme_r_02",
-        "phoneme_s_01",
-        "phoneme_t_01",
-        "phoneme_u_01",
-        "phoneme_w_01",
-        "phoneme_z_01"
-    ] ;
+    private var VISEMES: Array<String> ;
+    private var PHONEMES_MAP: Map<String,String> ;
 
-    /** Returns the number of Visemes which this module expects to handle.*/
-    static function get_viseme_count(): Int {
-        return VISEMES.length;
-    }
-
-    static var PHONEMES_MAP: Map<String,String> = [
-                'gi' => 'phoneme_g_01', // 'G',
-                'ge'=> 'phoneme_g_01', // 'G',
-                'ji'=> 'phoneme_g_01', // 'G',
-                'c'=> 'phoneme_g_01', // 'G',
-                'il'=> 'phoneme_l_01', //'Etc',  // 'L',
-                'el'=> 'phoneme_l_01', //'Etc',  // 'L',
-                // 'n'=> 'L',
-                'di'=> 'phoneme_d_01', // 'TH',
-                'eh'=> 'phoneme_e_01', // 'EH',
-                // 'i' => 'EH',
-                // 'e' => 'EE',
-                'ie'=> 'phoneme_i_01', // 'EE',
-                'ee'=> 'phoneme_i_01', // 'EE',
-                'sh'=> 'phoneme_g_01', // 'SH',
-                'sch'=> 'phoneme_c_02', // 'SH',
-                's'=> 'phoneme_e_01', // yes: 'e' looks better // 'S',
-                'fv'=> 'phoneme_f_01', // 'FV',
-                'fw'=> 'phoneme_f_01', // 'FV',
-                'er'=> 'phoneme_r_01', // 'R',
-                'o'=> 'phoneme_o_01', // 'O',
-                'O'=> 'phoneme_o_01', // 'O',
-                'ov'=> 'phoneme_o_01', // 'O',
-                'oo'=> 'phoneme_u_01', // 'OO',
-                'oh'=> 'phoneme_u_01', // 'OO',
-                'mb'=> 'phoneme_m_01', // 'MBP',
-                'p'=> 'phoneme_p_01', // 'MBP',
-                'ah'=> 'phoneme_a_01', // 'AH',
-                'a'=> 'phoneme_a_01', // 'AH',
-
-                '{'=> 'phoneme_e_01', // 'EH',
-                '@U'=> 'phoneme_o_01', //'O',  // TODO -- split in O-OO, like in 'goes'
-                'A'=> 'phoneme_a_01', //'AH',
-                'AI'=> 'phoneme_a_01', //'AH',  // TODO -- split to AH-EE
-                'aU'=> 'phoneme_a_01', //'AH',  // TODO -- split into AH-OO
-                'b'=> 'phoneme_b_02', //'MBP',
-                'd'=> 'phoneme_d_01', //'',
-                'D'=> 'phoneme_d_01', //'TH',   // Like in 'the'
-                'dZ'=> 'phoneme_d_01',
-
-                'E'=> 'phoneme_e_01', //'EH',
-                'EI'=> 'phoneme_i_01', //'EE',
-
-                // 'h'=>
-                'i'=> 'phoneme_i_01', //'EE',
-                'I'=> 'phoneme_i_01', //'EE',
-                // 'k'=> ''
-                'm'=> 'phoneme_m_01', //'MBP',
-                'f'=> 'phoneme_f_01', //'FV',
-                // 'g'=> '', // This is guttural GH
-                'l'=> 'phoneme_l_01', //'Etc',  // TODO - This will map to 'L' when we implement tongue and collar muscles
-                // 'n'=> '', //
-                // 'N'=> '', //
-                'r'=> 'phoneme_r_01', //'R',
-                'r='=> 'phoneme_r_01', //'R',
-                'S'=> 'phoneme_c_01', //'SH',
-                // 'T'=> 'TH',  // TODO - this will use tongue, when available.
-                // 't'=> '', // not tongue between the teeth
-                'u'=> 'phoneme_u_01', //'OO',
-                'v'=> 'phoneme_b_01', //'FV',
-                'V'=> 'phoneme_o_01', //'O',
-                'w'=> 'phoneme_w_01', //'OO',
-                'z'=> 'phoneme_z_01', //'S',
-
-                '_'=> null   // "End of sequence"
-                ];
-
-    static var DEFAULT_VISEME: String = 'phoneme_c_01' ;
 
     private var realized_times: Array<Float> = null;
     private var realized_visemes: Array<String> = null ;
@@ -155,9 +72,63 @@ class MaryTTSBlendSequencer {
     private var ramp_down_speed: Float = DEFAULT_RAMP_DOWN_SPEED;
 
 
-    public function new() {
+
+    public function new(tts_info_filename: String) {
+
+        //
+        // Load the JSON file
+        var tts_info_str: String = sys.io.File.getContent(tts_info_filename);
+        // Sys.println("File loaded") ;
+        // Sys.println(tts_info_str) ;
+
+        var tts_info = Json.parse(tts_info_str) ;
+        // Sys.println(tts_info) ;
+
+        //
+        // Take the data from the json structure
+        this.DEFAULT_VISEME = tts_info.default_viseme ;
+        this.VISEMES = tts_info.visemes ;
+
+        // Convert the map in the json into an "easy" map
+        // https://stackoverflow.com/questions/51717684/haxe-how-to-convert-json-dynamic-structure-to-map
+        this.PHONEMES_MAP = new Map<String, String>() ;
+        for(field in Reflect.fields(tts_info.map)) {
+            var d = Reflect.field(tts_info.map, field) ;
+            this.PHONEMES_MAP[field] = d ;
+        }
+
+
+        trace("Consistency check...");
+        // Consistency check: all the table values MUST be in the MOUTH_SHAPES set.
+        if(this.VISEMES.indexOf(this.DEFAULT_VISEME) == -1) {
+              throw new MaryTTSException('Default viseme $this.DEFAULT_VISEME is not listed.') ;
+        }
+
+        for (ph in this.PHONEMES_MAP.keys()) {
+            var ms: String = this.PHONEMES_MAP[ph] ;
+            if (ms != null && this.VISEMES.indexOf(ms) == -1) {
+              throw new MaryTTSException('For phoneme $ph, target mouth shape $ms is not listed.') ;
+            }
+         }
+        trace("Check done.");
+
+
+
     }
 
+    public function getVisemes(): Vector<String> {
+        var n_visemes: Int = this.get_viseme_count() ;
+        var out: Vector<String> = new Vector<String>(n_visemes) ;
+        for (i in 0...n_visemes) {
+            out[i] = this.VISEMES[i];
+        }
+        return out ;
+    }
+
+    /** Returns the number of Visemes which this module expects to handle.*/
+    public function get_viseme_count(): Int {
+        return this.VISEMES.length;
+    }
 
     public function stop_sequencer(): Void {
         this.ready_to_speak = false;
@@ -212,12 +183,17 @@ class MaryTTSBlendSequencer {
 
             var shape: String ;
             if(PHONEMES_MAP.exists(p)) {
-                shape = PHONEMES_MAP[p];
+                var viseme:String = PHONEMES_MAP[p] ;
+                if(viseme == "null") {
+                    shape = null;
+                } else {
+                    shape = viseme;
+                }
             } else {
                 shape = DEFAULT_VISEME ;
             }
 
-            trace("Mapping '" + p + "' --> '"+shape+"' at "+dur);
+            // trace("Mapping '" + p + "' --> '"+shape+"' at "+dur);
 
             this.realized_times.push(dur) ;
             this.realized_visemes.push(shape) ;
@@ -372,41 +348,24 @@ class MaryTTSBlendSequencer {
 
 
     //
-    // MAIN
+    // Local test functions
     //
-
-    static function main() {
-        // Uncomment the following line to perform a small local execution test.
-        local_test() ;
-        //test_speed() ;
-    }
 
     static function local_test() {
 
-        trace("Consistency check...");
-        // Consistency check: all the table values MUST be in the MOUTH_SHAPES set.
-        for (ph in PHONEMES_MAP.keys()) {
-            var ms: String = PHONEMES_MAP[ph] ;
-            if (ms != null && VISEMES.indexOf(ms) == -1) {
-              throw new MaryTTSException('For phoneme $ph, target mouth shape $ms is not listed.') ;
-            }
-         }
-        trace("Check done.");
-
         trace("Instance...");
-
-        var seq: MaryTTSBlendSequencer = new MaryTTSBlendSequencer();
-        trace(seq);
+        var seq: MaryTTSBlendSequencer = new MaryTTSBlendSequencer("MaryTTS-PhonemeMap-MBLab1_6.json");
+        // trace(seq);
 
         seq.stop_sequencer() ;
 
-        trace("Reading durations");
+        trace("Reading durations...");
         var durations: String = sys.io.File.getContent('data/realized_duration.txt');
         seq.parse_realized_durations(durations) ;
 
         //
         //
-        var n_visemes: Int = MaryTTSBlendSequencer.get_viseme_count() ;
+        var n_visemes: Int = seq.get_viseme_count() ;
         var visemes_buffer: Vector<Float> = new Vector<Float>(n_visemes) ;
         // The vector MUST be manually initialised for some target platforms (Python included)
         for (i in 0...visemes_buffer.length) {
@@ -425,13 +384,14 @@ class MaryTTSBlendSequencer {
     }
 
 
+
     static function test_speed() {
 
         var NUM_ITER: Int = 100000 ;
         var SIM_TIME: Float = 4.0 ;
 
-        var seq: MaryTTSBlendSequencer = new MaryTTSBlendSequencer();
-        var n_visemes: Int = MaryTTSBlendSequencer.get_viseme_count() ;
+        var seq: MaryTTSBlendSequencer = new MaryTTSBlendSequencer("MaryTTS-PhonemeMap-MBLab1_6.json");
+        var n_visemes: Int = seq.get_viseme_count() ;
         var visemes_buffer: Vector<Float> = new Vector<Float>(n_visemes) ;
         // The vector MUST be manually initialised for some target platforms (Python included)
         for (i in 0...visemes_buffer.length) {
@@ -440,9 +400,6 @@ class MaryTTSBlendSequencer {
 
         var durations: String = sys.io.File.getContent('data/realized_duration.txt');
         seq.parse_realized_durations(durations) ;
-
-
-
 
         var iterations: Int = 0 ;
         var before: Float = Sys.time() ;
@@ -468,5 +425,22 @@ class MaryTTSBlendSequencer {
         trace("Iter / sec: " + iter_per_sec) ;
 
     }
+    
+
+
+
+    //
+    // MAIN
+    //
+
+
+    // Run with:
+    // > haxe -main MaryTTSBlendSequencer --interp
+    static function main() {
+        // Uncomment the following line to perform a small local execution test.
+        local_test() ;
+        // test_speed() ;
+    }
+
 
 }

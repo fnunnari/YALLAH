@@ -97,8 +97,8 @@ public class MaryTTSController : MonoBehaviour {
 	private SkinnedMeshRenderer skinnedMeshRenderer;
 	private Mesh skinnedMesh;
 
-	private MaryTTSBlendSequencer sequencer = new MaryTTSBlendSequencer();
-	private double[] viseme_weights = new double[MaryTTSBlendSequencer.get_viseme_count()];
+    private MaryTTSBlendSequencer sequencer = new MaryTTSBlendSequencer("Assets/YALLAH/Scripts/tts/MaryTTS-Info-MBLab1_6.json");
+    private double[] viseme_weights ;
 
 	private AudioClip audioClip = null;
 
@@ -141,12 +141,19 @@ public class MaryTTSController : MonoBehaviour {
 
 	void Start () {
 		Assert.IsNotNull(skinnedMeshRenderer); 
-		Assert.IsNotNull(skinnedMesh); 
-		// TODO -- check that all the phonemes required by the Sequencer are indeed present in the mesh.
-//		for (int i = 0; i < skinnedMesh.blendShapeCount; i++) {
-//			string bs_name = skinnedMesh.GetBlendShapeName(i);
-//		}
+		Assert.IsNotNull(skinnedMesh);
 
+        //
+        // Check that all the phonemes required by the Sequencer are indeed present in the mesh.
+        string[] needed_visemes = this.sequencer.getVisemes();
+        for (int i = 0; i < needed_visemes.Length; i++) {
+            string bs_name = needed_visemes[i];
+            if( skinnedMesh.GetBlendShapeIndex(bs_name) == -1) {
+                Debug.LogError("The BlendShape '" + bs_name + "' is required by TTS but missing in skinnedMesh.");
+            }
+        }
+
+        this.viseme_weights = new double[this.sequencer.get_viseme_count()];
 	}
 
 	public void MaryTTSspeak(string text) {
@@ -231,8 +238,8 @@ public class MaryTTSController : MonoBehaviour {
 		// Debug.Log (this.viseme_weights [0]);
 
 
-		for (int i=0 ; i < MaryTTSBlendSequencer.get_viseme_count() ; i++) {
-			string viseme = (string)(MaryTTSBlendSequencer.VISEMES [i]);
+        for (int i=0 ; i < this.sequencer.get_viseme_count() ; i++) {
+            string viseme = (string)(this.sequencer.VISEMES [i]);
 
 			int blendShapeIdx = this.skinnedMesh.GetBlendShapeIndex(viseme);
 			// Debug.Log ("Looking for viseme " + viseme+". Index: " + blendShapeIdx);
