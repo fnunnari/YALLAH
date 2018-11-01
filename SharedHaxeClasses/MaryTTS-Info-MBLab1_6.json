@@ -1,7 +1,25 @@
 {
-    "_comment": "\n"
-        "# Maps the phonemes returned by MaryTTS into the visemes available"
-        "# in ManuelBastioniLAB 1.6",
+    "_comments": [
+        "Please, note that the visemes from BMLab 1.6 are tuned for Italian. Hence, some mappings might appear illogical.",
+        "",
+        "The following phonemes are listed but commented, hence mapped to default.",
+        "This is a choice, since future blendshape set might offer a better mapping.",
+        "n: ",
+        "N: ",
+        "i: it was EH",
+        "e: was EE",
+        "T: will use tongue when available.",
+        "t: no tongue between the teeth", 
+        "g: is guttural GH, should use throath blendshape",
+        "l: will map better when we implement tongue and collar muscles",
+        "",
+        "Other notes:",
+        "yes, phoneme 's' is mapped to viseme 'e': it looks better!",
+        "The following phonemes should be treated as compounds and splitted in two by the code",
+        "# TODO -- split @U into O-OO, like in 'goes'",
+        "# TODO -- split AI into AH-EE",
+        "# TODO -- split aU into AH-OO"
+    ],
     "default_viseme": "phoneme_c_01",
     "visemes": [
         "phoneme_a_01",
