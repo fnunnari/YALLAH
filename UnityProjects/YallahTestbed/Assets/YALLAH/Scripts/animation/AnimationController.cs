@@ -207,6 +207,11 @@ public class AnimationController : MonoBehaviour
 		animator.CrossFadeInFixedTime (IDLE_STATE_NAME, 0.3f);
 	}
 
+    public bool IsAmbientAnimationEnabled()
+    {
+        return useAmbientAnimation == true;
+    }
+
 	public void SetAnimationTransitionTime (float transitionTime)
 	{
 		animationTransitionTime = transitionTime;
