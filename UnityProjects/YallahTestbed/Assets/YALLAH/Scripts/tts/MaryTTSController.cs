@@ -178,20 +178,12 @@ public class MaryTTSController : MonoBehaviour {
         this.sequencer.stop_sequencer();
     }
 
-	private IEnumerator ProcessInputText(string text) {
-		// Debug.Log("Your sentence: " + text);
-
-        // Ask for durations and wav file.
-		yield return RetrieveMaryTTSdata(text);
-
-        // Play audio
-        this.audioSource.Play();
-		this.sequencer.reset_timers();
-	}
-
-	private IEnumerator RetrieveMaryTTSdata(string text) {
+    private IEnumerator ProcessInputText(string text) {
+        // Adapt the text to be put in a URL
 		text = text.Replace(" ", "+");
 
+        //
+        // Prepare the URLs to contact the MaryTTS server.
 
 		String MARY_TTS_HTTP_ADDRESS = "http://" + MaryTTSController.server_addresses[this.server];
 		// Debug.Log ("Composed address: " + MARY_TTS_HTTP_ADDRESS);
@@ -206,20 +198,29 @@ public class MaryTTSController : MonoBehaviour {
 		string request_url = MARY_TTS_HTTP_ADDRESS + "/process?INPUT_TEXT=" + text + "&INPUT_TYPE=TEXT" + voice_parameter + locale_parameter;
 		// Debug.Log("Request URL: " + request_url);
 			
-		// Fetch audio
+        //
+        // Fetch audio
 		WWW audioResponse = new WWW(request_url + MARY_TTS_AUDIO_PARAMETER);
 		yield return MaryTTWaitForRequest(audioResponse);
 
-        AudioClip new_clip = audioResponse.GetAudioClip(false, false, AudioType.WAV);
-        this.audioSource.clip = new_clip;
-
+        //
 		// Fetch realised durations
 		WWW rdurationsResponse = new WWW(request_url + MARY_TTS_REALISED_DURATION_PARAMETER);
 		yield return MaryTTWaitForRequest (rdurationsResponse);
 
+        //
+        // (Re-)Initialize the sequencer
 		lock (sequencer) {
 			sequencer.parse_realized_durations(rdurationsResponse.text);
 		}
+
+        //
+        // Play audio and start the animation sequencer
+        AudioClip new_clip = audioResponse.GetAudioClip(false, false, AudioType.WAV);
+        this.audioSource.clip = new_clip;
+        this.audioSource.Play();
+
+        this.sequencer.reset_timers();
 
 	}
 

@@ -335,6 +335,7 @@ MonoBehaviour:
   distanceThreshold: 0.5
   rotationThresholdDegs: 5
   forceStart: 0
+  forceStop: 0
 --- !u!114 &572914246
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -355,13 +356,13 @@ MonoBehaviour:
   - {fileID: 7400018, guid: e1fcc3aca4bdd4ed3a5e41270b5a9782, type: 3}
   - {fileID: 7400006, guid: e1fcc3aca4bdd4ed3a5e41270b5a9782, type: 3}
   animationTransitionTime: 0.4
+  playRandomAnim: 0
   walkCycleAnimationClip: {fileID: 7400012, guid: e1fcc3aca4bdd4ed3a5e41270b5a9782,
     type: 3}
   turnRightAnimationClip: {fileID: 7400010, guid: e1fcc3aca4bdd4ed3a5e41270b5a9782,
     type: 3}
   turnLeftAnimationClip: {fileID: 7400008, guid: e1fcc3aca4bdd4ed3a5e41270b5a9782,
     type: 3}
-  playRandomAnim: 0
 --- !u!1 &672330618 stripped
 GameObject:
   m_PrefabParentObject: {fileID: 100058, guid: e1fcc3aca4bdd4ed3a5e41270b5a9782, type: 3}
@@ -406,6 +407,7 @@ MonoBehaviour:
   mary_tts_voice: 8
   blendshapesMultiplier: 1
   saySomething: 0
+  stopSpeaking: 0
 --- !u!114 &672330623
 MonoBehaviour:
   m_ObjectHideFlags: 0
