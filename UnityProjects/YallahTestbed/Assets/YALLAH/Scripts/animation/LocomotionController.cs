@@ -50,6 +50,7 @@ public class LocomotionController : MonoBehaviour {
 	[Header("Test:")]
     [Tooltip("Orders the character to walk to the Target Position")]
 	public bool forceStart ;
+    public bool forceStop ;
 	#endif
 
 
@@ -90,6 +91,11 @@ public class LocomotionController : MonoBehaviour {
         return state_info.IsName ("WalkBlendTree");
     }
 
+    public void StopWalking() {
+        if(IsWalking()) {
+            this.anim.SetTrigger("locomotion_stop");
+        }        
+    }
 
 	// Update is called once per frame
 	void Update () {
@@ -99,6 +105,10 @@ public class LocomotionController : MonoBehaviour {
 			this.WalkTo (this.targetPosition);
 			this.forceStart = false;
 		}
+        if(this.forceStop) {
+            this.StopWalking();
+            this.forceStop = false;
+        }
 		#endif
 
 
