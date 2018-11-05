@@ -88,8 +88,6 @@ public class MaryTTSController : MonoBehaviour {
 	
 
 	// URL composition instructions at: http://mary.dfki.de:59125/documentation.html
-//	private const string MARY_TTS_AUDIO_PARAMETER = "&OUTPUT_TYPE=AUDIO&AUDIO=WAVE_FILE&LOCALE=en_US";
-//	private const string MARY_TTS_REALISED_DURATION_PARAMETER = "&OUTPUT_TYPE=REALISED_DURATIONS&LOCALE=en_US";
 	private const string MARY_TTS_AUDIO_PARAMETER = "&OUTPUT_TYPE=AUDIO&AUDIO=WAVE_FILE";
 	private const string MARY_TTS_REALISED_DURATION_PARAMETER = "&OUTPUT_TYPE=REALISED_DURATIONS";
 
@@ -100,8 +98,10 @@ public class MaryTTSController : MonoBehaviour {
     private MaryTTSBlendSequencer sequencer = new MaryTTSBlendSequencer("Assets/YALLAH/Scripts/tts/MaryTTS-Info-MBLab1_6.json");
     private double[] viseme_weights ;
 
-	private AudioClip audioClip = null;
-
+    /** This is an audio source that is initialized during Awake.
+     * It will play back the synthetized  audio.
+     * */
+    private AudioSource audioSource = null ;
 
 	#if UNITY_EDITOR
 
@@ -131,12 +131,17 @@ public class MaryTTSController : MonoBehaviour {
         }
     };
 
+    public bool stopSpeaking;
+
 	#endif
 
 
 	void Awake () {
 		skinnedMeshRenderer = GetComponent<SkinnedMeshRenderer> ();
 		skinnedMesh = GetComponent<SkinnedMeshRenderer> ().sharedMesh;
+
+        this.audioSource = this.gameObject.AddComponent<AudioSource>();
+        // Debug.Log("My audio source: " + this.audioSource);
 	}
 
 	void Start () {
@@ -160,14 +165,27 @@ public class MaryTTSController : MonoBehaviour {
 		StartCoroutine (ProcessInputText (text));
 	}
 
+    public bool IsMaryTTSspeaking()
+    {
+        return this.sequencer.is_speaking();
+        // Or directly check if audio is being emitted.
+        // return this.audioSource.isPlaying;
+    }
+
+    public void MaryTTSstopSpeaking() {
+        this.audioSource.Stop();
+        this.audioSource.clip = null;
+        this.sequencer.stop_sequencer();
+    }
+
 	private IEnumerator ProcessInputText(string text) {
-		//text = "if everything goes right both individuals shake hands and go back to the world with a smile";
 		// Debug.Log("Your sentence: " + text);
 
+        // Ask for durations and wav file.
 		yield return RetrieveMaryTTSdata(text);
 
-		// Play audio
-		AudioSource.PlayClipAtPoint(audioClip, transform.position);
+        // Play audio
+        this.audioSource.Play();
 		this.sequencer.reset_timers();
 	}
 
@@ -192,18 +210,14 @@ public class MaryTTSController : MonoBehaviour {
 		WWW audioResponse = new WWW(request_url + MARY_TTS_AUDIO_PARAMETER);
 		yield return MaryTTWaitForRequest(audioResponse);
 
-		this.audioClip = audioResponse.GetAudioClip(false, false, AudioType.WAV);
+        AudioClip new_clip = audioResponse.GetAudioClip(false, false, AudioType.WAV);
+        this.audioSource.clip = new_clip;
 
 		// Fetch realised durations
 		WWW rdurationsResponse = new WWW(request_url + MARY_TTS_REALISED_DURATION_PARAMETER);
 		yield return MaryTTWaitForRequest (rdurationsResponse);
 
 		lock (sequencer) {
-//			string[] lines = rdurationsResponse.text.Split(new string[] { Environment.NewLine }, StringSplitOptions.None);
-//			for (int i = 1; i < lines.Length; i++) {
-//				Debug.Log (" === " + lines [i]);
-//			}
-			// Debug.Log(rdurationsResponse.text);
 			sequencer.parse_realized_durations(rdurationsResponse.text);
 		}
 
@@ -231,6 +245,10 @@ public class MaryTTSController : MonoBehaviour {
 			this.MaryTTSspeak (to_say);
 			this.saySomething = false;
 		}
+        if(this.stopSpeaking) {
+            this.MaryTTSstopSpeaking();
+            this.stopSpeaking = false;
+        }
 		#endif
 
 
@@ -257,11 +275,6 @@ public class MaryTTSController : MonoBehaviour {
 			skinnedMeshRenderer.SetBlendShapeWeight(blendShapeIdx, (float) weight);
 		}
 
-	}
-
-	//	
-	public bool IsMaryTTSspeaking() {
-		return this.sequencer.is_speaking();
 	}
 
 }

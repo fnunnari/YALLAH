@@ -131,6 +131,7 @@ class MaryTTSBlendSequencer {
     }
 
     public function stop_sequencer(): Void {
+        this.active_viseme = null ;
         this.ready_to_speak = false;
     }
 
@@ -237,10 +238,7 @@ class MaryTTSBlendSequencer {
                                    + " Expected "+VISEMES.length+", found "+viseme_weights.length) ;
         }
 
-        if(this.ready_to_speak == false) {
-            return ;
-        }
-
+        // If this is true, we are performing the first iteration.
         if (this.last_time == -1) {
             this.last_time = now ;
             this.speak_start_time = now ;
@@ -248,12 +246,45 @@ class MaryTTSBlendSequencer {
             return ;
         }
 
+        // Setup time vsariables
         var elapsed_time: Float = now - this.speak_start_time ; // time elapsed
         var delta_time: Float = now - this.last_time ;
 
         this.last_time = now ;
 
         elapsed_time += ANTICIPATION_SECS ;
+
+
+        //
+        // UPDATE THE WEIGHTS VECTOR
+        // We do this even if a sentence is not loaded, maybe just to bring all visemes to 0.0.
+        for (i in 0...VISEMES.length) {
+            var viseme: String = VISEMES[i] ;
+            var current_weight: Float = viseme_weights[i] ;
+            if (viseme == this.active_viseme) {  // This has to ramp up to 1.0
+                var inc: Float = this.ramp_up_speed * delta_time ;
+                current_weight += inc ;
+                if(current_weight > 1.0) {
+                    current_weight = 1.0 ;
+                }
+
+            } else {  // This has to ramp down to 0.0
+                var dec: Float = - this.ramp_down_speed * delta_time ;
+                current_weight += dec ;
+                if(current_weight < 0.0) {
+                  current_weight = 0.0 ;
+                }
+
+            }
+
+            // update the weight
+            viseme_weights[i] = current_weight ;
+        }
+
+        // If this is false, no sentence is loaded or it has been invalidated. Bail out.
+        if(this.ready_to_speak == false) {
+            return ;
+        }
 
         //
         // CHECK WHICH PHONEME WE HAVE TO USE
@@ -317,31 +348,6 @@ class MaryTTSBlendSequencer {
         //     debug_line += '  $w' ;
         // }
         // trace(debug_line) ;
-
-        //
-        // UPDATE THE WEIGHTS VECTOR
-        for (i in 0...VISEMES.length) {
-            var viseme: String = VISEMES[i] ;
-            var current_weight: Float = viseme_weights[i] ;
-            if (viseme == this.active_viseme) {  // This has to ramp up to 1.0
-                var inc: Float = this.ramp_up_speed * delta_time ;
-                current_weight += inc ;
-                if(current_weight > 1.0) {
-                    current_weight = 1.0 ;
-                }
-
-            } else {  // This has to ramp down to 0.0
-                var dec: Float = - this.ramp_down_speed * delta_time ;
-                current_weight += dec ;
-                if(current_weight < 0.0) {
-                  current_weight = 0.0 ;
-                }
-
-            }
-
-            // update the weight
-            viseme_weights[i] = current_weight ;
-        }
 
     }  // end update
 

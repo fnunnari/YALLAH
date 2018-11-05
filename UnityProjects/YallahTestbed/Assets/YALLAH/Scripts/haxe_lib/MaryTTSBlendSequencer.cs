@@ -126,7 +126,7 @@ namespace haxe.root {
 					
 				}
 				
-				global::haxe.Log.trace.__hx_invoke2_o(default(double), "Consistency check...", default(double), new global::haxe.lang.DynamicObject(new int[]{302979532, 1547539107, 1648581351}, new object[]{"new", "MaryTTSBlendSequencer", "MaryTTSBlendSequencer.hx"}, new int[]{1981972957}, new double[]{((double) (100) )}));
+				global::haxe.Log.trace.__hx_invoke2_o(default(double), "Consistency check...", default(double), new global::haxe.lang.DynamicObject(new int[]{302979532, 1547539107, 1648581351}, new object[]{"new", "MaryTTSBlendSequencer", "MaryTTSBlendSequencer.hx"}, new int[]{1981972957}, new double[]{((double) (101) )}));
 				if (( __hx_this.VISEMES.indexOf(__hx_this.DEFAULT_VISEME, default(global::haxe.lang.Null<int>)) == -1 )) {
 					throw global::haxe.lang.HaxeException.wrap(new global::haxe.root.MaryTTSException(((string) (global::haxe.lang.Runtime.concat(global::haxe.lang.Runtime.concat("Default viseme ", global::haxe.root.Std.@string(__hx_this)), ".DEFAULT_VISEME is not listed.")) )));
 				}
@@ -144,7 +144,7 @@ namespace haxe.root {
 					
 				}
 				
-				global::haxe.Log.trace.__hx_invoke2_o(default(double), "Check done.", default(double), new global::haxe.lang.DynamicObject(new int[]{302979532, 1547539107, 1648581351}, new object[]{"new", "MaryTTSBlendSequencer", "MaryTTSBlendSequencer.hx"}, new int[]{1981972957}, new double[]{((double) (112) )}));
+				global::haxe.Log.trace.__hx_invoke2_o(default(double), "Check done.", default(double), new global::haxe.lang.DynamicObject(new int[]{302979532, 1547539107, 1648581351}, new object[]{"new", "MaryTTSBlendSequencer", "MaryTTSBlendSequencer.hx"}, new int[]{1981972957}, new double[]{((double) (113) )}));
 			}
 		}
 		
@@ -167,10 +167,10 @@ namespace haxe.root {
 		
 		public static void local_test() {
 			unchecked {
-				global::haxe.Log.trace.__hx_invoke2_o(default(double), "Instance...", default(double), new global::haxe.lang.DynamicObject(new int[]{302979532, 1547539107, 1648581351}, new object[]{"local_test", "MaryTTSBlendSequencer", "MaryTTSBlendSequencer.hx"}, new int[]{1981972957}, new double[]{((double) (355) )}));
+				global::haxe.Log.trace.__hx_invoke2_o(default(double), "Instance...", default(double), new global::haxe.lang.DynamicObject(new int[]{302979532, 1547539107, 1648581351}, new object[]{"local_test", "MaryTTSBlendSequencer", "MaryTTSBlendSequencer.hx"}, new int[]{1981972957}, new double[]{((double) (362) )}));
 				global::haxe.root.MaryTTSBlendSequencer seq = new global::haxe.root.MaryTTSBlendSequencer(((string) ("MaryTTS-PhonemeMap-MBLab1_6.json") ));
 				seq.stop_sequencer();
-				global::haxe.Log.trace.__hx_invoke2_o(default(double), "Reading durations...", default(double), new global::haxe.lang.DynamicObject(new int[]{302979532, 1547539107, 1648581351}, new object[]{"local_test", "MaryTTSBlendSequencer", "MaryTTSBlendSequencer.hx"}, new int[]{1981972957}, new double[]{((double) (361) )}));
+				global::haxe.Log.trace.__hx_invoke2_o(default(double), "Reading durations...", default(double), new global::haxe.lang.DynamicObject(new int[]{302979532, 1547539107, 1648581351}, new object[]{"local_test", "MaryTTSBlendSequencer", "MaryTTSBlendSequencer.hx"}, new int[]{1981972957}, new double[]{((double) (368) )}));
 				string durations = global::sys.io.File.getContent("data/realized_duration.txt");
 				seq.parse_realized_durations(durations);
 				int n_visemes = seq.get_viseme_count();
@@ -197,7 +197,7 @@ namespace haxe.root {
 					
 				}
 				
-				global::haxe.Log.trace.__hx_invoke2_o(default(double), "Main finished.", default(double), new global::haxe.lang.DynamicObject(new int[]{302979532, 1547539107, 1648581351}, new object[]{"local_test", "MaryTTSBlendSequencer", "MaryTTSBlendSequencer.hx"}, new int[]{1981972957}, new double[]{((double) (381) )}));
+				global::haxe.Log.trace.__hx_invoke2_o(default(double), "Main finished.", default(double), new global::haxe.lang.DynamicObject(new int[]{302979532, 1547539107, 1648581351}, new object[]{"local_test", "MaryTTSBlendSequencer", "MaryTTSBlendSequencer.hx"}, new int[]{1981972957}, new double[]{((double) (388) )}));
 			}
 		}
 		
@@ -242,12 +242,12 @@ namespace haxe.root {
 				}
 				
 				double after = global::haxe.root.Sys.time();
-				global::haxe.Log.trace.__hx_invoke2_o(default(double), global::haxe.lang.Runtime.concat(global::haxe.lang.Runtime.concat(global::haxe.lang.Runtime.concat(global::haxe.lang.Runtime.concat("Simulated ", global::haxe.lang.Runtime.toString(NUM_ITER)), " sessions of "), global::haxe.lang.Runtime.toString(SIM_TIME)), " seconds"), default(double), new global::haxe.lang.DynamicObject(new int[]{302979532, 1547539107, 1648581351}, new object[]{"test_speed", "MaryTTSBlendSequencer", "MaryTTSBlendSequencer.hx"}, new int[]{1981972957}, new double[]{((double) (419) )}));
+				global::haxe.Log.trace.__hx_invoke2_o(default(double), global::haxe.lang.Runtime.concat(global::haxe.lang.Runtime.concat(global::haxe.lang.Runtime.concat(global::haxe.lang.Runtime.concat("Simulated ", global::haxe.lang.Runtime.toString(NUM_ITER)), " sessions of "), global::haxe.lang.Runtime.toString(SIM_TIME)), " seconds"), default(double), new global::haxe.lang.DynamicObject(new int[]{302979532, 1547539107, 1648581351}, new object[]{"test_speed", "MaryTTSBlendSequencer", "MaryTTSBlendSequencer.hx"}, new int[]{1981972957}, new double[]{((double) (426) )}));
 				double elapsed = ( after - before );
 				double iter_per_sec = ( iterations / elapsed );
-				global::haxe.Log.trace.__hx_invoke2_o(default(double), global::haxe.lang.Runtime.concat("Number of iterations: ", global::haxe.lang.Runtime.toString(iterations)), default(double), new global::haxe.lang.DynamicObject(new int[]{302979532, 1547539107, 1648581351}, new object[]{"test_speed", "MaryTTSBlendSequencer", "MaryTTSBlendSequencer.hx"}, new int[]{1981972957}, new double[]{((double) (422) )}));
-				global::haxe.Log.trace.__hx_invoke2_o(default(double), global::haxe.lang.Runtime.concat("Elapsed (secs): ", global::haxe.lang.Runtime.toString(elapsed)), default(double), new global::haxe.lang.DynamicObject(new int[]{302979532, 1547539107, 1648581351}, new object[]{"test_speed", "MaryTTSBlendSequencer", "MaryTTSBlendSequencer.hx"}, new int[]{1981972957}, new double[]{((double) (423) )}));
-				global::haxe.Log.trace.__hx_invoke2_o(default(double), global::haxe.lang.Runtime.concat("Iter / sec: ", global::haxe.lang.Runtime.toString(iter_per_sec)), default(double), new global::haxe.lang.DynamicObject(new int[]{302979532, 1547539107, 1648581351}, new object[]{"test_speed", "MaryTTSBlendSequencer", "MaryTTSBlendSequencer.hx"}, new int[]{1981972957}, new double[]{((double) (424) )}));
+				global::haxe.Log.trace.__hx_invoke2_o(default(double), global::haxe.lang.Runtime.concat("Number of iterations: ", global::haxe.lang.Runtime.toString(iterations)), default(double), new global::haxe.lang.DynamicObject(new int[]{302979532, 1547539107, 1648581351}, new object[]{"test_speed", "MaryTTSBlendSequencer", "MaryTTSBlendSequencer.hx"}, new int[]{1981972957}, new double[]{((double) (429) )}));
+				global::haxe.Log.trace.__hx_invoke2_o(default(double), global::haxe.lang.Runtime.concat("Elapsed (secs): ", global::haxe.lang.Runtime.toString(elapsed)), default(double), new global::haxe.lang.DynamicObject(new int[]{302979532, 1547539107, 1648581351}, new object[]{"test_speed", "MaryTTSBlendSequencer", "MaryTTSBlendSequencer.hx"}, new int[]{1981972957}, new double[]{((double) (430) )}));
+				global::haxe.Log.trace.__hx_invoke2_o(default(double), global::haxe.lang.Runtime.concat("Iter / sec: ", global::haxe.lang.Runtime.toString(iter_per_sec)), default(double), new global::haxe.lang.DynamicObject(new int[]{302979532, 1547539107, 1648581351}, new object[]{"test_speed", "MaryTTSBlendSequencer", "MaryTTSBlendSequencer.hx"}, new int[]{1981972957}, new double[]{((double) (431) )}));
 			}
 		}
 		
@@ -305,6 +305,7 @@ namespace haxe.root {
 		
 		
 		public virtual void stop_sequencer() {
+			this.active_viseme = null;
 			this.ready_to_speak = false;
 		}
 		
@@ -345,7 +346,7 @@ namespace haxe.root {
 					
 				}
 				
-				global::haxe.Log.trace.__hx_invoke2_o(default(double), global::haxe.lang.Runtime.concat(global::haxe.lang.Runtime.concat("PARSED (", global::haxe.lang.Runtime.toString(parsed_durations.length)), ") phonemes."), default(double), new global::haxe.lang.DynamicObject(new int[]{302979532, 1547539107, 1648581351}, new object[]{"parse_realized_durations", "MaryTTSBlendSequencer", "MaryTTSBlendSequencer.hx"}, new int[]{1981972957}, new double[]{((double) (173) )}));
+				global::haxe.Log.trace.__hx_invoke2_o(default(double), global::haxe.lang.Runtime.concat(global::haxe.lang.Runtime.concat("PARSED (", global::haxe.lang.Runtime.toString(parsed_durations.length)), ") phonemes."), default(double), new global::haxe.lang.DynamicObject(new int[]{302979532, 1547539107, 1648581351}, new object[]{"parse_realized_durations", "MaryTTSBlendSequencer", "MaryTTSBlendSequencer.hx"}, new int[]{1981972957}, new double[]{((double) (175) )}));
 				int i = 0;
 				{
 					int _g2 = 0;
@@ -376,7 +377,7 @@ namespace haxe.root {
 				}
 				
 				this.ready_to_speak = true;
-				global::haxe.Log.trace.__hx_invoke2_o(default(double), global::haxe.lang.Runtime.concat(global::haxe.lang.Runtime.concat("MAPPED (", global::haxe.lang.Runtime.toString(this.realized_visemes.length)), "):"), default(double), new global::haxe.lang.DynamicObject(new int[]{302979532, 1547539107, 1648581351}, new object[]{"parse_realized_durations", "MaryTTSBlendSequencer", "MaryTTSBlendSequencer.hx"}, new int[]{1981972957}, new double[]{((double) (205) )}));
+				global::haxe.Log.trace.__hx_invoke2_o(default(double), global::haxe.lang.Runtime.concat(global::haxe.lang.Runtime.concat("MAPPED (", global::haxe.lang.Runtime.toString(this.realized_visemes.length)), "):"), default(double), new global::haxe.lang.DynamicObject(new int[]{302979532, 1547539107, 1648581351}, new object[]{"parse_realized_durations", "MaryTTSBlendSequencer", "MaryTTSBlendSequencer.hx"}, new int[]{1981972957}, new double[]{((double) (207) )}));
 			}
 		}
 		
@@ -398,10 +399,6 @@ namespace haxe.root {
 					throw global::haxe.lang.HaxeException.wrap(new global::haxe.root.MaryTTSException(((string) (global::haxe.lang.Runtime.concat(global::haxe.lang.Runtime.concat(global::haxe.lang.Runtime.concat(global::haxe.lang.Runtime.concat("Viseme weight vector has wrong size.", " Expected "), global::haxe.lang.Runtime.toString(this.VISEMES.length)), ", found "), global::haxe.lang.Runtime.toString(( ((double[]) (viseme_weights) ) as global::System.Array ).Length))) )));
 				}
 				
-				if (( this.ready_to_speak == false )) {
-					return;
-				}
-				
 				if (( this.last_time == -1 )) {
 					this.last_time = now;
 					this.speak_start_time = now;
@@ -413,6 +410,39 @@ namespace haxe.root {
 				double delta_time = ( now - this.last_time );
 				this.last_time = now;
 				elapsed_time += global::haxe.root.MaryTTSBlendSequencer.ANTICIPATION_SECS;
+				{
+					int _g1 = 0;
+					int _g = this.VISEMES.length;
+					while (( _g1 < _g )) {
+						int i = _g1++;
+						string viseme = global::haxe.lang.Runtime.toString(this.VISEMES[i]);
+						double current_weight = ((double) (((double[]) (viseme_weights) )[i]) );
+						if (string.Equals(viseme, this.active_viseme)) {
+							double inc = ( this.ramp_up_speed * delta_time );
+							current_weight += inc;
+							if (( current_weight > 1.0 )) {
+								current_weight = 1.0;
+							}
+							
+						}
+						else {
+							double dec = (  - (this.ramp_down_speed)  * delta_time );
+							current_weight += dec;
+							if (( current_weight < 0.0 )) {
+								current_weight = 0.0;
+							}
+							
+						}
+						
+						((double[]) (viseme_weights) )[i] = current_weight;
+					}
+					
+				}
+				
+				if (( this.ready_to_speak == false )) {
+					return;
+				}
+				
 				int phonemes_count = this.realized_visemes.length;
 				if (( this.position_tts < phonemes_count )) {
 					double time_to_wait = this.realized_times[this.position_tts];
@@ -441,35 +471,6 @@ namespace haxe.root {
 					
 					if (( elapsed_time > ( last_time_to_wait + 1.0 ) )) {
 						this.ready_to_speak = false;
-					}
-					
-				}
-				
-				{
-					int _g1 = 0;
-					int _g = this.VISEMES.length;
-					while (( _g1 < _g )) {
-						int i = _g1++;
-						string viseme = global::haxe.lang.Runtime.toString(this.VISEMES[i]);
-						double current_weight = ((double) (((double[]) (viseme_weights) )[i]) );
-						if (string.Equals(viseme, this.active_viseme)) {
-							double inc = ( this.ramp_up_speed * delta_time );
-							current_weight += inc;
-							if (( current_weight > 1.0 )) {
-								current_weight = 1.0;
-							}
-							
-						}
-						else {
-							double dec = (  - (this.ramp_down_speed)  * delta_time );
-							current_weight += dec;
-							if (( current_weight < 0.0 )) {
-								current_weight = 0.0;
-							}
-							
-						}
-						
-						((double[]) (viseme_weights) )[i] = current_weight;
 					}
 					
 				}
