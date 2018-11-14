@@ -93,12 +93,12 @@ namespace haxe.root {
 		}
 		
 		
-		public MaryTTSBlendSequencer(string tts_info_filename) {
-			global::haxe.root.MaryTTSBlendSequencer.__hx_ctor__MaryTTSBlendSequencer(this, tts_info_filename);
+		public MaryTTSBlendSequencer(string tts_info_json) {
+			global::haxe.root.MaryTTSBlendSequencer.__hx_ctor__MaryTTSBlendSequencer(this, tts_info_json);
 		}
 		
 		
-		public static void __hx_ctor__MaryTTSBlendSequencer(global::haxe.root.MaryTTSBlendSequencer __hx_this, string tts_info_filename) {
+		public static void __hx_ctor__MaryTTSBlendSequencer(global::haxe.root.MaryTTSBlendSequencer __hx_this, string tts_info_json) {
 			unchecked {
 				__hx_this.ramp_down_speed = global::haxe.root.MaryTTSBlendSequencer.DEFAULT_RAMP_DOWN_SPEED;
 				__hx_this.ramp_up_speed = global::haxe.root.MaryTTSBlendSequencer.DEFAULT_RAMP_UP_SPEED;
@@ -109,8 +109,7 @@ namespace haxe.root {
 				__hx_this.last_time = ((double) (((int) (-1) )) );
 				__hx_this.realized_visemes = null;
 				__hx_this.realized_times = null;
-				string tts_info_str = global::sys.io.File.getContent(tts_info_filename);
-				object tts_info = new global::haxe.format.JsonParser(((string) (tts_info_str) )).parseRec();
+				object tts_info = new global::haxe.format.JsonParser(((string) (tts_info_json) )).parseRec();
 				__hx_this.DEFAULT_VISEME = global::haxe.lang.Runtime.toString(global::haxe.lang.Runtime.getField(tts_info, "default_viseme", 1072057371, true));
 				__hx_this.VISEMES = ((global::haxe.root.Array<object>) (global::haxe.root.Array<object>.__hx_cast<object>(((global::haxe.root.Array) (global::haxe.lang.Runtime.getField(tts_info, "visemes", 545779894, true)) ))) );
 				__hx_this.PHONEMES_MAP = new global::haxe.ds.StringMap<object>();

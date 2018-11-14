@@ -403,9 +403,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9b1af78d52f1b4ee28f6de7ba9a25e8d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  server: 2
-  mary_tts_voice: 8
+  maryServerAndPort: localhost:59125
+  mary_tts_voice: 6
   blendshapesMultiplier: 1
+  additionalHTTPRequestParameters: 
   saySomething: 0
   stopSpeaking: 0
 --- !u!114 &672330623

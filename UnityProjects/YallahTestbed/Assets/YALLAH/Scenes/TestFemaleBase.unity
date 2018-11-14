@@ -373,13 +373,13 @@ MonoBehaviour:
   - {fileID: 7400006, guid: 44dae5db9a0354d498c216edccbde858, type: 3}
   - {fileID: 7400004, guid: 44dae5db9a0354d498c216edccbde858, type: 3}
   animationTransitionTime: 0.4
+  playRandomAnim: 0
   walkCycleAnimationClip: {fileID: 7400010, guid: 44dae5db9a0354d498c216edccbde858,
     type: 3}
   turnRightAnimationClip: {fileID: 7400012, guid: 44dae5db9a0354d498c216edccbde858,
     type: 3}
   turnLeftAnimationClip: {fileID: 7400014, guid: 44dae5db9a0354d498c216edccbde858,
     type: 3}
-  playRandomAnim: 0
 --- !u!114 &1358797387
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -396,6 +396,7 @@ MonoBehaviour:
   distanceThreshold: 0.5
   rotationThresholdDegs: 5
   forceStart: 0
+  forceStop: 0
 --- !u!1 &1470251582 stripped
 GameObject:
   m_PrefabParentObject: {fileID: 100060, guid: 44dae5db9a0354d498c216edccbde858, type: 3}
@@ -458,10 +459,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9b1af78d52f1b4ee28f6de7ba9a25e8d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  server: 2
-  mary_tts_voice: 0
+  maryServerAndPort: localhost:59125
+  mary_tts_voice: 5
   blendshapesMultiplier: 1
+  additionalHTTPRequestParameters: 
   saySomething: 0
+  stopSpeaking: 0
 --- !u!114 &1470251588
 MonoBehaviour:
   m_ObjectHideFlags: 0

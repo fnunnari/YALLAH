@@ -73,15 +73,15 @@ class MaryTTSBlendSequencer {
 
 
 
-    public function new(tts_info_filename: String) {
+    public function new(tts_info_json: String) {
 
         //
         // Load the JSON file
-        var tts_info_str: String = sys.io.File.getContent(tts_info_filename);
+        // var tts_info_str: String = sys.io.File.getContent(tts_info_filename);
         // Sys.println("File loaded") ;
         // Sys.println(tts_info_str) ;
 
-        var tts_info = Json.parse(tts_info_str) ;
+        var tts_info = Json.parse(tts_info_json) ;
         // Sys.println(tts_info) ;
 
         //
