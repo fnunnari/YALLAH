@@ -18,6 +18,12 @@ The goal of YALLAH is to allow 3D content creators to **generate, customize, ani
 
 We aim at providing a common authoring pipeline, framework, and API for the creation of multi-functional virtual humans that can be used in different application domains: video games, embodied conversational agents, virtual assistants, front-end for chat-bot systems.
 
+## Demos
+
+* **YALLENS** Using a YALLAH-generated character with Hololens 
+  <a href="http://www.youtube.com/watch?v=LcQ5Rn45EeI" target="_blank"><img src="http://img.youtube.com/vi/LcQ5Rn45EeI/0.jpg" alt="Yallens Video on YouTube" width="240" height="180" border="5" /></a>
+* **DECAD** (DFKI Embodied Conversational Agent Demo) at [http://decad.sb.dfki.de](http://decad.sb.dfki.de) demonstrates an online running demo of a virtual human created with YALLAH.
+
 ## Documentation
 
 The official [YALLAH documentation](https://github.com/fnunnari/YALLAH/wiki) is maintained on the online github wiki pages.
@@ -48,7 +54,6 @@ There are video tutorials on YouTube at the following playlist: <https://www.you
 * This project is developed at the [Sign Language Synthesis and Interation group](https://slsi.dfki.de/),
   a research group of the [German Research Center for Artificial Intelligence (DFKI)](https://www.dfki.de/)
   and funded by the [Cluster of Excellence on Multimodal Computing and Interaction (MMCI)](http://www.mmci.uni-saarland.de/) in Saarbrücken, Germany.
-* **DECAD** (DFKI Embodied Conversational Agent Demo) at [http://decad.sb.dfki.de](http://decad.sb.dfki.de) demonstrates an online running demo of a virtual human created with YALLAH.
 
 ## People
 
