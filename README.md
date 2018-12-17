@@ -21,7 +21,7 @@ We aim at providing a common authoring pipeline, framework, and API for the crea
 ## Demos
 
 * **YALLENS** Using a YALLAH-generated character with Hololens 
-  <a href="http://www.youtube.com/watch?v=LcQ5Rn45EeI" target="_blank"><img src="http://img.youtube.com/vi/LcQ5Rn45EeI/0.jpg" alt="Yallens Video on YouTube" width="3.55cm" height="2cm" /></a>
+  <a href="http://www.youtube.com/watch?v=LcQ5Rn45EeI" target="_blank"><img src="http://img.youtube.com/vi/LcQ5Rn45EeI/0.jpg" alt="Yallens Video on YouTube" width="160" height="90" /></a>
 * **DECAD** (DFKI Embodied Conversational Agent Demo) at [http://decad.sb.dfki.de](http://decad.sb.dfki.de) demonstrates an online running demo of a virtual human created with YALLAH.
 
 ## Documentation
