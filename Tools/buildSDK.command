@@ -1,6 +1,8 @@
 #!/usr/bin/env bash
 
-UNITY_EXE=/Applications/Unity/Unity.app/Contents/MacOS/Unity
+UNITY_EXE=/Applications/Unity/Hub/Editor/2017.4.29f1/Unity.app/Contents/MacOS/Unity
+
+WIKI_DIR=../../YALLAH.wiki
 
 get_abs_filename() {
   # $1 : relative filename
@@ -14,6 +16,27 @@ ABS_DIR=$(get_abs_filename $DIR)
 echo Running from $ABS_DIR
 cd "$ABS_DIR"
 
+#
+# Check if Unity exe is relly there
+echo "Checking for Unity in '$UNITY_EXE' ..."
+if [ -f $UNITY_EXE ]; then
+   echo "Found."
+else
+   echo "Unity executable not found. Please, edit variable UNITY_EXE and retry."
+   exit 10
+fi
+
+
+#
+# Check if The Wiki directory exists
+echo "Checking for Wiki in '$WIKI_DIR' ..."
+if [ -d $WIKI_DIR ]; then
+   echo "Found."
+else
+   echo "Wiki directory not found. Please, edit variable WIKI_DIR and retry."
+   exit 10
+fi
+
 
 #
 # Make directories
@@ -23,6 +46,16 @@ echo "Making temporary directory '$RELEASE_DIR'..."
 mkdir $RELEASE_DIR
 ABS_RELEASE_DIR=$(get_abs_filename $RELEASE_DIR)
 echo "Release dir (abs path): '$ABS_RELEASE_DIR'..."
+
+#
+# Check if a release with the same name is already there
+echo "Checking if the archive '$RELEASE_DIR.zip' is already there ..."
+if [ -f ../Releases/$RELEASE_DIR.zip ]; then
+   echo "Already created in ../Releases/. Please, remove to create a new one."
+   exit 10
+else
+   echo "not yet."
+fi
 
 
 #
@@ -49,7 +82,7 @@ mv ../UnityProjects/YallahTestbed/$PKG_NAME $ABS_RELEASE_DIR
 #
 # Wiki/Docs
 echo "Archiving the Wiki..."
-pushd ../../YALLAH-wiki
+pushd $WIKI_DIR
 git archive --format zip --output $ABS_RELEASE_DIR/Wiki.zip master
 popd
 
