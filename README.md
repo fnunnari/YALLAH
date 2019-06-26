@@ -26,7 +26,7 @@ We aim at providing a common authoring pipeline, framework, and API for the crea
 
 ## Documentation
 
-The official [YALLAH documentation](https://github.com/fnunnari/YALLAH/wiki) is maintained on the online github wiki pages.
+The official [YALLAH documentation](https://github.com/yallah-team/YALLAH/wiki) is maintained on the online github wiki pages.
 
 ## Video Tutorials
 
@@ -48,6 +48,8 @@ There are video tutorials on YouTube at the following playlist: <https://www.you
 
 * The 3D authoring pipeline relies on [Blender](https://www.blender.org/).
 * The character generation heavily relies on the excellent [Manuel Bastioni Laboratory](http://www.manuelbastioni.com/) character generator.
+  * IMPORTANT! Towards the end of 2018, the original author dropped the development. The follow-up is called MB-Lab and is available at the following git repo: <https://github.com/animate1978/MB-Lab>.
+  * The MB-Lab v1.6.1a, currently used for this project, is available for direct download at <https://github.com/NumesSanguis/FACSvatar/releases/download/v0.3.4-alpha-release/manuelbastionilab_161a.zip>.
 * The real-time 3D rendering targets [Unity](https://unity3d.com/).
 * The text-to-speech synthesis relies on the [MARY Text-to-Speech System (MaryTTS)](http://mary.dfki.de/)
 * The [Haxe](https://haxe.org/) meta-programming language is used to develop some of the code.
@@ -59,8 +61,8 @@ There are video tutorials on YouTube at the following playlist: <https://www.you
 
 ### Current Contributors
 * Fabrizio Nunnari (Research & Development)
-* Kiarash Tamaddon (Development)
 * Alexis Heloir (Research, Testing)
 
 ### Past Contributors
+* Kiarash Tamaddon (Development)
 * Timo Gühring (Research & Development: text to speech, Haxe ports)
