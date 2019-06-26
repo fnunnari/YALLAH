@@ -1,3 +1,13 @@
+# WARNING WARNING - PROJECT MOVED
+
+This project will be maintained on the new repository at: <https://github.com/yallah-team/YALLAH>.
+
+The new Wiki address is: <https://github.com/yallah-team/YALLAH/wiki>.
+
+This repository will not be updated further.
+
+(June 26th, 2019)
+
 # YALLAH
 
 YALLAH stands for **Yet Another Low-Level Agent Handler**.
