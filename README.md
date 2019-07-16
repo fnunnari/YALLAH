@@ -36,20 +36,22 @@ There are video tutorials on YouTube at the following playlist: <https://www.you
 2. Import the Character in Unity <https://youtu.be/bWzclpmE3ag>
 3. Configure the Motion Controllers in Unity <https://youtu.be/dD2oNAgDN7k>
 
-## Download
+## Downloads
 
-* [YALLAH-SDK-YYMMDD.zip](http://www.dfki.de/~fanu01/YALLAH/Releases) contains:
+All downloads here: [https://cloud.dfki.de/owncloud/index.php/s/WxjR8X4MH7qGtxn](https://cloud.dfki.de/owncloud/index.php/s/WxjR8X4MH7qGtxn)
+
+* YALLAH-SDK-YYMMDD.zip contains:
   * `yallah.zip` - the Blender add-on needed to author a new virtual character.
   * `YALLAH_Unity-YYMMDD.unitypackage` - all the scripts and basic assets to run the virtual character in Unity.
-  * `Wiki.zip` - all the documents. A dump of the online Wiki.
-* [YALLAH-Assets-YYMMDD.zip](http://www.dfki.de/~fanu01/YALLAH/Assets): a collection of assets to dress and animate your characters.
+  * `Wiki.zip` - all the documents: a dump of the online Wiki.
+* YALLAH-Assets-YYMMDD.zip: a collection of assets to dress and animate your characters.
 
 ## Links
 
 * The 3D authoring pipeline relies on [Blender](https://www.blender.org/).
 * The character generation heavily relies on the excellent [Manuel Bastioni Laboratory](http://www.manuelbastioni.com/) character generator.
   * IMPORTANT! Towards the end of 2018, the original author dropped the development. The follow-up is called MB-Lab and is available at the following git repo: <https://github.com/animate1978/MB-Lab>.
-  * The MB-Lab v1.6.1a, currently used for this project, is available for direct download at <https://github.com/NumesSanguis/FACSvatar/releases/download/v0.3.4-alpha-release/manuelbastionilab_161a.zip>.
+  * The MB-Lab v1.6.1a, currently used for this project, is available for direct download at <https://cloud.dfki.de/owncloud/index.php/s/558mWyCq7BDS58t>.
 * The real-time 3D rendering targets [Unity](https://unity3d.com/).
 * The text-to-speech synthesis relies on the [MARY Text-to-Speech System (MaryTTS)](http://mary.dfki.de/)
 * The [Haxe](https://haxe.org/) meta-programming language is used to develop some of the code.
