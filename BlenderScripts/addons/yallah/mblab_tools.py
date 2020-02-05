@@ -52,7 +52,7 @@ def is_mblab_body(mesh_obj: bpy.types.Object) -> bool:
 
 def character_prefix(mesh_obj: bpy.types.Object) -> Optional[str]:
     """Get the prefix that has been used to create the character.
-    :param mesh_obj: The MESH object, as created and named by MBLab.
+    :param mesh_obj: The MESH object, as created and named by MBLab (e.g., Anna_body).
     """
 
     import re
@@ -471,7 +471,7 @@ class SetRelaxedPoseToFingers(bpy.types.Operator):
             relaxed_finger_anim = json.load(fp=relaxed_finger_anim_file)
 
         if type(relaxed_finger_anim) != dict:
-            self.report({'ERROR'}, "File '{}' should containt a dictionary at top level".format(RELAXED_FINGER_ANIM))
+            self.report({'ERROR'}, "File '{}' should contain a dictionary at top level".format(RELAXED_FINGER_ANIM))
             return {'CANCELLED'}
 
         for data_path in relaxed_finger_anim.keys():  # type: str

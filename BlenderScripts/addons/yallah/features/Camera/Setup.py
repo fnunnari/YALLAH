@@ -43,10 +43,3 @@ if 'head_top' not in arm.edit_bones:
     head_top.tail = Vector(head_top.head) + Vector((0,0, 0.01))
 
 bpy.ops.object.mode_set(mode='OBJECT')
-
-
-
-
-
-
-
