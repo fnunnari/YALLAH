@@ -248,7 +248,7 @@ class SetupMBLabCharacter(bpy.types.Operator):
             return {'CANCELLED'}
 
         if arm_obj.type != 'ARMATURE':
-            self.report({'ERROR'}, "Character Mesh parent object {} must be Armature".format(arm_obj.name))
+            self.report({'ERROR'}, "Character Mesh parent object {} must be an Armature".format(arm_obj.name))
             return {'CANCELLED'}
 
         assert arm_obj.type == 'ARMATURE'
@@ -258,7 +258,6 @@ class SetupMBLabCharacter(bpy.types.Operator):
             self.report({'ERROR'}, "Character not properly named (should be, for example: 'Anna_body')."
                                    " Please, use the MBLab prefix during finalization.")
             return {'CANCELLED'}
-
 
         #
         # A TEST TO CHECK FOR WORKING DIRECTORIES AND PATHS
@@ -280,6 +279,7 @@ class SetupMBLabCharacter(bpy.types.Operator):
                     if space.type == 'VIEW_3D':
                         space.viewport_shade = 'MATERIAL'
 
+        # Call the script
         filepath = os.path.join(YALLAH_FEATURES_DIR, "RealTimeMaterials/Setup.py")
         exec(compile(open(filepath).read(), filepath, 'exec'))
 
@@ -306,7 +306,15 @@ class SetupMBLabCharacter(bpy.types.Operator):
         #
         # CREATE THE BONES NEEDED FOR DYNAMIC CAMERA FRAMING
         #
-        filepath = os.path.join(YALLAH_FEATURES_DIR, "Camera/Setup.py")
+        filepath = os.path.join(YALLAH_FEATURES_DIR, "HeadBone/Setup.py")
+        exec(compile(open(filepath).read(), filepath, 'exec'))
+
+        SetupMBLabCharacter.clear_selection(mesh_obj=mesh_obj)
+
+        #
+        # CREATE THE DUMMY BONES NEEDED TO FILL THE GAPS IN UNCONNECTED BONES
+        #
+        filepath = os.path.join(YALLAH_FEATURES_DIR, "ConnectBones/Setup.py")
         exec(compile(open(filepath).read(), filepath, 'exec'))
 
         SetupMBLabCharacter.clear_selection(mesh_obj=mesh_obj)
@@ -314,7 +322,7 @@ class SetupMBLabCharacter(bpy.types.Operator):
         #
         # REMOVE THE SURFACE SUBDIVISION MODIFIER
         #
-        # We need to remove this, otherwise the blendshapes will not be visible in Unity
+        # We need to remove this, otherwise the blend shapes will not be visible in Unity
         #
         # n_modifires = len(mesh_obj.modifiers)
         # print("There are {} modifiers".format(n_modifires))

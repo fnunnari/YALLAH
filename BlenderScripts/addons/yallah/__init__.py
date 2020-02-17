@@ -18,7 +18,6 @@ from yallah.anim_utils import SetDummyUserToAllActions
 from yallah.anim_utils import CreateAPoseAction
 
 
-
 import yallah.shape_key_utils
 import yallah.vertex_utils
 import yallah.anim_utils
@@ -28,7 +27,7 @@ bl_info = {
     "name": "YALLAH (Yet Another Low-Level Avatar Handler)",
     "description": "Blender support scripts for the YALLAH project.",
     "author": "Fabrizio Nunnari",
-    "version": (1, 0, 0),
+    "version": (1, 0, 1),
     "blender": (2, 79, 0),
     "location": "View3D > Toolbar",
     "warning": "",

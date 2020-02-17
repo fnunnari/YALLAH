@@ -30,18 +30,13 @@ EYE_NAME_L = 'eye_L'
 EYES_PARENT_NAME = 'head'
 
 # To discover the ids of the eye vertices, select the vertices in MESH mode,
-# go back to object mdde and then run this small script
+# go back to object mode and then run this small script
 # mesh = mesh_obj.data
 #
 # for v in mesh.vertices:
 #     if v.select:
 #         print(v.index)
 
-
-# EYE_PUPIL_CENTER_VERTEX_ID_R = 6941
-# EYE_BALL_CENTER_VERTEX_ID_R = 6670
-# EYE_PUPIL_CENTER_VERTEX_ID_L = 593
-# EYE_BALL_CENTER_VERTEX_ID_L = 322
 
 # For each character mesh type, we list the indices of the vertices to select when calculating the center of the eyes.
 # There are normally two indices: pupil center and eye-ball center
