@@ -1,8 +1,6 @@
 [
   ["pelvis", "thigh_R"],
-  ["pelvis", "thigh_twist_R"],
   ["pelvis", "thigh_L"],
-  ["pelvis", "thigh_twist_L"],
   ["spine03", "breast_R"],
   ["spine03", "breast_L"],
   ["spine03", "clavicle_R"],
