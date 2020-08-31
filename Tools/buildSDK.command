@@ -1,6 +1,6 @@
 #!/usr/bin/env bash
 
-UNITY_EXE=/Applications/Unity/Hub/Editor/2017.4.29f1/Unity.app/Contents/MacOS/Unity
+UNITY_EXE=/Applications/Unity/Hub/Editor/2019.4.6f1/Unity.app/Contents/MacOS/Unity
 
 WIKI_DIR=../../YALLAH.wiki
 
