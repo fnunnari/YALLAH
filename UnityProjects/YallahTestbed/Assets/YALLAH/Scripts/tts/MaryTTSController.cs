@@ -153,7 +153,7 @@ public class MaryTTSController : MonoBehaviour {
     /** Counter to advance through the demo sentences. */
     private static int SENTENCE_POSITION = -1;
 
-	#endif
+#endif
 
 
 	void Awake () {
@@ -280,7 +280,7 @@ public class MaryTTSController : MonoBehaviour {
 	void Update() {
 
 
-		#if UNITY_EDITOR
+	#if UNITY_EDITOR
 		if (this.saySomething) {
 			VoiceInfo voice_info = MaryTTSController.VOICES[this.mary_tts_voice];
 			string[] locale_sentences = TEST_SENTENCES[voice_info.locale] ;
@@ -299,7 +299,7 @@ public class MaryTTSController : MonoBehaviour {
             this.MaryTTSstopSpeaking();
             this.stopSpeaking = false;
         }
-		#endif
+	#endif
 
 
         // Asks teh sequencer to update the viseme_weights vector with the new weights. */
