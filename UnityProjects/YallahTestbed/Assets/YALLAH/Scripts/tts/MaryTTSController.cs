@@ -11,6 +11,7 @@ using UnityEngine;
 
 using haxe.root;
 
+
 /**
  * Blender blend shape value range: 0.0-1.0
  * Unity blend shape value range: 0.0-100.0
@@ -156,7 +157,28 @@ public class MaryTTSController : MonoBehaviour {
 #endif
 
 
-	void Awake () {
+    #region Listener
+    public interface MaryTTSListener
+    {
+        void SpeechFinished(System.Object param);
+    }
+
+    private System.Object currentListenerParameter = null;
+    private List<MaryTTSListener> listeners = new List<MaryTTSListener>();
+
+    public void AddListener(MaryTTSListener l)
+    {
+        this.listeners.Add(l);
+    }
+
+    public void RemoveListener(MaryTTSListener l)
+    {
+        this.listeners.Remove(l);
+    }
+    #endregion
+
+
+    void Awake () {
 		this.skinnedMeshRenderer = GetComponent<SkinnedMeshRenderer> ();
         this.skinnedMesh = GetComponent<SkinnedMeshRenderer> ().sharedMesh;
 
@@ -188,8 +210,21 @@ public class MaryTTSController : MonoBehaviour {
         this.viseme_weights = new double[this.sequencer.get_viseme_count()];
 	}
 
-	public void MaryTTSspeak(string text) {
-		StartCoroutine (ProcessInputText (text));
+    public void MaryTTSspeak(string text)
+    {
+        this.MaryTTSspeak(text, null);
+    }
+
+    public void MaryTTSspeak(string text, System.Object listener_param) {
+
+        // If it is already speaking, notify listeners
+        if (this.sequencer.is_speaking())
+        {
+            this._notifySpeechFinished();
+        }
+
+        this.currentListenerParameter = listener_param;
+        StartCoroutine(ProcessInputText (text));
 	}
 
     public void MaryTTSstopSpeaking()
@@ -274,13 +309,15 @@ public class MaryTTSController : MonoBehaviour {
             Debug.LogError("WWW error: " + www.error);
 		}
 	}
-	
+
+
+    private bool wasSpeaking = false;
 
 	// Update is called once per frame
 	void Update() {
 
 
-	#if UNITY_EDITOR
+		#if UNITY_EDITOR
 		if (this.saySomething) {
 			VoiceInfo voice_info = MaryTTSController.VOICES[this.mary_tts_voice];
 			string[] locale_sentences = TEST_SENTENCES[voice_info.locale] ;
@@ -299,7 +336,7 @@ public class MaryTTSController : MonoBehaviour {
             this.MaryTTSstopSpeaking();
             this.stopSpeaking = false;
         }
-	#endif
+		#endif
 
 
         // Asks teh sequencer to update the viseme_weights vector with the new weights. */
@@ -325,6 +362,30 @@ public class MaryTTSController : MonoBehaviour {
 			skinnedMeshRenderer.SetBlendShapeWeight(blendShapeIdx, (float) weight);
 		}
 
-	}
+        //
+        // Manager Listeners
+        bool speaks_now = this.sequencer.is_speaking();
+        if (speaks_now == false)
+        {
+            if (this.wasSpeaking)
+            {
+                this._notifySpeechFinished();
+            }
+        }
+        this.wasSpeaking = speaks_now;
+
+    }
+
+
+    private void _notifySpeechFinished()
+    {
+        foreach (MaryTTSListener l in this.listeners)
+        {
+            l.SpeechFinished(this.currentListenerParameter);
+        }
+        this.currentListenerParameter = null;
+
+    }
+
 
 }
