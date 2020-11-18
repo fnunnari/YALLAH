@@ -126,9 +126,8 @@ public class CameraCinemaControl : MonoBehaviour {
 		// Initialize/cache all camera distances.
 		_initializeDistances();
 
-
 		// Initialize camera position and inclination.
-		_computeCameraParams (this.activeShot, ref targetCameraPosition, ref targetCameraAngle);
+		_computeCameraParams(this.activeShot, ref targetCameraPosition, ref targetCameraAngle);
 		transform.position = targetCameraPosition;
 		transform.rotation = Quaternion.Euler(new Vector3(targetCameraAngle, 0, 0));
 	}
@@ -154,7 +153,7 @@ public class CameraCinemaControl : MonoBehaviour {
 
 		// damp to the target camera inclination
 		float newXangle = Mathf.SmoothDampAngle(transform.rotation.eulerAngles.x, this.targetCameraAngle, ref this._cameraAngleVelocity, smooth_time * 2, maxSpeed: 45.0f, deltaTime: Time.fixedDeltaTime);
-		transform.rotation = Quaternion.Euler(new Vector3(newXangle, 0, 0));
+		transform.rotation = Quaternion.Euler(new Vector3(newXangle, 0, 0)) ;
 	}
 
 
