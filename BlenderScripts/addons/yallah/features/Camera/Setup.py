@@ -29,7 +29,8 @@ arm = arm_obj.data
 assert isinstance(arm, bpy.types.Armature)
 
 bpy.ops.object.mode_set(mode='OBJECT')
-bpy.context.scene.objects.active = arm_obj
+#bpy.context.scene.objects.active = arm_obj
+bpy.context.view_layer.objects.active = arm_obj
 
 # Create the bone
 bpy.ops.object.mode_set(mode='EDIT')  # switches to armature-edit
