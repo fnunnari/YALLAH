@@ -54,7 +54,7 @@ class LoadVertexGroups(bpy.types.Operator):
                     return {'CANCELLED'}
 
             # print("Creating group '{}'".format(groupName))
-            vg = obj.vertex_groups.new(groupName)
+            vg = obj.vertex_groups.new(name=groupName)
             group_vertices = in_dict[groupName]
             assert isinstance(group_vertices, list)
             vg.add(group_vertices, weight=1.0, type='REPLACE')

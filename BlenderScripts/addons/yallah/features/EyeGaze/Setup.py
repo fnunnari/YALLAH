@@ -30,13 +30,18 @@ EYE_NAME_L = 'eye_L'
 EYES_PARENT_NAME = 'head'
 
 # To discover the ids of the eye vertices, select the vertices in MESH mode,
-# go back to object mode and then run this small script
+# go back to object mdde and then run this small script
 # mesh = mesh_obj.data
 #
 # for v in mesh.vertices:
 #     if v.select:
 #         print(v.index)
 
+
+# EYE_PUPIL_CENTER_VERTEX_ID_R = 6941
+# EYE_BALL_CENTER_VERTEX_ID_R = 6670
+# EYE_PUPIL_CENTER_VERTEX_ID_L = 593
+# EYE_BALL_CENTER_VERTEX_ID_L = 322
 
 # For each character mesh type, we list the indices of the vertices to select when calculating the center of the eyes.
 # There are normally two indices: pupil center and eye-ball center
@@ -89,7 +94,9 @@ for eye_name, eye_vertex_ids in zip([EYE_NAME_L, EYE_NAME_R],
 
     # Select the MESH
     bpy.ops.object.mode_set(mode='OBJECT')
-    bpy.context.scene.objects.active = mesh_obj
+    #bpy.context.scene.objects.active = mesh_obj
+    #dkw change blender v2.8
+    bpy.context.view_layer.objects.active = mesh_obj
 
     # Deselect all vertices
     bpy.ops.object.mode_set(mode='EDIT')
@@ -125,8 +132,9 @@ for eye_name, eye_vertex_ids in zip([EYE_NAME_L, EYE_NAME_R],
 
     # Select ARMATURE
     bpy.ops.object.mode_set(mode='OBJECT')
-    bpy.context.scene.objects.active = arm_obj
-
+    #bpy.context.scene.objects.active = arm_obj
+    #Dkw v2.8 change
+    bpy.context.view_layer.objects.active = arm_obj
     # Create the bone
     bpy.ops.object.mode_set(mode='EDIT')  # switches to armature-edit
     if eye_name not in arm.edit_bones:
@@ -142,7 +150,9 @@ for eye_name, eye_vertex_ids in zip([EYE_NAME_L, EYE_NAME_R],
 
 # We are in edit mode. The last eye is still selected. Deselect it.
 bpy.ops.object.mode_set(mode='OBJECT')
-bpy.context.scene.objects.active = mesh_obj
+#bpy.context.scene.objects.active = mesh_obj
+#Dkw Blender 2.8 change
+bpy.context.view_layer.objects.active = mesh_obj
 bpy.ops.object.mode_set(mode='EDIT')  # switches to mesh-edit
 bpy.ops.mesh.select_all(action='DESELECT')
 # Go back to Object mode.

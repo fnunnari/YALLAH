@@ -10,9 +10,10 @@ from typing import Optional
 
 #
 # Maps the name of the Mesh to the names of the diffuse and displacement images
+#dkw
 TEXTURE_IMAGE_MAP = [
-    ('MBLab_human_female', 'human_female_diffuse.png', 'human_female_displacement.png'),
-    ('MBLab_human_male', 'human_male_diffuse.png', 'human_male_displacement.png'),
+    ('MBLab_human_female', 'human_female_albedo.png', 'human_female_displacement.png'),
+    ('MBLab_human_male', 'human_male_albedo.png', 'human_male_displacement.png'),
 ]
 
 R_HAND_NAME = "hand_R"
@@ -52,7 +53,7 @@ def is_mblab_body(mesh_obj: bpy.types.Object) -> bool:
 
 def character_prefix(mesh_obj: bpy.types.Object) -> Optional[str]:
     """Get the prefix that has been used to create the character.
-    :param mesh_obj: The MESH object, as created and named by MBLab (e.g., Anna_body).
+    :param mesh_obj: The MESH object, as created and named by MBLab.
     """
 
     import re
@@ -107,6 +108,7 @@ class FixMaterials(bpy.types.Operator):
 
         # Check if the diffuse and displacement textures still exist.
         # They disappear if the user save and quit blender and reload the character.
+        #print(bpy.data.images.items())
         if diffuse_texture_name not in bpy.data.images:
             self.report({'ERROR'}, "Can not find a texture named '{}'."
                                    " Maybe the scene was saved after finalization and then reloaded?"
@@ -123,77 +125,84 @@ class FixMaterials(bpy.types.Operator):
         # Now, some magic creating nice real-time materials for Blender Game Engine and the rest
         # of the world, too.
 
-        # print("# materials: {}".format(len(mesh.materials)))
-        for mat in mesh.materials:
-            # print(mat.name)
-            mat.use_nodes = False
-            mat.use_transparency = False
-            # mat.game_settings.physics = False
+        #print("# materials leng: {}".format(len(mesh.materials)))
+        
+        # for mat in mesh.materials:
+        #     #print(mat.name)
+        #     mat.use_nodes = False
+        #     #Dkw there is no use_transparency in blender 2.9
+        #     #mat.use_transparency = False
+        #     # mat.game_settings.physics = False
 
-        diffuse_tex = bpy.data.textures.new('MBLabDiffuse', 'IMAGE')
-        diffuse_tex.image = bpy.data.images[diffuse_texture_name]
-        diffuse_tex.image.use_fake_user = True
-        diffuse_tex.image.use_alpha = False  # This texture has not alpha channel. Pixels are all at 255.
+        # diffuse_tex = bpy.data.textures.new('MBLabDiffuse', 'IMAGE')
+        # diffuse_tex.image = bpy.data.images[diffuse_texture_name]
+        # diffuse_tex.image.use_fake_user = True
+        # #Dkw Blender 2.8 has no attribute name use_alpha 
+        # #diffuse_tex.image.use_alpha = False  # This texture has not alpha channel. Pixels are all at 255.
 
-        disp_tex = bpy.data.textures.new('MBLabDisp', 'IMAGE')
-        disp_tex.image = bpy.data.images[displacement_texture_name]
-        disp_tex.image.use_fake_user = True
+        # disp_tex = bpy.data.textures.new('MBLabDisp', 'IMAGE')
+        # disp_tex.image = bpy.data.images[displacement_texture_name]
+        # disp_tex.image.use_fake_user = True
 
-        # materials: 7
-        # MBlab_pupil
-        # MBlab_generic
-        # MBlab_cornea
-        # MBlab_fur
-        # MBlab_human_skin1501659564.030342
-        # MBlab_human_eyes1501659564.030366
-        # MBlab_human_teeth1501659564.03038
 
-        for mat in mesh.materials:  # type: bpy.types.Material
-            # For most materials, set the texture slot 0 to use the diffuse texture
 
-            if mat.name.startswith(char_name+"_MBlab_pupil"):
-                mat.texture_slots.create(0)
-                mat.texture_slots[0].texture = diffuse_tex
-                mat.diffuse_color = Color((0.0, 0.0, 0.0))
-            elif mat.name.startswith(char_name+"_MBlab_generic"):
-                pass
-            elif mat.name.startswith(char_name+"_MBlab_cornea"):
-                mat.use_transparency = True
-                mat.alpha = 0.1
-            elif mat.name.startswith(char_name+"_MBlab_fur"):
-                mat.diffuse_color = Color((0.013, 0.013, 0.013))
-                mat.specular_color = Color((0.0, 0.0, 0.0))
+        # for mat in mesh.materials:
+        #     print("# materials: {}".format(mat))
+        # # materials: 7
+        # # MBlab_pupil
+        # # MBlab_generic
+        # # MBlab_cornea
+        # # MBlab_fur
+        # # MBlab_human_skin1501659564.030342
+        # # MBlab_human_eyes1501659564.030366
+        # # MBlab_human_teeth1501659564.03038
 
-                mat.use_transparency = True
-                mat.transparency_method = 'Z_TRANSPARENCY'
-                mat.alpha = 0.0
-                # Fix the way the texture is interpreted for the eyeleashes
-                # The default texture has only color info. We must use RGB info as transparency:
-                # Black=opaque, white=transparent
-                mat.texture_slots.create(0)
-                mat.texture_slots[0].texture = diffuse_tex
-                mat.texture_slots[0].use_map_alpha = True
-                mat.texture_slots[0].use_map_color_diffuse = False
-                mat.texture_slots[0].invert = True
-            elif mat.name.startswith(char_name+"_MBlab_human_skin"):
-                mat.specular_intensity = 0.2
-                mat.texture_slots.create(0)
-                mat.texture_slots[0].texture = diffuse_tex
-                mat.texture_slots.create(1)
-                # For the skin only, set the slot 1 to use displacement
-                mat.texture_slots[1].texture = disp_tex
-                mat.texture_slots[1].use_map_color_diffuse = False
-                mat.texture_slots[1].use_map_normal = True
-                mat.texture_slots[1].normal_factor = 0.03
-            elif mat.name.startswith(char_name+"_MBlab_human_eyes"):
-                mat.texture_slots.create(0)
-                mat.texture_slots[0].texture = diffuse_tex
-            elif mat.name.startswith(char_name+"_MBlab_human_teeth"):
-                mat.texture_slots.create(0)
-                mat.texture_slots[0].texture = diffuse_tex
-            else:
-                self.report({'ERROR'}, "Unexpected material named '{}'".format(mat.name))
-                return {'CANCELLED'}
+        # for mat in mesh.materials:  # type: bpy.types.Material
+        #     # For most materials, set the texture slot 0 to use the diffuse texture
+
+        #     if mat.name.startswith(char_name+"_MBlab_pupil"):
+        #         mat.texture_slots.create(0)
+        #         mat.texture_slots[0].texture = diffuse_tex
+        #         mat.diffuse_color = Color((0.0, 0.0, 0.0))
+        #     elif mat.name.startswith(char_name+"_MBlab_generic"):
+        #         pass
+        #     elif mat.name.startswith(char_name+"_MBlab_cornea"):
+        #         mat.use_transparency = True
+        #         mat.alpha = 0.1
+        #     elif mat.name.startswith(char_name+"_MBlab_fur"):
+        #         mat.diffuse_color = Color((0.013, 0.013, 0.013))
+        #         mat.specular_color = Color((0.0, 0.0, 0.0))
+
+        #         mat.use_transparency = True
+        #         mat.transparency_method = 'Z_TRANSPARENCY'
+        #         mat.alpha = 0.0
+        #         # Fix the way the texture is interpreted for the eyeleashes
+        #         # The default texture has only color info. We must use RGB info as transparency:
+        #         # Black=opaque, white=transparent
+        #         mat.texture_slots.create(0)
+        #         mat.texture_slots[0].texture = diffuse_tex
+        #         mat.texture_slots[0].use_map_alpha = True
+        #         mat.texture_slots[0].use_map_color_diffuse = False
+        #         mat.texture_slots[0].invert = True
+        #     elif mat.name.startswith(char_name+"_MBlab_human_skin"):
+        #         mat.specular_intensity = 0.2
+        #         mat.texture_slots.create(0)
+        #         mat.texture_slots[0].texture = diffuse_tex
+        #         mat.texture_slots.create(1)
+        #         # For the skin only, set the slot 1 to use displacement
+        #         mat.texture_slots[1].texture = disp_tex
+        #         mat.texture_slots[1].use_map_color_diffuse = False
+        #         mat.texture_slots[1].use_map_normal = True
+        #         mat.texture_slots[1].normal_factor = 0.03
+        #     elif mat.name.startswith(char_name+"_MBlab_human_eyes"):
+        #         mat.texture_slots.create(0)
+        #         mat.texture_slots[0].texture = diffuse_tex
+        #     elif mat.name.startswith(char_name+"_MBlab_human_teeth"):
+        #         mat.texture_slots.create(0)
+        #         mat.texture_slots[0].texture = diffuse_tex
+        #     else:
+        #         self.report({'ERROR'}, "Unexpected material named '{}'".format(mat.name))
+        #         return {'CANCELLED'}
 
         return {'FINISHED'}
 
@@ -205,6 +214,7 @@ class SetupMBLabCharacter(bpy.types.Operator):
     """Setup a ManuelBastioniLab character to be ready for rendering in real-time and exportation to Unity."""
     bl_idname = "mbast_tools.setup_mblab_character"
     bl_label = "MBLab Tools - Setup MBLab Character"
+    bl_options = {'REGISTER', 'INTERNAL', 'UNDO'}
 
     #
     # DEFINITIONS: SUPPORT FUNCTIONS
@@ -218,14 +228,17 @@ class SetupMBLabCharacter(bpy.types.Operator):
 
         # Switch to OBJECT mode
         bpy.ops.object.mode_set(mode='OBJECT')
-
+        bpy.ops.object.select_all(action='DESELECT') # Deselect all objects
         # Unselect everything
-        for o in bpy.context.scene.objects:
-            o.select = False
+        #for o in bpy.context.scene.objects:
+            #o.select = False
+        #    o.select_all(action="DESELECT")
 
         # The MESH object will be the active and the only selected object
-        mesh_obj.select = True
-        bpy.context.scene.objects.active = mesh_obj
+        #Dkw change 2.8V
+        mesh_obj.select_set(True)
+        bpy.context.view_layer.objects.active = mesh_obj   
+        #bpy.context.scene.objects.active = mesh_obj
 
     @classmethod
     def poll(cls, context):
@@ -248,7 +261,7 @@ class SetupMBLabCharacter(bpy.types.Operator):
             return {'CANCELLED'}
 
         if arm_obj.type != 'ARMATURE':
-            self.report({'ERROR'}, "Character Mesh parent object {} must be an Armature".format(arm_obj.name))
+            self.report({'ERROR'}, "Character Mesh parent object {} must be Armature".format(arm_obj.name))
             return {'CANCELLED'}
 
         assert arm_obj.type == 'ARMATURE'
@@ -259,6 +272,7 @@ class SetupMBLabCharacter(bpy.types.Operator):
                                    " Please, use the MBLab prefix during finalization.")
             return {'CANCELLED'}
 
+
         #
         # A TEST TO CHECK FOR WORKING DIRECTORIES AND PATHS
         # This is harmless and can be used as template to develop new functionalities
@@ -268,19 +282,20 @@ class SetupMBLabCharacter(bpy.types.Operator):
 
         #
         # FIX THE MATERIALS AND MODE FOR REAL-TIME RENDERING (AND UNITY)
-        #
-        bpy.context.scene.game_settings.material_mode = 'GLSL'
-        bpy.context.scene.render.engine = 'BLENDER_GAME'
+        #Dkw
+        #bpy.context.scene.game_settings.material_mode = 'GLSL'
+        #bpy.context.scene.render.engine = 'BLENDER_GAME'
 
         # Switch the view to Material mode, so that we can appreciate the fixes to the materials.
         for area in bpy.context.screen.areas:
             if area.type == 'VIEW_3D':
                 for space in area.spaces:
                     if space.type == 'VIEW_3D':
-                        space.viewport_shade = 'MATERIAL'
+                        #Dkw
+                        space.shading.type = 'MATERIAL'
 
-        # Call the script
         filepath = os.path.join(YALLAH_FEATURES_DIR, "RealTimeMaterials/Setup.py")
+        print(filepath)
         exec(compile(open(filepath).read(), filepath, 'exec'))
 
         #
@@ -306,15 +321,7 @@ class SetupMBLabCharacter(bpy.types.Operator):
         #
         # CREATE THE BONES NEEDED FOR DYNAMIC CAMERA FRAMING
         #
-        filepath = os.path.join(YALLAH_FEATURES_DIR, "HeadBone/Setup.py")
-        exec(compile(open(filepath).read(), filepath, 'exec'))
-
-        SetupMBLabCharacter.clear_selection(mesh_obj=mesh_obj)
-
-        #
-        # CREATE THE DUMMY BONES NEEDED TO FILL THE GAPS IN UNCONNECTED BONES
-        #
-        filepath = os.path.join(YALLAH_FEATURES_DIR, "ConnectBones/Setup.py")
+        filepath = os.path.join(YALLAH_FEATURES_DIR, "Camera/Setup.py")
         exec(compile(open(filepath).read(), filepath, 'exec'))
 
         SetupMBLabCharacter.clear_selection(mesh_obj=mesh_obj)
@@ -322,7 +329,7 @@ class SetupMBLabCharacter(bpy.types.Operator):
         #
         # REMOVE THE SURFACE SUBDIVISION MODIFIER
         #
-        # We need to remove this, otherwise the blend shapes will not be visible in Unity
+        # We need to remove this, otherwise the blendshapes will not be visible in Unity
         #
         # n_modifires = len(mesh_obj.modifiers)
         # print("There are {} modifiers".format(n_modifires))
@@ -334,7 +341,9 @@ class SetupMBLabCharacter(bpy.types.Operator):
         #
         # CREATE A REFERENCE A-Pose, with object transform and all bones reset to identity.
         #
-        bpy.context.scene.objects.active = arm_obj
+        #bpy.context.scene.objects.active = arm_obj
+        #DKW v2.8
+        bpy.context.view_layer.objects.active = arm_obj
         bpy.ops.yallah.create_apose_action()
 
         SetupMBLabCharacter.clear_selection(mesh_obj=mesh_obj)
@@ -368,6 +377,7 @@ class RemoveAnimationFromFingers(bpy.types.Operator):
     """Remove all animation curves from the hands of a MBLab character"""
     bl_idname = "mblab_tools.remove_finger_animation"
     bl_label = "MBLab Tools - Remove animation curves for the fingers from the active action"
+    bl_options = {'REGISTER', 'INTERNAL', 'UNDO'}
 
     @classmethod
     def poll(cls, context):
@@ -447,6 +457,7 @@ class SetRelaxedPoseToFingers(bpy.types.Operator):
     """Insert a key frame on the current action to set the finger in relaxed pose."""
     bl_idname = "mblab_tools.set_finger_relaxed"
     bl_label = "MBLab Tools - Insert a key frame on the current action to set the finger in relaxed pose."
+    bl_options = {'REGISTER', 'INTERNAL', 'UNDO'}
 
     @classmethod
     def poll(cls, context):
@@ -479,7 +490,7 @@ class SetRelaxedPoseToFingers(bpy.types.Operator):
             relaxed_finger_anim = json.load(fp=relaxed_finger_anim_file)
 
         if type(relaxed_finger_anim) != dict:
-            self.report({'ERROR'}, "File '{}' should contain a dictionary at top level".format(RELAXED_FINGER_ANIM))
+            self.report({'ERROR'}, "File '{}' should containt a dictionary at top level".format(RELAXED_FINGER_ANIM))
             return {'CANCELLED'}
 
         for data_path in relaxed_finger_anim.keys():  # type: str
@@ -504,6 +515,7 @@ class ResetCharacterPose(bpy.types.Operator):
     """Reset character main transformations and all pose bones transformations to identity."""
     bl_idname = "mblab_tools.reset_character_pose"
     bl_label = "MBLab Tools - Reset the character pose."
+    bl_options = {'REGISTER', 'INTERNAL', 'UNDO'}
 
     @classmethod
     def poll(cls, context):
@@ -543,10 +555,8 @@ class ResetCharacterPose(bpy.types.Operator):
 def register():
 
     # This property will be use to mark when a character has received the Setup procedure.
-    bpy.types.Object.yallah_setup_done =\
-        bpy.props.BoolProperty(name="yallah_setup_done",
-                               description="When true, the character has already undergone the YALLAH Setup process",
-                               default=False)
+    bpy.types.Object.yallah_setup_done =  bpy.props.BoolProperty(name="yallah_setup_done",
+    description="When true, the character has already undergone the YALLAH Setup process",default=False)
 
     bpy.utils.register_class(FixMaterials)
     bpy.utils.register_class(SetupMBLabCharacter)
