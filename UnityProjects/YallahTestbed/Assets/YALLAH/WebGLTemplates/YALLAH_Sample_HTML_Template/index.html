@@ -1,0 +1,155 @@
+<!DOCTYPE html>
+<html lang="en">
+
+  <head>
+
+    <!-- UNITY scripts -->
+    <!-- See: https://docs.unity3d.com/Manual/webgl-templates.html -->
+
+    <!-- script src="vendor/unity/UnityProgress.js"></script -->
+    <script src="%UNITY_WEBGL_LOADER_URL%"></script>
+    <script>
+        var gameInstance = UnityLoader.instantiate("gameContainer", "%UNITY_WEBGL_BUILD_URL%");  //, {onProgress: UnityProgress}) ;
+    </script>
+    <!-- END UNITY scripts -->
+
+
+    <!-- GUI scripts -->
+    <script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+
+    <script type="text/javascript">
+        // jQuery Document
+
+        function speak (msg) {
+            console.log("-------------------chatText: " + msg);
+            // gameInstance.SendMessage('AnnaMesh', 'GetInput', msg);
+            MaryTTSspeak(msg) ;
+        }
+
+        // The following code prevents the "speak" form to reload a page with a GET request.
+        $(document).ready(function(){
+            // If user submits the form
+            $("#submitmsg").click(function(){
+                // Interaction with Unity
+                var clientmsg = $("#usermsg").val();
+                speak(clientmsg);
+
+                // FIXME auto scrolling does not work
+                var oldscrollHeight = $("#chatbox").attr("scrollHeight") - 20; //Scroll height before the request
+
+                $("#usermsg").attr("value", "");
+                var now = new Date();
+                var formatted = now.getHours() + ":" + now.getMinutes();
+                var element = "<div class='msgln'>(" + formatted + ") <b>YOU</b>: " + clientmsg + "<br></div>";
+                $("#chatbox").append(element);
+
+                // Auto-scroll
+                var newscrollHeight = $("#chatbox").attr("scrollHeight") - 20; //Scroll height after the request
+                if (newscrollHeight > oldscrollHeight) {
+                    $("#chatbox").animate({ scrollTop: newscrollHeight }, 'normal'); //Autoscroll to bottom of div
+                }
+
+                return false;
+            });
+        });
+
+    </script>
+    <!-- END GUI SCRIPTS -->
+
+  </head>
+
+  <body>
+
+    <!-- Unity window -->
+    <div style="display: flex">
+
+      <!-- The following is the container showing the Unity 3D rendering -->
+      <div id="gameContainer" style="width: 600px; height: 600px; margin: auto; float: left; border: 10pt solid white;">
+      </div> <!-- style="width: 600px; height: 600px" -->
+      <!-- div class="footer">
+          <div class="webgl-logo"></div>
+          <div class="fullscreen" onclick="gameInstance.SetFullscreen(1)"></div>
+          <div class="title"></div>
+      </div -->
+
+      <!-- Run the script initializing the wrappers between JS functions and native C functions. -->
+      <script src="setup_public_api.js"></script>
+
+      <!-- This is the div containing the text-to-speech text input and the other controls. -->
+      <div style="float: left; border: 10pt solid white;">
+        <p>Type your text here and the agent will speak it out.</p>
+
+        <!-- Chat box -->
+        <form name="message" action="">
+            <input name="usermsg" type="text" id="usermsg" />
+            <input name="submitmsg" type="submit" id="submitmsg" value="Speak" />
+        </form>
+
+        <!--p><a href="#" onclick='document.getElementById("jscontrols").style.visibility="visible"'>Show</a> / <a href="#" onclick='document.getElementById("jscontrols").style.visibility="hidden"'>Hide</a> Javascript API panel (for developers).</p-->
+        <p><a href="#" onclick='document.getElementById("jscontrols").style.display="inherit"'>Show</a> / <a href="#" onclick='document.getElementById("jscontrols").style.display="none"'>Hide</a> Javascript API panel (for developers).</p>
+
+        <div id="jscontrols" style="display: none; border: double #ddd; padding: 5pt;"> <!-- visibility: visible; -->
+          <p>JavaScript API interactive tests panel (for Developers).</p>
+
+          
+          <h3>Test - Animation</h3>
+
+          <div>PlayAnimationClip <a href="#" onclick="PlayAnimationClip('Waving')">Play Waving</a> or <a href="#" onclick="PlayAnimationClip('Salsa')">Play Salsa</a></div>
+          <div><a href="#" onclick='document.getElementById("animation_status").innerHTML=IsAnimationClipPlaying()'>IsAnimationClipPlaying:</a><span id="animation_status"></span></div>
+          <div><a href="#" onclick='document.getElementById("animation_current").innerHTML=GetPlayingAnimationClip()'>GetPlayingAnimationClip:</a><span id="animation_current"></span></div>
+          <div><a href="#" onclick='document.getElementById("animation_list").innerHTML=ListAvailableAnimationClips()'>ListAvailableAnimationClips:</a><span id="animation_list"></span></div>
+          <a href="#" onclick='EnableAmbientAnimation()'>EnableAmbientAnimation</a>
+          <a href="#" onclick='DisableAmbientAnimation()'>DisableAmbientAnimation</a>
+
+
+          <h3>Test - Mary TTS</h3>
+
+          <div>MaryTTSspeak <a href="#" onclick="MaryTTSspeak('Test native A-P-I.')">"Test native A-P-I"</a> <a href="#" onclick="MaryTTSspeak('Hello, how are you?')">"Hello, how are you?"</a></div>
+          <div><a href="#" onclick='document.getElementById("mary_status").innerHTML=IsMaryTTSspeaking()'>IsMaryTTSspeaking:</a><span id="mary_status"></span></div>
+
+
+          <h3>Test - Facial Expressions</h3>
+
+          <div>SetCurrentFacialExpression: <a href="#" onclick='SetCurrentFacialExpression("fe_angry01")'>Angry</a> <a href="#" onclick='SetCurrentFacialExpression("fe_sad01")'>Sad</a></div>
+          <div><a href="#" onclick='document.getElementById("expression_current").innerHTML=GetCurrentFacialExpression()'>GetCurrentFacialExpression:</a><span id="expression_current"></span></div>
+          <a href="#" onclick="ClearFacialExpression()">ClearFacialExpression</a>
+          <div><a href="#" onclick='document.getElementById("expression_list").innerHTML=ListFacialExpressions()'>ListFacialExpressions:</a><span id="expression_list"></span></div>
+          <div>SetExpressionTransitionTime (secs): <a href="#" onclick='SetExpressionTransitionTime(0.1)'>0.1</a> <a href="#" onclick='SetExpressionTransitionTime(0.5)'>0.5</a> <a href="#" onclick='SetExpressionTransitionTime(2.0)'>2.0</a></div>
+          <div><a href="#" onclick='document.getElementById("expression_trans_time").innerHTML=GetExpressionTransitionTime()'>GetExpressionTransitionTime:</a><span id="expression_trans_time"></span></div>
+
+
+          <h3>Test - Eye Gaze</h3>
+            <ul>
+              <li>Axes: x-right, y-up, z-towards_observer</li>
+              <li>Main Camera is at ca. (0, 1.58, -1.1)</li>
+              <li>Woman eyes mid-point in standing position is at ca. (0, 1.58, -0.13)</li>
+            </ul>
+          <div>LookAtPoint: <a href="#" onclick="LookAtPoint(1, 1.1, -1)">(1, 1.1, -1)</a> <a href="#" onclick="LookAtPoint(-1, 2.3, -2)">(-1, 2.3, -2)</a> </div>
+          <div>LookAtObject: <a href="#" onclick='LookAtObject("Main Camera")'>Main Camera</a></div>
+
+
+          <h3>Test - Camera</h3>
+
+          <div><a href="#" onclick='GoToNextShot()'>GoToNextShot</a> </div>
+    	    <div><a href="#" onclick='GoToPreviousShot()'>GoToPreviousShot</a> </div>
+          <div><a href="#" onclick='document.getElementById("shots_list").innerHTML=ListCameraShots()'>ListCameraShots: </a><span id="shots_list"></span></div>
+  	      <div><a href="#" onclick='document.getElementById("camera_shot_name").innerHTML=GetCurrentShot()'>GetCurrentShot: </a><span id="camera_shot_name"></span></div>
+	        <div><a href="#" onclick='SetCurrentShot("MEDIUM_SHOT")'>SetCurrentShot to MEDIUM_SHOT</a> </div>
+          <div>
+            <a>SetShotFineTunePercentage: </a>
+            <a href="#" onclick='SetShotFineTunePercentage(-20)'>-20</a>,
+            <a href="#" onclick='SetShotFineTunePercentage(0)'>0</a>,
+            <a href="#" onclick='SetShotFineTunePercentage(20)'>20</a>
+          </div>
+          <div><a href="#" onclick='document.getElementById("shot_fine_tune_percentage").innerHTML=GetShotFineTunePercentage()'>GetShotFineTunePercentage: </a><span id="shot_fine_tune_percentage"></span></div>
+
+
+        </div> <!-- End JavaScript controls panel -->
+
+      </div> <!-- End right column: Chat Textbox + controls. -->
+
+    </div> <!-- End Main div -->
+
+  </body>
+
+</html>

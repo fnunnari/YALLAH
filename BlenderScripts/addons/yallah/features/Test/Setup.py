@@ -2,7 +2,8 @@ import bpy
 import os
 import json
 
-from yallah import YALLAH_FEATURES_DIR
+from . __init__ import YALLAH_FEATURES_DIR
+
 
 #
 # Test Feature. Used to check working directories and relative paths.
