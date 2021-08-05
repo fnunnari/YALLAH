@@ -10,7 +10,6 @@ from typing import Optional
 
 #
 # Maps the name of the Mesh to the names of the diffuse and displacement images
-#dkw
 TEXTURE_IMAGE_MAP = [
     ('MBLab_human_female', 'human_female_albedo.png', 'human_female_displacement.png'),
     ('MBLab_human_male', 'human_male_albedo.png', 'human_male_displacement.png'),
@@ -228,17 +227,11 @@ class SetupMBLabCharacter(bpy.types.Operator):
 
         # Switch to OBJECT mode
         bpy.ops.object.mode_set(mode='OBJECT')
-        bpy.ops.object.select_all(action='DESELECT') # Deselect all objects
-        # Unselect everything
-        #for o in bpy.context.scene.objects:
-            #o.select = False
-        #    o.select_all(action="DESELECT")
+        bpy.ops.object.select_all(action='DESELECT')  # Deselect all objects
 
         # The MESH object will be the active and the only selected object
-        #Dkw change 2.8V
         mesh_obj.select_set(True)
         bpy.context.view_layer.objects.active = mesh_obj   
-        #bpy.context.scene.objects.active = mesh_obj
 
     @classmethod
     def poll(cls, context):
@@ -272,7 +265,6 @@ class SetupMBLabCharacter(bpy.types.Operator):
                                    " Please, use the MBLab prefix during finalization.")
             return {'CANCELLED'}
 
-
         #
         # A TEST TO CHECK FOR WORKING DIRECTORIES AND PATHS
         # This is harmless and can be used as template to develop new functionalities
@@ -282,16 +274,12 @@ class SetupMBLabCharacter(bpy.types.Operator):
 
         #
         # FIX THE MATERIALS AND MODE FOR REAL-TIME RENDERING (AND UNITY)
-        #Dkw
-        #bpy.context.scene.game_settings.material_mode = 'GLSL'
-        #bpy.context.scene.render.engine = 'BLENDER_GAME'
-
+        #
         # Switch the view to Material mode, so that we can appreciate the fixes to the materials.
         for area in bpy.context.screen.areas:
             if area.type == 'VIEW_3D':
                 for space in area.spaces:
                     if space.type == 'VIEW_3D':
-                        #Dkw
                         space.shading.type = 'MATERIAL'
 
         filepath = os.path.join(YALLAH_FEATURES_DIR, "RealTimeMaterials/Setup.py")
@@ -329,20 +317,23 @@ class SetupMBLabCharacter(bpy.types.Operator):
         #
         # REMOVE THE SURFACE SUBDIVISION MODIFIER
         #
-        # We need to remove this, otherwise the blendshapes will not be visible in Unity
+        # We need to remove all the modifiers (except the armature),
+        # otherwise the blendshapes will not be visible in Unity
         #
         # n_modifires = len(mesh_obj.modifiers)
         # print("There are {} modifiers".format(n_modifires))
+        modifiers_to_remove = []
         for md in mesh_obj.modifiers:
-            if md.name == "mbastlab_subdvision":
-                mesh_obj.modifiers.remove(md)
-                break
+            # print("md name: " + md.name)
+            if not md.name.endswith("_armature"):
+                modifiers_to_remove.append(md)
+        for md in modifiers_to_remove:
+            print("Removing modifier '" + md.name + "'")
+            mesh_obj.modifiers.remove(md)
 
         #
         # CREATE A REFERENCE A-Pose, with object transform and all bones reset to identity.
         #
-        #bpy.context.scene.objects.active = arm_obj
-        #DKW v2.8
         bpy.context.view_layer.objects.active = arm_obj
         bpy.ops.yallah.create_apose_action()
 
@@ -555,8 +546,10 @@ class ResetCharacterPose(bpy.types.Operator):
 def register():
 
     # This property will be use to mark when a character has received the Setup procedure.
-    bpy.types.Object.yallah_setup_done =  bpy.props.BoolProperty(name="yallah_setup_done",
-    description="When true, the character has already undergone the YALLAH Setup process",default=False)
+    bpy.types.Object.yallah_setup_done =\
+        bpy.props.BoolProperty(name="yallah_setup_done",
+                               description="When true, the character has already undergone the YALLAH Setup process",
+                               default=False)
 
     bpy.utils.register_class(FixMaterials)
     bpy.utils.register_class(SetupMBLabCharacter)
