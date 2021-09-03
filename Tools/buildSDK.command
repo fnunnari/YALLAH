@@ -1,6 +1,7 @@
 #!/usr/bin/env bash
 
-UNITY_EXE=/Applications/Unity/Hub/Editor/2019.4.6f1/Unity.app/Contents/MacOS/Unity
+UNITY_EXE=/Applications/Unity/Hub/Editor/2020.3.14f1/Unity.app/Contents/MacOS/Unity
+
 
 WIKI_DIR=../../YALLAH.wiki
 
@@ -40,8 +41,11 @@ fi
 
 #
 # Make directories
+echo "Please, enter the version numer (E.g., \"1.3\", \"1.0RC1\")"
+read VER
+
 TIMECODE=`date "+%y%m%d"`
-RELEASE_DIR=YALLAH_SDK-$TIMECODE
+RELEASE_DIR=YALLAH_SDK-$VER-$TIMECODE
 echo "Making temporary directory '$RELEASE_DIR'..."
 mkdir $RELEASE_DIR
 ABS_RELEASE_DIR=$(get_abs_filename $RELEASE_DIR)
