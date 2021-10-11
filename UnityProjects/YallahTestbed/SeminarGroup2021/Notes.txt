@@ -1,0 +1,16 @@
+This folder contains the scripts that we (Fabrizios Seminar Group, 2021) created as part of the seminar.
+Groupmembers are: Jan Dickmann, Kora Regitz and Felix Jahn
+For Questions you can contact JanDickmann on github.
+
+We used Unity Version 2017.4.40f1
+Blender Version 2.79 (LTS)
+YALLAH Blender Plugin Version 180919
+YALLAH Unity Plugin Version 180919
+
+There are Scripts for breathing, blushing/paling, blinking, controlling the facial expressions and a script that uses all of those scripts to animate the character (called Videoscript because we used it to create short videos).
+
+Short instructions on how to setup the scripts are in the comments in the scripts. To see how to actually use them look at the VideoScript as example.
+
+The code is still a little bit messy and there are probably bugs, we were also not very consistent with our names, sorry for that.
+
+We also added a different Cornea texture, the iris in the original texture is too big and not very pretty, we fixed that. Although it might only work for the caucasian woman character.

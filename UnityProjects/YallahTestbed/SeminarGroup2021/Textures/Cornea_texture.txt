@@ -1,0 +1,1 @@
+We added a different Cornea texture, the iris in the original texture is too big and not very pretty, we fixed that. Although it might only work for the caucasian woman character.
