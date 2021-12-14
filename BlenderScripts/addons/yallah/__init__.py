@@ -11,22 +11,12 @@
 # You should have received a copy of the GNU General Public License
 # along with this program. If not, see <http://www.gnu.org/licenses/>.
 
-bl_info = {
-    "name" : "YALLAH",
-    "author" : "fabrizio",
-    "description" : "Yet another low level agent handler",
-    "blender" : (2, 83, 0),
-    "version" : (0, 0, 1),
-    "location" : "View3D",
-    "warning" : "",
-    "category" : "Object"
-}
 import os
-import bpy 
-
+import bpy
+from bpy.utils import register_class
+from bpy.utils import unregister_class
 
 from . import mblab_tools
-from bpy.utils import register_class
 from . mblab_tools import is_female
 from . mblab_tools import is_male
 from . mblab_tools import is_mblab_body
@@ -47,6 +37,16 @@ from . import shape_key_utils
 from . import vertex_utils
 from . import anim_utils
 
+bl_info = {
+    "name": "YALLAH",
+    "author": "Fabrizio Nunnari, Daksitha Withanage",
+    "description": "Yet another low level agent handler",
+    "blender": (2, 95, 0),
+    "version": (2, 0, 0),
+    "location": "View3D",
+    "warning": "",
+    "category": "Object"
+}
 
 
 # Package version in x.y.z string form.
@@ -56,7 +56,7 @@ YALLAH_DATA_DIR = os.path.join(os.path.dirname(__file__), "data")
 YALLAH_FEATURES_DIR = os.path.join(os.path.dirname(__file__), "features")
 
 
-class Yallah_PT_Panel(bpy.types.Panel):
+class YALLAH_PT(bpy.types.Panel):
     bl_idname = "Yalla_PT_Panel"
     bl_label = "YALLAH_Panel"
     bl_space_type = 'VIEW_3D'
@@ -68,12 +68,13 @@ class Yallah_PT_Panel(bpy.types.Panel):
         layout = self.layout
         obj = context.active_object
         if obj is None:
-            layout.row().label(text= "Nothing active")
-        
-        #Mesh
+            layout.row().label(text="Nothing active")
+
+        #
+        # MESH selected
         elif obj.type == 'MESH':
             if not is_mblab_body(mesh_obj=obj):
-                layout.row().label(text= "The MESH must be a _finalized_ MBLab character")
+                layout.row().label(text="The MESH must be a _finalized_ MBLab character")
                 return
 
             if is_female(mesh_obj=obj):
@@ -89,14 +90,13 @@ class Yallah_PT_Panel(bpy.types.Panel):
             # SETUP
             row = layout.row()
             box = row.box()
-            box.label(text= "Setup:")
-            #TODO non type object has no attribute yallah setup done ?
+            box.label(text="Setup:")
+            # TODO non type object has no attribute yallah setup done ?
             if obj.yallah_setup_done:
-                box.label(text= "Setup already performed.")
+                box.label(text="Setup already performed.")
             else:
                 box.operator(SetupMBLabCharacter.bl_idname, text="Setup a MBLab character")
 
-        #
             # CLOTHES
             row = layout.row()
             box = row.box()
@@ -107,7 +107,7 @@ class Yallah_PT_Panel(bpy.types.Panel):
             op.replace_existing = True
 
         #
-        # ARMATURE
+        # ARMATURE selected
         elif obj.type == 'ARMATURE':
 
             row = layout.row()
@@ -119,34 +119,40 @@ class Yallah_PT_Panel(bpy.types.Panel):
             box.operator(SetDummyUserToAllActions.bl_idname)
 
         #
-        # No ops
+        # Unsupported type selected
         else:
             layout.label(text="Please, select an MBLab armature or body.")
 
 
+#
+# REGISTRATION
+#
 
-classes = (Yallah_PT_Panel,)
-#register, unregister = bpy.utils.register_classes_factory(classes)
+# The set of classes to (un)resister
+classes = (YALLAH_PT,)
+
 
 def register():
     mblab_tools.register()
     shape_key_utils.register()
     vertex_utils.register()
     anim_utils.register()
-    #2.83 api reference
-    from bpy.utils import register_class
-    for clas in classes:
-        register_class(clas)
+
+    # 2.83 api for (un)regisering
+    for cls in classes:
+        register_class(cls)
+
 
 def unregister():
     mblab_tools.unregister()
     shape_key_utils.unregister()
     vertex_utils.unregister()
     anim_utils.unregister()
-    #2.83 api 
-    from bpy.utils import unregister_class
-    for clas in reversed(classes):
-        unregister_class(clas)
+
+    # 2.83 api for (un)regisering
+    for cls in reversed(classes):
+        unregister_class(cls)
+
 
 if __name__ == "__main__":
     register()
