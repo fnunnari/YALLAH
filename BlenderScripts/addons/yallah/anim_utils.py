@@ -216,6 +216,19 @@ class CreateAPoseAction(bpy.types.Operator):
         # Be sure that the action stays in memory.
         bpy.data.actions[CreateAPoseAction.A_POSE_ACTION_NAME].use_fake_user = True
 
+        # Dirty trick to avoid curve simplification
+        # Add a new keyframe with a negligible delta from the first one
+        action = bpy.data.actions[CreateAPoseAction.A_POSE_ACTION_NAME]
+        EPSILON = 0.0001
+        for fc in action.fcurves:
+            first_kf = fc.keyframe_points[0]
+            first_kf_time = first_kf.co[0]
+
+            first_kf_value = first_kf.co[1]
+
+            # If the first keyframe is set after the action start
+            fc.keyframe_points.insert(frame=first_kf_time + 1, value=first_kf_value + EPSILON)
+
         return {'FINISHED'}
 
 
