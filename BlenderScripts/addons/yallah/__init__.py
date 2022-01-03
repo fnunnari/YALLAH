@@ -31,6 +31,7 @@ from . vertex_utils import LoadVertexGroups
 from . vertex_utils import SaveVertexGroups
 
 from . anim_utils import SetDummyUserToAllActions
+from . anim_utils import AddStartEndFramesToAllAnimationCurves
 from . anim_utils import CreateAPoseAction
 
 from . import shape_key_utils
@@ -41,7 +42,7 @@ bl_info = {
     "name": "YALLAH",
     "author": "Fabrizio Nunnari, Daksitha Withanage",
     "description": "Yet another low level agent handler",
-    "blender": (2, 95, 0),
+    "blender": (2, 93, 0),
     "version": (2, 0, 0),
     "location": "View3D",
     "warning": "",
@@ -56,8 +57,8 @@ YALLAH_DATA_DIR = os.path.join(os.path.dirname(__file__), "data")
 YALLAH_FEATURES_DIR = os.path.join(os.path.dirname(__file__), "features")
 
 
-class YALLAH_PT(bpy.types.Panel):
-    bl_idname = "Yalla_PT_Panel"
+class YALLAH_PT_main_panel(bpy.types.Panel):
+    bl_idname = "YALLAH_PT_main_panel"
     bl_label = "YALLAH_Panel"
     bl_space_type = 'VIEW_3D'
     bl_region_type = 'UI'
@@ -117,6 +118,7 @@ class YALLAH_PT(bpy.types.Panel):
             box.operator(SetRelaxedPoseToFingers.bl_idname, text="Set Relaxed Fingers Keyframe")
             box.operator(ResetCharacterPose.bl_idname, text="Reset Character Pose")
             box.operator(SetDummyUserToAllActions.bl_idname)
+            box.operator(AddStartEndFramesToAllAnimationCurves.bl_idname)
 
         #
         # Unsupported type selected
@@ -129,7 +131,7 @@ class YALLAH_PT(bpy.types.Panel):
 #
 
 # The set of classes to (un)resister
-classes = (YALLAH_PT,)
+classes = (YALLAH_PT_main_panel,)
 
 
 def register():
@@ -138,7 +140,7 @@ def register():
     vertex_utils.register()
     anim_utils.register()
 
-    # 2.83 api for (un)regisering
+    # 2.83 api for (un)registering
     for cls in classes:
         register_class(cls)
 
@@ -149,7 +151,7 @@ def unregister():
     vertex_utils.unregister()
     anim_utils.unregister()
 
-    # 2.83 api for (un)regisering
+    # 2.83 api for (un)registering
     for cls in reversed(classes):
         unregister_class(cls)
 

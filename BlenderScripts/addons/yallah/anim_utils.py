@@ -1,4 +1,40 @@
 import bpy
+import bpy.types
+
+from typing import Tuple
+
+
+def frame_range(action: bpy.types.Action) -> Tuple[float, float]:
+    """Retrieves the first and the last frame of an action.
+    Replaces the original Action.frame_range property, which is wrongly returning (1.0, 2.0)
+     on animations with a single keyframe."""
+
+    s = None
+    e = None
+
+    if action.fcurves is None:
+        raise Exception("No F-Curves defined in action {}".format(action.name))
+
+    for fc in action.fcurves:
+        kfps = fc.keyframe_points
+
+        if len(kfps) == 0:
+            raise Exception("No keyframes for path {}[{}] in action {}".format(fc.data_path, fc.array_index, action.name))
+
+        first_frame = kfps[0].co[0]
+        last_frame = kfps[-1].co[0]
+
+        if s is None:
+            s = first_frame
+        elif first_frame < s:
+            s = first_frame
+
+        if e is None:
+            e = last_frame
+        elif last_frame > e:
+            e = last_frame
+
+    return s, e
 
 
 class ExportActionData(bpy.types.Operator):
@@ -35,7 +71,7 @@ class ExportActionData(bpy.types.Operator):
 
         for fc in fcurves:  # type: bpy.types.FCurve
 
-            print("Inserting dp {} idx {}".format(fc.data_path, fc.array_index))
+            print("Inserting data_path {}, array_index {}".format(fc.data_path, fc.array_index))
 
             if fc.data_path not in out_data:
                 index_dict = {}
@@ -72,8 +108,55 @@ class SetDummyUserToAllActions(bpy.types.Operator):
 
         import bpy
 
-        for actions in bpy.data.actions:
-            actions.use_fake_user = True
+        for action in bpy.data.actions:
+            action.use_fake_user = True
+
+        return {'FINISHED'}
+
+
+class AddStartEndFramesToAllAnimationCurves(bpy.types.Operator):
+    """Operator to force every animation curve to have a keyframe at the beginning and at the end of the
+     action containing them."""
+
+    bl_idname = "yallah.add_start_end_frames_to_all_actions"
+    bl_label = "Add Start/End keyframes to all animation curves."
+
+    @classmethod
+    def poll(cls, context):
+        if not (context.mode == 'POSE' or context.mode == 'OBJECT'):
+            return False
+
+        return True
+
+    def execute(self, context):
+
+        import bpy
+
+        #
+        # For each action in the database
+        for action in bpy.data.actions:
+
+            action_frame_start, action_frame_end = frame_range(action)
+            # print("For action ", action.name, action_frame_start, action_frame_end)
+
+            #
+            # For each animation curve in the action
+            for fc in action.fcurves:
+                first_kf = fc.keyframe_points[0]
+                first_kf_time = first_kf.co[0]
+                last_kf = fc.keyframe_points[-1]
+                last_kf_time = last_kf.co[0]
+                # print("FCURVE range ", first_kf_time, last_kf_time)
+
+                # If the first keyframe is set after the action start
+                if first_kf_time > action_frame_start:
+                    first_kf_value = first_kf.co[1]
+                    fc.keyframe_points.insert(frame=action_frame_start, value=first_kf_value)
+
+                # If the last keyframe is set before the action end
+                if last_kf_time < action_frame_end:
+                    last_kf_value = last_kf.co[1]
+                    fc.keyframe_points.insert(frame=action_frame_end, value=last_kf_value)
 
         return {'FINISHED'}
 
@@ -139,12 +222,14 @@ class CreateAPoseAction(bpy.types.Operator):
 def register():
     bpy.utils.register_class(ExportActionData)
     bpy.utils.register_class(SetDummyUserToAllActions)
+    bpy.utils.register_class(AddStartEndFramesToAllAnimationCurves)
     bpy.utils.register_class(CreateAPoseAction)
 
 
 def unregister():
     bpy.utils.unregister_class(ExportActionData)
     bpy.utils.unregister_class(SetDummyUserToAllActions)
+    bpy.utils.unregister_class(AddStartEndFramesToAllAnimationCurves)
     bpy.utils.unregister_class(CreateAPoseAction)
 
 
