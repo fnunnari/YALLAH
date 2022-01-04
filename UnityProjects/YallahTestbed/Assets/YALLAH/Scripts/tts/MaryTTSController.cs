@@ -180,7 +180,9 @@ public class MaryTTSController : MonoBehaviour {
 
     void Awake () {
 		this.skinnedMeshRenderer = GetComponent<SkinnedMeshRenderer> ();
+        Assert.IsNotNull(this.skinnedMeshRenderer);
         this.skinnedMesh = GetComponent<SkinnedMeshRenderer> ().sharedMesh;
+        Assert.IsNotNull(this.skinnedMesh);
 
         // For info, see: https://docs.unity3d.com/2017.4/Documentation/ScriptReference/Resources.html
         Debug.Log("Loading MaryTTS info from resource: " + MARYTTS_INFO_JSON_RESOURCE);
@@ -193,8 +195,6 @@ public class MaryTTSController : MonoBehaviour {
 	}
 
 	void Start () {
-		Assert.IsNotNull(skinnedMeshRenderer); 
-		Assert.IsNotNull(skinnedMesh);
 
         //
         // Check that all the visemes required by the Sequencer are indeed present in the mesh.
@@ -339,9 +339,14 @@ public class MaryTTSController : MonoBehaviour {
 		#endif
 
 
-        // Asks teh sequencer to update the viseme_weights vector with the new weights. */
+        // Asks the sequencer to update the viseme_weights vector with the new weights. */
 		this.sequencer.update(Time.time, this.viseme_weights);
-		// Debug.Log (this.viseme_weights [0]);
+        // Debug.Log (this.viseme_weights [0]);
+        String all_visemes_values = "";
+        //foreach (double v in this.viseme_weights) {
+        //    all_visemes_values += String.Format("{0:F2}", v) + " " ;
+        //}
+        //Debug.Log(all_visemes_values);
 
 
         //
@@ -349,11 +354,12 @@ public class MaryTTSController : MonoBehaviour {
         for (int i=0 ; i < this.sequencer.get_viseme_count() ; i++) {
             string viseme = (string)(this.sequencer.VISEMES [i]);
 
-			int blendShapeIdx = this.skinnedMesh.GetBlendShapeIndex(viseme);
-			// Debug.Log ("Looking for viseme " + viseme+". Index: " + blendShapeIdx);
+			//int blendShapeIdx = this.skinnedMesh.GetBlendShapeIndex(viseme);
+            int blendShapeIdx = this.skinnedMesh.GetBlendShapeIndex(viseme);
+            // Debug.Log ("Looking for viseme " + viseme+". Index: " + blendShapeIdx);
 
-			// Simple version
-			double weight = this.viseme_weights[i] * 100.0 * this.blendshapesMultiplier;
+            // Simple version
+            double weight = this.viseme_weights[i] * 100.0 * this.blendshapesMultiplier;
 
 			// Tries to soften movements at low values
 			//double sw = this.viseme_weights[i] ;

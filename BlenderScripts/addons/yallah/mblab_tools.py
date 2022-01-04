@@ -210,7 +210,7 @@ class FixMaterials(bpy.types.Operator):
 #
 #
 class SetupMBLabCharacter(bpy.types.Operator):
-    """Setup a ManuelBastioniLab character to be ready for rendering in real-time and exportation to Unity."""
+    """Setup an MB-Lab character to be ready for rendering in real-time and exportation to Unity."""
     bl_idname = "mbast_tools.setup_mblab_character"
     bl_label = "MBLab Tools - Setup MBLab Character"
     bl_options = {'REGISTER', 'INTERNAL', 'UNDO'}
