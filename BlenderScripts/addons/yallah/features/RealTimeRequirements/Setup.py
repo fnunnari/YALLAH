@@ -5,11 +5,6 @@ assert obj is not None
 assert obj.type == 'MESH'
 mesh_obj = obj
 
-
-# TODO -- consider for removal
-#print("Fixing the materials for real-time rendering (Unity).")
-#bpy.ops.mbast_tools.fix_materials()
-
 # We need to remove all the modifiers (except the armature),
 # otherwise the blendshapes will not be visible in Unity
 modifiers_to_remove = []

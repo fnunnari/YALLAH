@@ -2,7 +2,8 @@
 
 ## [Unreleased]
 
-* Supporting the combination: MBLab 1.7.8 + Blender 2.83 LTS + Unity 2020.3 LTS
+* Supporting the combination: MBLab 1.7.8.5 + Blender 2.93 LTS + Unity 2020.3 LTS
+* Material support removed from the Blender editing side.
 
 ## [1.0] 2021-09-03
 

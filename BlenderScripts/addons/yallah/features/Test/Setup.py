@@ -2,7 +2,7 @@ import bpy
 import os
 import json
 
-from . __init__ import YALLAH_FEATURES_DIR
+from yallah import YALLAH_FEATURES_DIR
 
 
 #
@@ -20,7 +20,6 @@ assert mesh_obj.type == 'MESH'
 
 arm_obj = mesh_obj.parent
 assert arm_obj.type == 'ARMATURE'
-
 
 
 def test_method():

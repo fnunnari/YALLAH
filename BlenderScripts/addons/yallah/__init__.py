@@ -92,11 +92,10 @@ class YALLAH_PT_main_panel(bpy.types.Panel):
             row = layout.row()
             box = row.box()
             box.label(text="Setup:")
-            # TODO non type object has no attribute yallah setup done ?
             if obj.yallah_setup_done:
                 box.label(text="Setup already performed.")
             else:
-                box.operator(SetupMBLabCharacter.bl_idname, text="Setup a MBLab character")
+                box.operator(SetupMBLabCharacter.bl_idname, text="Setup an MBLab character")
 
             # CLOTHES
             row = layout.row()
