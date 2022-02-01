@@ -54,7 +54,7 @@ TextureImporter:
   spriteTessellationDetail: -1
   textureType: 10
   textureShape: 1
-  singleChannelComponent: 1
+  singleChannelComponent: 0
   flipbookRows: 1
   flipbookColumns: 1
   maxTextureSizeSet: 0

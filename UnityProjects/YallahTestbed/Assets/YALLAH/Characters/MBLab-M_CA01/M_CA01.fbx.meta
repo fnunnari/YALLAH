@@ -39,7 +39,57 @@ ModelImporter:
   - first:
       74: -1899218913893460160
     second: Waving
-  externalObjects: {}
+  externalObjects:
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: M_CA01_MBLab_nails
+    second: {fileID: 2100000, guid: c7729abcf048846c091976f3141fee4e, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: M_CA01_MBLab_skin2
+    second: {fileID: 2100000, guid: 2de6ecbd144ee48768e93f5fcea1fa75, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: M_CA01_MBLab_tongue
+    second: {fileID: 2100000, guid: 6fa236c59803d40ba874fa2041db10a1, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: M_CA01_MBlab_cornea
+    second: {fileID: 2100000, guid: dcb12e969db6446bf944abcb7226cc8a, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: M_CA01_MBlab_eyelash
+    second: {fileID: 2100000, guid: ee4695d3c8dc64b50b2279427c41bb6d, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: M_CA01_MBlab_generic
+    second: {fileID: 2100000, guid: 126479242b3bd4bb98b3ff0b7618e88b, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: M_CA01_MBlab_human_eyes
+    second: {fileID: 2100000, guid: c257affc94742442fb592543ee2bece8, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: M_CA01_MBlab_human_teeth
+    second: {fileID: 2100000, guid: abe71e97b280345adb9186f680e10ac4, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: M_CA01_MBlab_iris
+    second: {fileID: 2100000, guid: 95eb4794ae63b44ce83f56cc7ff44841, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: M_CA01_MBlab_pupil
+    second: {fileID: 2100000, guid: 2d3016d6361d549358afd9b038e086bb, type: 2}
   materials:
     materialImportMode: 2
     materialName: 0
