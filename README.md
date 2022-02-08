@@ -57,13 +57,13 @@ All downloads here: [https://cloud.dfki.de/owncloud/index.php/s/WxjR8X4MH7qGtxn]
 ## Links
 
 * The 3D authoring pipeline relies on [Blender](https://www.blender.org/).
-* The character generation heavily relies on the excellent [Manuel Bastioni Laboratory](http://www.manuelbastioni.com/) character generator.
-  * IMPORTANT! Towards the end of 2018, the original author dropped the development. The follow-up is called MB-Lab and is available at the following git repo: <https://github.com/animate1978/MB-Lab>.
-  * The MB-Lab v1.6.1a, currently used for this project, is available for direct download at <https://cloud.dfki.de/owncloud/index.php/s/558mWyCq7BDS58t>.
+* The character generation heavily relies on the excellent [MB-Lab](https://github.com/animate1978/MB-Lab) character generator, an addon for Blender.
+  * Hystorical note! The MB-Lab addon is a continuation of the excellent ManuelBastioniLab, that closed twards the end of 2018. Version 1 of YALLAH still relies on it. The old MB-Lab v1.6.1a, currently used for this project, is available for direct download at <https://cloud.dfki.de/owncloud/index.php/s/558mWyCq7BDS58t>.
 * The real-time 3D rendering targets [Unity](https://unity3d.com/).
 * The text-to-speech synthesis relies on the [MARY Text-to-Speech System (MaryTTS)](http://mary.dfki.de/)
 * The [Haxe](https://haxe.org/) meta-programming language is used to develop some of the code.
-* This project is developed at the [Sign Language Synthesis and Interation group](https://slsi.dfki.de/),
+* This project is developed at the [Affective Computing group](https://affective.dfki.de), a research group of the [German Research Center for Artificial Intelligence (DFKI)](https://www.dfki.de/),
+  * The development of YALLAH started at the Sign Language Synthesis and Interation group,
   a research group of the [German Research Center for Artificial Intelligence (DFKI)](https://www.dfki.de/)
   and funded by the [Cluster of Excellence on Multimodal Computing and Interaction (MMCI)](http://www.mmci.uni-saarland.de/) in Saarbrücken, Germany.
 
@@ -93,6 +93,7 @@ All downloads here: [https://cloud.dfki.de/owncloud/index.php/s/WxjR8X4MH7qGtxn]
 
 * Fabrizio Nunnari (Research & Development)
 * Alexis Heloir (Research, Testing)
+* Daksitha Withanage Don (Development, Testing)
 
 ### Past Contributors
 
