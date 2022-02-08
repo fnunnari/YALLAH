@@ -3,7 +3,8 @@
 ## [Unreleased]
 
 * Supporting the combination: MBLab 1.7.8.5 + Blender 2.93 LTS + Unity 2020.3 LTS
-* Material support removed from the Blender editing side.
+* Material support removed from the Blender editing side
+* Pre-configured materials for default male and female added to the Unity package
 
 ## [1.0] 2021-09-03
 
