@@ -92,8 +92,9 @@ popd
 
 #
 # README.md
-echo "Copying the README..."
+echo "Copying README and Changelog..."
 cp ../README.md $ABS_RELEASE_DIR
+cp ../Changelog.md $ABS_RELEASE_DIR
 
 #
 # Zipping everything
