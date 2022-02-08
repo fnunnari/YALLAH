@@ -126,6 +126,8 @@ BlenderExe
 BlenderConfig
 Releases
 BlenderScripts/addons/MB-Lab-1_7_8_5
+# Generated when building the Unity package
+Tools/unity_log.txt
 
 # ================= #
 # Blender generated #
