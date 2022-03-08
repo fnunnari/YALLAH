@@ -119,6 +119,11 @@ ehthumbs.db
 
 
 # =============== #
+# Editor specific #
+# =============== #
+.idea
+
+# =============== #
 # YALLAH specific #
 # =============== #
 SharedHaxeClasses/haxe_lib.cs
