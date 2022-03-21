@@ -6,7 +6,11 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 
+using UnityEngine;
+// Provides Random
+
 using haxe.root;
+
 
 /**
  * Blender blend shape value range: 0.0-1.0
@@ -101,28 +105,25 @@ public class MaryTTSController : MonoBehaviour {
      */
     private AudioSource audioSource = null;
 
-    // private AudioClip audioClip = null;
-
-
-	#if UNITY_EDITOR
-
-	[Header("Test:")]
-    // A couple of checkboxes to test the engine from within the editor.
-	public bool saySomething ;
-    public bool stopSpeaking;
 
     private static readonly Dictionary<string, string[]> TEST_SENTENCES = new Dictionary<string, string[]> {
         {"en_US",
             new string [] {
-                "The quick brown fox jumps over the lazy dog",
-                 "Hello, how are you?"
+                "Hello, how are you?",
+                "If everything goes right both individuals shake hands and go back to the world with a smile.",
+                "I am gonna make him an offer he cant refuse.",
+                "They may take our lives but not our freedom.",
+                "The quick brown fox jumps over the lazy dog."
             }
         },
 
         {"en_GB",
             new string [] {
-                "The quick brown fox jumps over the lazy dog",
-                "Hello, how are you?"
+                "Hello, how are you?",
+                "If everything goes right both individuals shake hands and go back to the world with a smile.",
+                "I am gonna make him an offer he cant refuse.",
+                "They may take our lives but not our freedom.",
+                "The quick brown fox jumps over the lazy dog."
             }
         },
 
@@ -136,21 +137,52 @@ public class MaryTTSController : MonoBehaviour {
         {"it",
             new string[] {
                 "Ciao, come stai?",
-                "Benvenuto nel mondo della sintesi vocale."
+                "Benvenuto nel mondo della sintesi vocale.",
+                "Nel mezzo del cammin di nostra vita, mi ritrovai per una selva oscura."
             }
         },
 
     };
 
+#if UNITY_EDITOR
+
+    [Header("Test:")]
+    // A couple of checkboxes to test the engine from within the editor.
+	public bool saySomething ;
+    public bool stopSpeaking;
+
     /** Counter to advance through the demo sentences. */
     private static int SENTENCE_POSITION = -1;
 
-	#endif
+#endif
 
 
-	void Awake () {
+    #region Listener
+    public interface MaryTTSListener
+    {
+        void SpeechFinished(System.Object param);
+    }
+
+    private System.Object currentListenerParameter = null;
+    private List<MaryTTSListener> listeners = new List<MaryTTSListener>();
+
+    public void AddListener(MaryTTSListener l)
+    {
+        this.listeners.Add(l);
+    }
+
+    public void RemoveListener(MaryTTSListener l)
+    {
+        this.listeners.Remove(l);
+    }
+    #endregion
+
+
+    void Awake () {
 		this.skinnedMeshRenderer = GetComponent<SkinnedMeshRenderer> ();
+        Assert.IsNotNull(this.skinnedMeshRenderer);
         this.skinnedMesh = GetComponent<SkinnedMeshRenderer> ().sharedMesh;
+        Assert.IsNotNull(this.skinnedMesh);
 
         // For info, see: https://docs.unity3d.com/2017.4/Documentation/ScriptReference/Resources.html
         Debug.Log("Loading MaryTTS info from resource: " + MARYTTS_INFO_JSON_RESOURCE);
@@ -163,8 +195,6 @@ public class MaryTTSController : MonoBehaviour {
 	}
 
 	void Start () {
-		Assert.IsNotNull(skinnedMeshRenderer); 
-		Assert.IsNotNull(skinnedMesh);
 
         //
         // Check that all the visemes required by the Sequencer are indeed present in the mesh.
@@ -180,8 +210,21 @@ public class MaryTTSController : MonoBehaviour {
         this.viseme_weights = new double[this.sequencer.get_viseme_count()];
 	}
 
-	public void MaryTTSspeak(string text) {
-		StartCoroutine (ProcessInputText (text));
+    public void MaryTTSspeak(string text)
+    {
+        this.MaryTTSspeak(text, null);
+    }
+
+    public void MaryTTSspeak(string text, System.Object listener_param) {
+
+        // If it is already speaking, notify listeners
+        if (this.sequencer.is_speaking())
+        {
+            this._notifySpeechFinished();
+        }
+
+        this.currentListenerParameter = listener_param;
+        StartCoroutine(ProcessInputText (text));
 	}
 
     public void MaryTTSstopSpeaking()
@@ -189,6 +232,18 @@ public class MaryTTSController : MonoBehaviour {
         this.audioSource.Stop();
         this.audioSource.clip = null;
         this.sequencer.stop_sequencer();
+    }
+
+    public void MaryTTSsayRandomSentence()
+    {
+        VoiceInfo voice_info = MaryTTSController.VOICES[this.mary_tts_voice];
+        string[] locale_sentences = MaryTTSController.TEST_SENTENCES[voice_info.locale];
+
+        int rnd_id = UnityEngine.Random.Range(0, locale_sentences.Length);
+        string sentence = locale_sentences[rnd_id];
+        //Debug.Log(sentence);
+        this.MaryTTSspeak(sentence);
+
     }
 
     public bool IsMaryTTSspeaking()
@@ -254,7 +309,9 @@ public class MaryTTSController : MonoBehaviour {
             Debug.LogError("WWW error: " + www.error);
 		}
 	}
-	
+
+
+    private bool wasSpeaking = false;
 
 	// Update is called once per frame
 	void Update() {
@@ -282,9 +339,14 @@ public class MaryTTSController : MonoBehaviour {
 		#endif
 
 
-        // Asks teh sequencer to update the viseme_weights vector with the new weights. */
+        // Asks the sequencer to update the viseme_weights vector with the new weights. */
 		this.sequencer.update(Time.time, this.viseme_weights);
-		// Debug.Log (this.viseme_weights [0]);
+        // Debug.Log (this.viseme_weights [0]);
+        String all_visemes_values = "";
+        //foreach (double v in this.viseme_weights) {
+        //    all_visemes_values += String.Format("{0:F2}", v) + " " ;
+        //}
+        //Debug.Log(all_visemes_values);
 
 
         //
@@ -292,11 +354,12 @@ public class MaryTTSController : MonoBehaviour {
         for (int i=0 ; i < this.sequencer.get_viseme_count() ; i++) {
             string viseme = (string)(this.sequencer.VISEMES [i]);
 
-			int blendShapeIdx = this.skinnedMesh.GetBlendShapeIndex(viseme);
-			// Debug.Log ("Looking for viseme " + viseme+". Index: " + blendShapeIdx);
+			//int blendShapeIdx = this.skinnedMesh.GetBlendShapeIndex(viseme);
+            int blendShapeIdx = this.skinnedMesh.GetBlendShapeIndex(viseme);
+            // Debug.Log ("Looking for viseme " + viseme+". Index: " + blendShapeIdx);
 
-			// Simple version
-			double weight = this.viseme_weights[i] * 100.0 * this.blendshapesMultiplier;
+            // Simple version
+            double weight = this.viseme_weights[i] * 100.0 * this.blendshapesMultiplier;
 
 			// Tries to soften movements at low values
 			//double sw = this.viseme_weights[i] ;
@@ -305,6 +368,30 @@ public class MaryTTSController : MonoBehaviour {
 			skinnedMeshRenderer.SetBlendShapeWeight(blendShapeIdx, (float) weight);
 		}
 
-	}
+        //
+        // Manager Listeners
+        bool speaks_now = this.sequencer.is_speaking();
+        if (speaks_now == false)
+        {
+            if (this.wasSpeaking)
+            {
+                this._notifySpeechFinished();
+            }
+        }
+        this.wasSpeaking = speaks_now;
+
+    }
+
+
+    private void _notifySpeechFinished()
+    {
+        foreach (MaryTTSListener l in this.listeners)
+        {
+            l.SpeechFinished(this.currentListenerParameter);
+        }
+        this.currentListenerParameter = null;
+
+    }
+
 
 }

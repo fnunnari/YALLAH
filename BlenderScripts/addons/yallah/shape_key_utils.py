@@ -12,9 +12,9 @@ class CreateShapeKeys(bpy.types.Operator):
     bl_idname = "object.create_shape_keys"
     bl_label = "Create ShapeKeys from File"
 
-    shape_keys_filename = bpy.props.StringProperty(name="ShapeKeysFile",
-                                                   description="The json file with the description of the new ShapeKeys",
-                                                   subtype="FILE_PATH")
+    shape_keys_filename: bpy.props.StringProperty(name="ShapeKeysFile",
+                                                  description="The json file with the description of the new ShapeKeys",
+                                                  subtype="FILE_PATH")
 
     @classmethod
     def poll(cls, context):
@@ -69,9 +69,9 @@ class RemoveShapeKeys(bpy.types.Operator):
     bl_idname = "object.remove_shape_keys"
     bl_label = "Remove ShapeKeys from File"
 
-    shape_keys_filename = bpy.props.StringProperty(name="ShapeKeysFile",
-                                                   description="The json file with the description of the new ShapeKeys",
-                                                   subtype="FILE_PATH")
+    shape_keys_filename: bpy.props.StringProperty(name="ShapeKeysFile",
+                                                  description="The json file with the description of the new ShapeKeys",
+                                                  subtype="FILE_PATH")
 
     @classmethod
     def poll(cls, context):

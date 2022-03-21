@@ -7,13 +7,15 @@ class LoadVertexGroups(bpy.types.Operator):
     bl_idname = "object.load_vertex_groups"
     bl_label = "Load and create a vertex group from a JSON dictionary file."
 
-    vertex_groups_filename = bpy.props.StringProperty(name="VertexGroupdFile",
-                                                      description="The json file with the description of the vertex groups to load",
-                                                      subtype="FILE_PATH")
+    vertex_groups_filename: bpy.props.StringProperty(
+        name="VertexGroupdFile",
+        description="The json file with the description of the vertex groups to load",
+        subtype="FILE_PATH")
 
-    replace_existing = bpy.props.BoolProperty(name="Replace Existing",
-                                              default=False,
-                                              description="If True, existing vertex groups with the same name will be overridden by the loaded ones. Otherwise an error will be thrown.")
+    replace_existing: bpy.props.BoolProperty(
+        name="Replace Existing",
+        default=False,
+        description="If True, existing vertex groups with the same name will be overridden by the loaded ones. Otherwise an error will be thrown.")
 
     @classmethod
     def poll(cls, context):
@@ -54,7 +56,7 @@ class LoadVertexGroups(bpy.types.Operator):
                     return {'CANCELLED'}
 
             # print("Creating group '{}'".format(groupName))
-            vg = obj.vertex_groups.new(groupName)
+            vg = obj.vertex_groups.new(name=groupName)
             group_vertices = in_dict[groupName]
             assert isinstance(group_vertices, list)
             vg.add(group_vertices, weight=1.0, type='REPLACE')
@@ -68,9 +70,10 @@ class SaveVertexGroups(bpy.types.Operator):
     bl_idname = "object.save_vertex_group"
     bl_label = "Save the indices of the active vertex group onto a JSON file."
 
-    vertex_group_filename = bpy.props.StringProperty(name="VertexGroupFile",
-                                                      description="The json file that will be written.",
-                                                      subtype="FILE_PATH")
+    vertex_group_filename: bpy.props.StringProperty(
+        name="VertexGroupFile",
+        description="The json file that will be written.",
+        subtype="FILE_PATH")
 
     @classmethod
     def poll(cls, context):

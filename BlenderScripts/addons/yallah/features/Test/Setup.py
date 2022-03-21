@@ -4,6 +4,7 @@ import json
 
 from yallah import YALLAH_FEATURES_DIR
 
+
 #
 # Test Feature. Used to check working directories and relative paths.
 print("Feature Test: main body")
@@ -19,7 +20,6 @@ assert mesh_obj.type == 'MESH'
 
 arm_obj = mesh_obj.parent
 assert arm_obj.type == 'ARMATURE'
-
 
 
 def test_method():

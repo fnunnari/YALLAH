@@ -119,44 +119,22 @@ ehthumbs.db
 
 
 # =============== #
+# Editor specific #
+# =============== #
+.idea
+
+# =============== #
 # YALLAH specific #
 # =============== #
 SharedHaxeClasses/haxe_lib.cs
 BlenderExe
 BlenderConfig
-
+Releases
+BlenderScripts/addons/MB-Lab-1_7_8_5
+# Generated when building the Unity package
+Tools/unity_log.txt
 
 # ================= #
 # Blender generated #
 # ================= #
 *.blend1*
-
-
-# =============== #
-# Unity generated #
-# =============== #
-[Oo]bj/
-[Bb]uild
-sysinfo.txt
-*.stackdump
-Temp/
-UnityGenerated/
-Library/
-Assets/AssetStoreTools*
-
-# ===================================== #
-# Visual Studio / MonoDevelop generated #
-# ===================================== #
-# If you use Visual Studio Community as default editor (Unity 2018)
-.vs/
-# Other Mono files
-[Ee]xported[Oo]bj/
-#*.svd
-*.userprefs
-*.csproj
-*.pidb
-*.suo
-*.sln
-*.user
-*.unityproj
-*.booproj
