@@ -22,7 +22,7 @@ The following people can take advantage of project YALLAH:
 ## Demos
 
 * **YALLENS** Using a YALLAH-generated character with Hololens 
-  <a href="http://www.youtube.com/watch?v=LcQ5Rn45EeI" target="_blank">Youtube Video <img src="Docs/Yallens-screenshot.png" alt="Yallens Video on YouTube" width="160" height="90" style="float: right;" /></a>
+  <a href="http://www.youtube.com/watch?v=LcQ5Rn45EeI" target="_blank">Youtube Video <img src="Docs/Yallens-screenshot.png" alt="Yallens Video on YouTube" width="25%"  style="float: right;" /></a>
 * **DECAD** (DFKI Embodied Conversational Agent Demo) at [http://decad.sb.dfki.de](http://decad.sb.dfki.de) demonstrates an online running demo of a virtual human created with YALLAH.
 
 ## Documentation
